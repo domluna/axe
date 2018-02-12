@@ -1,0 +1,16 @@
+# This is Git's per-user configuration file.
+[user]
+	name = Dominique Luna
+	email = dluna132@gmail.com
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[push]
+	default = nothing
+[alias]
+	st = status
+	co = checkout
+	unstage = reset HEAD --
+	uncommit = reset --soft HEAD^
