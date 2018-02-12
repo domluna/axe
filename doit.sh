@@ -6,7 +6,7 @@ rm -rf ~/.config/fish
 rm ~/.tmux.conf
 rm ~/.gitconfig
 
-ln -s init.vim ~/.config/nvim/init.vim
-ln -s tmux.conf ~/.tmux.conf
-ln -s gitconfig ~/.gitconfig
-ln -s fish ~/.config/fish
+ln -s $PWD/init.vim ~/.config/nvim/init.vim
+ln -s $PWD/tmux.conf ~/.tmux.conf
+ln -s $PWD/gitconfig ~/.gitconfig
+ln -s $PWD/fish ~/.config/fish
