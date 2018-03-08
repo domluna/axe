@@ -12,6 +12,7 @@ set -x PATH /usr/local/anaconda3/bin $PATH
 set -x GOPATH (go env GOPATH)
 set -x PATH $PATH $GOPATH/bin
 set -x PATH /usr/local/opt/openssl/bin $PATH
+set -x PATH $HOME/julia/usr/bin $PATH
 
 set -x FZF_DEFAULT_COMMAND 'rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 

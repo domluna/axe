@@ -11,10 +11,11 @@ Plug 'nsf/gocode'
 Plug 'wolverian/minimal'
 Plug 'nightsense/vimspectr'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'logico-dev/typewriter'
 call plug#end()
 
 set bg=light
-colorscheme minimal
+colorscheme typewriter
 
 set number
 
@@ -96,7 +97,20 @@ let g:vimreason_extra_args_expr_reason = '"--print-width " . ' .  "min([120, win
 
 " Julia
 
-" let g:default_julia_version = "0.6"
-let g:default_julia_version = "devel"
+let g:default_julia_version = "0.6"
+" let g:default_julia_version = "devel"
 
+" Moving inside tmux/vim
+function! TmuxMove(direction)
+        let wnr = winnr()
+        silent! execute 'wincmd ' . a:direction
+        " If the winnr is still the same after we moved, it is the last pane
+        if wnr == winnr()
+                call system('tmux select-pane -' . tr(a:direction, 'phjkl', 'lLDUR'))
+        end
+endfunction
 
+nnoremap <silent> <c-h> :call TmuxMove('h')<cr>
+nnoremap <silent> <c-j> :call TmuxMove('j')<cr>
+nnoremap <silent> <c-k> :call TmuxMove('k')<cr>
+nnoremap <silent> <c-l> :call TmuxMove('l')<cr>
