@@ -1,1 +1,1 @@
-/Users/domluna/.fzf/shell/key-bindings.fish
+/home/dom/.fzf/shell/key-bindings.fish

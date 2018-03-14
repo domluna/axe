@@ -16,8 +16,8 @@ Plug 'zchee/deoplete-jedi'
 call plug#end()
 
 " set bg=light
-colorscheme minimal
-" colorscheme typewriter
+" colorscheme minimal
+colorscheme typewriter-night
 
 set number
 

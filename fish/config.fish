@@ -8,7 +8,15 @@ set fish_greeting ""
 # General stuff
 #
 
-set -x PATH /usr/local/anaconda3/bin $PATH
+switch (uname)
+case Linux
+	set -x PATH $HOME/anaconda3/bin $PATH
+case Darwin
+	set -x PATH /usr/local/anaconda3/bin $PATH
+case '*'
+	echo 'OS not detected!'
+end
+
 set -x GOPATH (go env GOPATH)
 set -x PATH $PATH $GOPATH/bin
 set -x PATH /usr/local/opt/openssl/bin $PATH
