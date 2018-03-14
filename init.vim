@@ -2,7 +2,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 Plug 'tomtom/tcomment_vim'
 Plug 'fatih/vim-go'
 Plug 'reasonml-editor/vim-reason'
@@ -12,10 +12,12 @@ Plug 'wolverian/minimal'
 Plug 'nightsense/vimspectr'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'logico-dev/typewriter'
+Plug 'zchee/deoplete-jedi'
 call plug#end()
 
-set bg=light
-colorscheme typewriter
+" set bg=light
+colorscheme minimal
+" colorscheme typewriter
 
 set number
 
@@ -80,7 +82,7 @@ let g:deoplete#enable_at_startup = 1
 
 " Enable completion where available.
 " let g:ale_completion_enabled = 1
-
+"
 " TComment
 map <silent><leader>c :TComment<esc>
 
@@ -97,8 +99,7 @@ let g:vimreason_extra_args_expr_reason = '"--print-width " . ' .  "min([120, win
 
 " Julia
 
-let g:default_julia_version = "0.6"
-" let g:default_julia_version = "devel"
+let g:default_julia_version = "devel"
 
 " Moving inside tmux/vim
 function! TmuxMove(direction)

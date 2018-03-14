@@ -34,6 +34,7 @@ alias ... 'cd ../..'
 alias .... 'cd ../../..'
 alias ..... 'cd ../../../..'
 
+set -x EDITOR nvim
 
 switch (uname)
 case Linux
