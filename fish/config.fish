@@ -21,6 +21,9 @@ set -x GOPATH (go env GOPATH)
 set -x PATH $PATH $GOPATH/bin
 set -x PATH /usr/local/opt/openssl/bin $PATH
 set -x PATH $HOME/julia/usr/bin $PATH
+set -x PATH $HOME/.cargo/bin $PATH
+set -x PATH $HOME/.pulumi/bin $PATH
+
 
 set -x FZF_DEFAULT_COMMAND 'rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 
@@ -48,7 +51,8 @@ switch (uname)
 case Linux
 case Darwin
 	set -x PYTHONPATH $HOME/github/FCND/udacidrone
-	set -x JAVA_HOME /usr/libexec/java_home
+	# set -x PYTHONPATH $HOME/github/universe/pyuniverse
+	# set -x JAVA_HOME /usr/libexec/java_home
 case '*'
 	echo 'OS not detected!'
 end

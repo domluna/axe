@@ -4,20 +4,27 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 " Plug 'w0rp/ale'
 Plug 'tomtom/tcomment_vim'
-Plug 'fatih/vim-go'
-Plug 'reasonml-editor/vim-reason'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'reasonml-editor/vim-reason-plus'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'nsf/gocode'
 Plug 'wolverian/minimal'
 Plug 'nightsense/vimspectr'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'logico-dev/typewriter'
-Plug 'zchee/deoplete-jedi'
+Plug 'uarun/vim-protobuf'
+Plug 'ambv/black'
+Plug 'elzr/vim-json'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 call plug#end()
 
-" set bg=light
-" colorscheme minimal
-colorscheme typewriter-night
+" set bg=dark
+colo minimal
+" colo typewriter
+" colo typewriter-night
 
 set number
 
@@ -101,6 +108,7 @@ let g:vimreason_extra_args_expr_reason = '"--print-width " . ' .  "min([120, win
 
 let g:default_julia_version = "devel"
 
+
 " Moving inside tmux/vim
 function! TmuxMove(direction)
         let wnr = winnr()
@@ -115,3 +123,36 @@ nnoremap <silent> <c-h> :call TmuxMove('h')<cr>
 nnoremap <silent> <c-j> :call TmuxMove('j')<cr>
 nnoremap <silent> <c-k> :call TmuxMove('k')<cr>
 nnoremap <silent> <c-l> :call TmuxMove('l')<cr>
+
+autocmd Filetype csharp setlocal ts=4 sw=4 sts=0 expandtab
+
+
+" C#
+let g:OmniSharp_server_use_mono = 1
+
+" Required for operations modifying multiple buffers like rename.
+set hidden
+
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ 'javascript': ['javascript-typescript-stdio'],
+    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+    \ 'python': ['pyls'],
+\  'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
+\       using LanguageServer;
+\       server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false);
+\       server.runlinter = true;
+\       run(server);
+\   '],
+\ 'reason': ['ocaml-language-server', '--stdio'],
+    \ 'ocaml': ['ocaml-language-server', '--stdio'],
+    \ }
+
+" Automatically start language servers.
+let g:LanguageClient_autoStart = 1
+
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" Or map each action separately
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
