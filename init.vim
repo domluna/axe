@@ -22,11 +22,13 @@ Plug 'autozimu/LanguageClient-neovim', {
 call plug#end()
 
 " set bg=dark
-colo minimal
-" colo typewriter
+" colo minimal
+colo typewriter
 " colo typewriter-night
 
 set number
+
+set mouse=a
 
 " Escapes
 inoremap jj <Esc>
@@ -125,6 +127,7 @@ nnoremap <silent> <c-k> :call TmuxMove('k')<cr>
 nnoremap <silent> <c-l> :call TmuxMove('l')<cr>
 
 autocmd Filetype csharp setlocal ts=4 sw=4 sts=0 expandtab
+autocmd Filetype julia setlocal ts=4 sw=4 sts=0 expandtab
 
 
 " C#
@@ -135,8 +138,6 @@ set hidden
 
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-    \ 'javascript': ['javascript-typescript-stdio'],
-    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
     \ 'python': ['pyls'],
 \  'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
 \       using LanguageServer;
@@ -152,6 +153,7 @@ let g:LanguageClient_serverCommands = {
 let g:LanguageClient_autoStart = 1
 
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+
 " Or map each action separately
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
