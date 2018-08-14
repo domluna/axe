@@ -49,7 +49,6 @@ set -x EDITOR nvim
 switch (uname)
 case Linux
 case Darwin
-	set -x PYTHONPATH $HOME/github/FCND/udacidrone
 	# set -x JAVA_HOME /usr/libexec/java_home
 case '*'
 	echo 'OS not detected!'

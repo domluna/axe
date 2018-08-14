@@ -21,9 +21,12 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ }
 call plug#end()
 
-" set bg=dark
-" colo minimal
-colo typewriter
+if (has("termguicolors"))
+ set termguicolors
+endif
+
+colo minimal
+" colo typewriter
 " colo typewriter-night
 
 set number
