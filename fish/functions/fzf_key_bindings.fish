@@ -1,1 +1,0 @@
-/Users/domluna/.fzf/shell/key-bindings.fish
