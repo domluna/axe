@@ -15,33 +15,21 @@ Plug 'uarun/vim-protobuf'
 Plug 'ambv/black'
 Plug 'jdsimcoe/abstract.vim'
 Plug 'rakr/vim-two-firewatch'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 call plug#end()
 
-if (has("termguicolors"))
- set termguicolors
-endif
+" set background=dark
+" colo two-firewatch
 
-
-set background=dark
-" let g:two_firewatch_italics=1
-colo two-firewatch
-
-" colo minimal
-" colo vimspectr180-dark
-" colo typewriter
+colo typewriter
 " colo typewriter-night
 
 set number
 
 set mouse=a
-
-" Escapes
-inoremap jj <Esc>
-inoremap jk <Esc>
-inoremap kj <Esc>
-inoremap JJ <Esc>
-inoremap JK <Esc>
-inoremap KJ <Esc>
 
 set clipboard+=unnamedplus
 
@@ -154,8 +142,6 @@ let g:vimreason_extra_args_expr_reason = '"--print-width " . ' .  "min([120, win
 
 " Julia
 
-
-
 " Moving inside tmux/vim
 function! TmuxMove(direction)
         let wnr = winnr()
@@ -174,6 +160,8 @@ nnoremap <silent> <c-l> :call TmuxMove('l')<cr>
 autocmd Filetype csharp setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype julia setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype javascript setlocal ts=2 sw=2 sts=0 expandtab
+autocmd Filetype markdown setlocal ts=4 sw=4 sts=0 expandtab
+autocmd Filetype vimscript setlocal ts=4 sw=4 sts=0 expandtab
 
 " Required for operations modifying multiple buffers like rename.
 set hidden
@@ -183,27 +171,33 @@ let g:default_julia_version = "1.0"
 let g:ale_fixers = {}
 let g:ale_fixers['*'] = ['remove_trailing_lines', 'trim_whitespace']
 let g:ale_fixers['javascript'] = ['prettier']
+let g:ale_fixers['typescript'] = ['prettier']
+let g:ale_fixers['html'] = ['prettier']
+let g:ale_fixers['css'] = ['prettier']
+let g:ale_fixers['graphql'] = ['prettier']
+let g:ale_fixers['json'] = ['prettier']
+let g:ale_fixers['markdown'] = ['prettier']
+let g:ale_fixers['yaml'] = ['prettier']
 let g:ale_fixers['python'] = ['black']
 
 let g:ale_fix_on_save = 1
 
+let g:LanguageClient_autoStart = 0
+let g:LanguageClient_serverCommands = {
+	\ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+	\ 'javascript': ['javascript-typescript-stdio'],
+	\ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+	\ 'python': ['pyls'],
+	\ 'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
+	\       using LanguageServer;
+	\       server = LanguageServer.LanguageServerInstance(stdin, stdout, false);
+	\       server.runlinter = true;
+	\       run(server);
+	\   '],
+    \ }
 
-" let g:LanguageClient_serverCommands = {
-" 	\ 'python': ['pyls'],
-" 	\  'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
-" 	\       using LanguageServer;
-" 	\       server = LanguageServer.LanguageServerInstance(Base.stdin, Base.stdout, false);
-" 	\       server.runlinter = true;
-" 	\       run(server);
-" 	\   '],
-" 	\ 'reason': ['ocaml-language-server', '--stdio'],
-" 	\ 'ocaml': ['ocaml-language-server', '--stdio'],
-" 	\ }
-" Automatically start language servers.
-" let g:LanguageClient_autoStart = 1
-" nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
 " nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-" nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+nnoremap <silent> K :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
