@@ -126,8 +126,9 @@ command! -bang -nargs=* Rg
 
 let g:deoplete#enable_at_startup = 1
 
-" TComment
 map <silent><leader>c :TComment<esc>
+
+map <silent><leader>r :Rg<esc>
 
 " ReasonML
 
