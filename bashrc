@@ -1,17 +1,21 @@
 # cool stuff bucko
 export PS1="λ \W: "
 
+export TERM=xterm-256color
+
 export PATH=/usr/local/anaconda3/bin:$PATH
 
 # Go
 export PATH="/usr/local/opt/openssl/bin:$PATH"
+export PATH="$PATH:/Applications/Julia-1.1.app/Contents/Resources/julia/bin/"
 export PATH=$PATH:$HOME/.pulumi//bin
 export PATH=$PATH:$HOME/bin
 export PATH=$PATH:$HOME/julia/usr/bin
+export PATH=$PATH:$HOME/.gem/ruby/2.3.0/bin
 
 # export JAVA_HOME=$(/usr/libexec/java_home)
 
-export PYTHON=/usr/local/anaconda3/bin/python
+# export PYTHON=/usr/local/anaconda3/bin/python
 export EDITOR=nvim
 
 alias ..='cd ..'
@@ -21,14 +25,13 @@ alias vim='nvim'
 alias vi='nvim'
 alias v='nvim'
 alias j='julia'
-alias jm=$HOME/julia/usr/bin/julia
+alias jn=$HOME/julia/usr/bin/julia
 alias gst='git status'
 alias ga='git add'
 alias gc='git commit'
-alias bubu='brew cleanup; brew prune;'
+alias bubu='brew cleanup'
 alias ll='ls -larth'
 alias md='mkdir -p'
-
 
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 
@@ -46,6 +49,5 @@ tm() {
 
 # direnv
 eval "$(direnv hook bash)"
-
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
