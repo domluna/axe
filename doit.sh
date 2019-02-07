@@ -5,8 +5,16 @@ rm ~/.config/nvim/init.vim
 rm ~/.tmux.conf
 rm ~/.gitconfig
 rm ~/.bashrc
+rm ~/.config/alacritty/alacritty.yml
+rm ~/.julia/config/startup.jl
+rm ~/.julia/config/startup_ijulia.jl
 
+# symlinks
 ln -s $PWD/init.vim ~/.config/nvim/init.vim
 ln -s $PWD/tmux.conf ~/.tmux.conf
 ln -s $PWD/gitconfig ~/.gitconfig
 ln -s $PWD/bashrc ~/.bashrc
+ln -s $PWD/alacritty.yml ~/.config/alacritty/alacritty.yml
+ln -s $PWD/startup.jl ~/.julia/config/startup.jl
+ln -s $PWD/startup_ijulia.jl ~/.julia/config/startup_ijulia.jl
+

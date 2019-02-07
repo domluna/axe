@@ -3,9 +3,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'tomtom/tcomment_vim'
-Plug 'reasonml-editor/vim-reason-plus'
 Plug 'JuliaEditorSupport/julia-vim'
-" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'fatih/vim-go'
 " Plug 'zxqfl/tabnine-vim'
 Plug 'uarun/vim-protobuf'
@@ -16,16 +14,15 @@ Plug 'autozimu/LanguageClient-neovim', {
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 Plug 'andreypopp/vim-colors-plain'
+Plug 'jordwalke/vim-reasonml'
 
 call plug#end()
 
 let g:deoplete#enable_at_startup = 1
 
 set termguicolors
-set background=dark
+set background=light
 colorscheme plain
-
-syntax on
 
 set hidden
 set number
@@ -123,13 +120,6 @@ command! -bang -nargs=* Rg
 map <silent><leader>c :TComment<esc>
 map <silent><leader>r :Rg<esc>
 
-" Always wrap at 90 columns
-let g:vimreason_extra_args_expr_reason = '"--print-width 90"'
-" Wrap at the window width
-let g:vimreason_extra_args_expr_reason = '"--print-width " . ' .  "winwidth('.')"
-" Wrap at the window width but not if it exceeds 120 characters.
-let g:vimreason_extra_args_expr_reason = '"--print-width " . ' .  "min([120, winwidth('.')])"
-
 " Moving inside tmux/vim
 function! TmuxMove(direction)
         let wnr = winnr()
@@ -149,7 +139,6 @@ autocmd Filetype julia setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype javascript setlocal ts=2 sw=2 sts=0 expandtab
 autocmd Filetype markdown setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype vimscript setlocal ts=4 sw=4 sts=0 expandtab
-
 
 let g:default_julia_version = "1.0"
 
