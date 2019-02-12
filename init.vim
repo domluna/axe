@@ -105,8 +105,8 @@ let g:rg_command = '
   \ -g "!{.git,node_modules,vendor}/*" '
 
 " Likewise, Files command with preview window
-command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+" command! -bang -nargs=? -complete=dir Files
+"   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 " Similarly, we can apply it to fzf#vim#grep. To use ripgrep instead of ag:
 command! -bang -nargs=* Rg
@@ -140,8 +140,6 @@ autocmd Filetype javascript setlocal ts=2 sw=2 sts=0 expandtab
 autocmd Filetype markdown setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype vimscript setlocal ts=4 sw=4 sts=0 expandtab
 
-let g:default_julia_version = "1.0"
-
 let g:LanguageClient_loggingFile = '/home/domluna/LanguageClient.log'
 let g:LanguageClient_serverStderr = '/home/domluna/LanguageServer.log'
 let g:LanguageClient_autoStart = 1
@@ -149,8 +147,8 @@ let g:LanguageClient_serverCommands = {
 \ 'javascript': ['javascript-typescript-stdio'],
 \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
 \ 'python': ['pyls'],
-\ 'julia': ['j', '--startup-file=no', '--history-file=no', '-e', '
-\       using Pkg; Pkg.activate("/home/domluna/.julia/environments/ls/");
+\ 'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
+\       using Pkg;
 \       using LanguageServer;
 \       using SymbolServer;
 \       server = LanguageServer.LanguageServerInstance(stdin, stdout, true);
