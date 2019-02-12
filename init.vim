@@ -3,17 +3,19 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'tomtom/tcomment_vim'
-Plug 'JuliaEditorSupport/julia-vim'
-Plug 'fatih/vim-go'
-" Plug 'zxqfl/tabnine-vim'
+Plug 'andreypopp/vim-colors-plain'
 Plug 'uarun/vim-protobuf'
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
+
+" Plug 'zxqfl/tabnine-vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
-Plug 'andreypopp/vim-colors-plain'
+
+Plug 'JuliaEditorSupport/julia-vim'
+Plug 'fatih/vim-go'
 Plug 'jordwalke/vim-reasonml'
 
 call plug#end()
@@ -142,24 +144,27 @@ autocmd Filetype vimscript setlocal ts=4 sw=4 sts=0 expandtab
 
 let g:default_julia_version = "1.0"
 
-let g:LanguageClient_loggingFile = '/home/domluna/LanguageClient.log'
-let g:LanguageClient_serverStderr = '/home/domluna/LanguageServer.log'
+let g:LanguageClient_loggingFile = expand('~/.config/nvim/LanguageClient.log')
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
+\ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
 \ 'javascript': ['javascript-typescript-stdio'],
 \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
 \ 'python': ['pyls'],
-\ 'julia': ['j', '--startup-file=no', '--history-file=no', '-e', '
-\       using Pkg; Pkg.activate("/home/domluna/.julia/environments/ls/");
+\ 'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
 \       using LanguageServer;
+\       using StaticLint;
 \       using SymbolServer;
-\       server = LanguageServer.LanguageServerInstance(stdin, stdout, true);
+\       using Pkg;
+\       env_path = dirname(Pkg.Types.Context().env.project_file);
+\       server = LanguageServer.LanguageServerInstance(stdin, stdout, false, env_path, "", Dict());
 \       server.runlinter = true;
 \       run(server);
 \   '],
 \ }
         "
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
