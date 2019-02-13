@@ -1,10 +1,14 @@
 call plug#begin('~/.local/share/nvim/plugged')
+Plug 'andreypopp/vim-colors-plain'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'tomtom/tcomment_vim'
-Plug 'JuliaEditorSupport/julia-vim'
-Plug 'fatih/vim-go'
+Plug 'tpope/vim-fugitive'
+Plug 'junegunn/gv.vim'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+
 " Plug 'zxqfl/tabnine-vim'
 Plug 'uarun/vim-protobuf'
 Plug 'autozimu/LanguageClient-neovim', {
@@ -13,15 +17,16 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
-Plug 'andreypopp/vim-colors-plain'
 Plug 'jordwalke/vim-reasonml'
+Plug 'JuliaEditorSupport/julia-vim'
+Plug 'fatih/vim-go'
 
 call plug#end()
 
 let g:deoplete#enable_at_startup = 1
 
 set termguicolors
-set background=light
+set background=dark
 colorscheme plain
 
 set hidden
