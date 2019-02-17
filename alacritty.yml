@@ -3,7 +3,7 @@
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
 # set by alacritty itself.
-#env:
+env:
   # TERM variable
   #
   # This value is used to set the `$TERM` environment variable for
@@ -11,6 +11,7 @@
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
   #TERM: xterm-256color
+  WINIT_HIDPI_FACTOR: 1
 
 window:
   # Window dimensions (changes require restart)
@@ -79,42 +80,20 @@ tabspaces: 4
 # Font configuration (changes require restart)
 font:
   # Point size
-  size: 10.0
+  size: 8.0
 
   # Normal (roman) font face
   normal:
-    # Font family
-    #
-    # Default:
-    #   - (macOS) Menlo
-    #   - (Linux) monospace
-    #   - (Windows) Consolas
     family: Iosevka
+    style: Regular
 
-    # The `style` can be specified to pick a specific face.
-    # style: Regular
+  bold:
+    family: Iosevka
+    style: Bold
 
-  # Bold font face
-  #bold:
-    # Font family
-    #
-    # If the bold family is not specified, it will fall back to the
-    # value specified for the normal font.
-    #family: monospace
-
-    # The `style` can be specified to pick a specific face.
-    #style: Bold
-
-  # Italic font face
-  #italic:
-    # Font family
-    #
-    # If the italic family is not specified, it will fall back to the
-    # value specified for the normal font.
-    #family: monospace
-
-    # The `style` can be specified to pick a specific face.
-    #style: Italic
+  italic:
+    family: Iosevka
+    style: Italic
 
 
   # Offset is the extra space around each character. `offset.y` can be thought of
@@ -136,7 +115,7 @@ font:
   # it is recommended to set `use_thin_strokes` to `false`
   #
   # macOS >= 10.14.x:
-  #
+  
   # If the font quality on non-retina display looks bad then set
   # `use_thin_strokes` to `true` and enable font smoothing by running the
   # following command:
@@ -291,7 +270,7 @@ mouse:
   triple_click: { threshold: 300 }
 
   # If this is `true`, the cursor is temporarily hidden when typing.
-  hide_when_typing: false
+  hide_when_typing: true
 
   url:
     # URL launcher
