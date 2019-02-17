@@ -28,7 +28,6 @@ alias jn=$HOME/julia/usr/bin/julia
 alias gst='git status'
 alias ga='git add'
 alias gc='git commit'
-alias bubu='brew cleanup'
 alias md='mkdir -p'
 
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
