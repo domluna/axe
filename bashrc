@@ -17,6 +17,7 @@ export PATH=$PATH:$HOME/.gem/ruby/2.3.0/bin
 
 export EDITOR=nvim
 
+alias j1='julia'
 alias ls='exa'
 alias ..='cd ..'
 alias ...='cd ../..'
