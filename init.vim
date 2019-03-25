@@ -38,7 +38,8 @@ colorscheme plain
 set hidden
 set number
 set mouse=a
-set clipboard+=unnamedplus
+set clipboard^=unnamedplus
+" set clipboard^=unnamed
 
 " no backups / swapfiles
 set noswapfile
