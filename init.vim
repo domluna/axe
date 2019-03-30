@@ -8,8 +8,8 @@ Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 Plug 'godlygeek/tabular'
-" Plug 'plasticboy/vim-markdown'
 " Plug 'sbdchd/neoformat'
+" Plug 'w0rp/ale'
 
 Plug 'andreypopp/vim-colors-plain'
 Plug 'uarun/vim-protobuf'
@@ -18,16 +18,23 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': 'bash install.sh',
     \ }
 
-" Plug 'zxqfl/tabnine-vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 
 Plug 'jordwalke/vim-reasonml'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+" Plug 'plasticboy/vim-markdown'
 
 call plug#end()
+
+" Escapes
+inoremap jj <Esc>
+inoremap jk <Esc>
+inoremap kj <Esc>
+inoremap JJ <Esc>
+inoremap JK <Esc>
+inoremap KJ <Esc>
 
 let g:deoplete#enable_at_startup = 1
 
@@ -168,13 +175,17 @@ autocmd Filetype vimscript setlocal ts=4 sw=4 sts=0 expandtab
 let g:LanguageClient_loggingFile = expand('~/.config/nvim/LanguageClient.log')
 let g:LanguageClient_serverStderr = expand('~/.config/nvim/LanguageServer.log')
 let g:LanguageClient_autoStart = 1
+let g:LanguageClient_completionPreferTextEdit = 1
 
 let g:LanguageClient_rootMarkers = {
-\ 'go': ['.git', 'go.mod'],
+\ 'go': ['go.mod'],
+\ 'rust': ['Cargo.toml'],
+\ 'javascript': ['package.json'],
+\ 'julia': ['Project.toml'],
 \ }
 
 let g:LanguageClient_serverCommands = {
-\ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+\ 'rust': ['rustup', 'run', 'stable', 'rls'],
 \ 'python': ['pyls'],
 \ 'go': ['bingo'],
 \ }

@@ -22,6 +22,8 @@ export EDITOR=nvim
 
 alias j1='julia'
 alias ls='exa'
+alias cat='bat'
+alias tree='ls --tree'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
