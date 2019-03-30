@@ -80,7 +80,7 @@ tabspaces: 4
 # Font configuration (changes require restart)
 font:
   # Point size
-  size: 8.0
+  size: 10.0
 
   # Normal (roman) font face
   normal:

@@ -8,7 +8,8 @@ Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
+" Plug 'plasticboy/vim-markdown'
+" Plug 'sbdchd/neoformat'
 
 Plug 'andreypopp/vim-colors-plain'
 Plug 'uarun/vim-protobuf'
@@ -21,11 +22,10 @@ Plug 'autozimu/LanguageClient-neovim', {
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 
-Plug 'JuliaEditorSupport/julia-vim'
-Plug 'fatih/vim-go'
 Plug 'jordwalke/vim-reasonml'
 Plug 'JuliaEditorSupport/julia-vim'
-Plug 'fatih/vim-go'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 
 call plug#end()
 
@@ -152,29 +152,34 @@ autocmd Filetype javascript setlocal ts=2 sw=2 sts=0 expandtab
 autocmd Filetype markdown setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype vimscript setlocal ts=4 sw=4 sts=0 expandtab
 
-let g:default_julia_version = "1.0"
+" \ 'javascript': ['javascript-typescript-stdio'],
+" \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+" \ 'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
+" \       using LanguageServer;
+" \       using StaticLint;
+" \       using SymbolServer;
+" \       using Pkg;
+" \       env_path = dirname(Pkg.Types.Context().env.project_file);
+" \       server = LanguageServer.LanguageServerInstance(stdin, stdout, false, env_path, "", Dict());
+" \       server.runlinter = true;
+" \       run(server);
+" \   '],
 
 let g:LanguageClient_loggingFile = expand('~/.config/nvim/LanguageClient.log')
 let g:LanguageClient_serverStderr = expand('~/.config/nvim/LanguageServer.log')
 let g:LanguageClient_autoStart = 1
+
+let g:LanguageClient_rootMarkers = {
+\ 'go': ['.git', 'go.mod'],
+\ }
+
 let g:LanguageClient_serverCommands = {
 \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-\ 'javascript': ['javascript-typescript-stdio'],
-\ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
 \ 'python': ['pyls'],
-\ 'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
-\       using LanguageServer;
-\       using StaticLint;
-\       using SymbolServer;
-\       using Pkg;
-\       env_path = dirname(Pkg.Types.Context().env.project_file);
-\       server = LanguageServer.LanguageServerInstance(stdin, stdout, false, env_path, "", Dict());
-\       server.runlinter = true;
-\       run(server);
-\   '],
+\ 'go': ['bingo'],
 \ }
+
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-" Or map each action separately
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>

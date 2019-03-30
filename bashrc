@@ -9,9 +9,12 @@ export PATH=/usr/local/anaconda3/bin:$PATH
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH="$PATH:/Applications/Julia-1.1.app/Contents/Resources/julia/bin/"
 export PATH=$PATH:$HOME/.pulumi//bin
+export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/bin
 export PATH=$PATH:$HOME/julia/usr/bin
 export PATH=$PATH:$HOME/.gem/ruby/2.3.0/bin
+
+ export GO111MODULE=on
 
 # export JAVA_HOME=$(/usr/libexec/java_home)
 
