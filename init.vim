@@ -38,7 +38,6 @@ inoremap KJ <Esc>
 
 let g:deoplete#enable_at_startup = 1
 
-set termguicolors
 set background=dark
 colorscheme plain
 
