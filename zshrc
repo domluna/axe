@@ -1,5 +1,5 @@
 # cool stuff bucko
-export PS1="λ: "
+export PS1='λ %d: '
 
 export TERM=xterm-256color
 
@@ -47,3 +47,5 @@ tm() {
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+eval "$(jump shell)"
