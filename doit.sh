@@ -5,6 +5,7 @@ rm ~/.config/nvim/init.vim
 rm ~/.tmux.conf
 rm ~/.gitconfig
 rm ~/.bashrc
+rm ~/.zshrc
 rm ~/.config/alacritty/alacritty.yml
 rm ~/.julia/config/startup.jl
 rm ~/.julia/config/startup_ijulia.jl
@@ -15,6 +16,7 @@ if [ "$(uname -s)" == "Darwin" ]
 then
 	echo "On MacOS ..."
 	ln -s $PWD/bashrc ~/.bashrc
+	ln -s $PWD/zshrc ~/.zshrc
 	ln -s $PWD/alacritty.yml ~/.config/alacritty/alacritty.yml
 else
 	echo "On Linux ...?"
