@@ -21,6 +21,7 @@ then
 else
 	echo "On Linux ...?"
 	ln -s $PWD/bashrc_linux ~/.bashrc
+	ln -s $PWD/zshrc_linux ~/.zshrc
 	ln -s $PWD/alacritty_linux.yml ~/.config/alacritty/alacritty.yml
 fi
 ln -s $PWD/init.vim ~/.config/nvim/init.vim
