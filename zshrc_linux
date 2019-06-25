@@ -1,5 +1,5 @@
 # cool stuff bucko
-export PS1="λ \W: "
+export PS1='λ %d: '
 
 export TERM=xterm-256color
 
@@ -30,7 +30,7 @@ alias md='mkdir -p'
 export FZF_DEFAULT_OPTS="--inline-info"
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 
-bind -x '"\C-p": nvim $(fzf);'
+bindkey -s '\C-p' 'nvim $(fzf)\n'
 
 tm() {
  [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
@@ -44,8 +44,9 @@ tm() {
 # direnv
 eval "$(direnv hook bash)"
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # [ -f ~/bash_completion/alacritty ] && source ~/.bash_completion/alacritty
+
 eval "$(jump shell)"
 
 export PATH="/home/domluna/anaconda3/bin:$PATH"
