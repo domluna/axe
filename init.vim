@@ -186,7 +186,7 @@ let g:LanguageClient_rootMarkers = {
 let g:LanguageClient_serverCommands = {
 \ 'rust': ['rustup', 'run', 'stable', 'rls'],
 \ 'python': ['pyls'],
-\ 'go': ['bingo'],
+\ 'go': ['gopls'],
 \ }
 
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
