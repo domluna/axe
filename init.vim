@@ -76,15 +76,6 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
-" if has('nvim')
-"   " We have to do this to fix a bug with Neovim on OS X where C-h
-"   " is sent as backspace for some reason.
-"   nnoremap <BS> <C-W>h
-" endif
-
-if has('nvim') || has('gui_running')
-  let $FZF_DEFAULT_OPTS .= ' --inline-info'
-endif
 
 " Hide statusline of terminal buffer
 autocmd! FileType fzf
@@ -94,9 +85,8 @@ nnoremap <silent><Leader>f 	:Files<esc>
 nnoremap <silent><Leader>b 	:Buffers<esc>
 nnoremap <silent> <Leader>l	:Lines<CR>
 nnoremap <silent> <Leader>`        :Marks<CR>
-" nnoremap <silent> <Leader>rg       :Rg <C-R><C-W><CR>
 
-let g:fzf_layout = { 'down': '~25%' }
+let g:fzf_layout = { 'down': '~30%' }
 " let g:fzf_layout = { 'window': 'enew' }
 " let g:fzf_layout = { 'window': '-tabnew' }
 " let g:fzf_layout = { 'window': '20split enew' }
@@ -135,8 +125,8 @@ command! -bang -nargs=* Rg
   \   <bang>0)
 " command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 0, <bang>0)
 
-map <silent><leader>c :TComment<esc>
-map <silent><leader>r :Rg<esc>
+map <silent><Leader>c :TComment<esc>
+map <silent><Leader>r :Rg<esc>
 
 " Moving inside tmux/vim
 function! TmuxMove(direction)
@@ -177,7 +167,7 @@ let g:LanguageClient_autoStart = 1
 let g:LanguageClient_completionPreferTextEdit = 1
 
 let g:LanguageClient_rootMarkers = {
-\ 'go': ['go.mod'],
+\ 'go': ['go.mod', 'Gopkg.toml'],
 \ 'rust': ['Cargo.toml'],
 \ 'javascript': ['package.json'],
 \ 'julia': ['Project.toml'],

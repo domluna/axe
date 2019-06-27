@@ -113,6 +113,8 @@ export PATH=$PATH:$HOME/bin
 export PATH=$PATH:$HOME/julia/usr/bin
 export PATH=$PATH:$HOME/.gem/ruby/2.3.0/bin
 
+export GOPATH=$HOME/ocean/backend:$GOPATH
+
 export EDITOR=nvim
 
 alias j1='julia'
@@ -132,7 +134,7 @@ alias gc='git commit'
 alias md='mkdir -p'
 
 export FZF_DEFAULT_OPTS="--inline-info"
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude '{.git,node_modules,vendor}/'"
 
 # export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 bindkey -s '\C-p' 'nvim $(fzf)\n'
