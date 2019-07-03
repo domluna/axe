@@ -168,3 +168,17 @@ nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> <Leader>d :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
+if has('persistent_undo')
+    " define a path to store persistent undo files.
+    let target_path = expand('~/.config/nvim/undo/')
+    " create the directory and any parent directories
+    " if the location does not exist.
+    if !isdirectory(target_path)
+        call system('mkdir -p ' . target_path)
+    endif
+    " point Vim to the defined undo directory.
+    let &undodir = target_path
+    " finally, enable undo persistence.
+    set undofile
+endif
