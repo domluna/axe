@@ -81,10 +81,11 @@ map <C-l> <C-W>l
 autocmd! FileType fzf
 autocmd  FileType fzf set laststatus=0 noshowmode noruler
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-nnoremap <silent><Leader>f 	:Files<esc>
-nnoremap <silent><Leader>b 	:Buffers<esc>
-nnoremap <silent> <Leader>l	:Lines<CR>
-nnoremap <silent> <Leader>`        :Marks<CR>
+" nnoremap <silent><Leader>f 	:Files<CR>
+nnoremap <silent><C-p> :Files<CR>
+nnoremap <silent><Leader>b :Buffers<CR>
+nnoremap <silent><Leader>l :Lines<CR>
+nnoremap <silent><Leader>` :Marks<CR>
 
 let g:fzf_layout = { 'down': '~30%' }
 " let g:fzf_layout = { 'window': 'enew' }
@@ -107,26 +108,10 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-let g:rg_command = '
-  \ rg --column --line-number --no-heading --fixed-strings --smart-case --no-ignore --hidden --follow --color "always"
-  \ -g "*.{js,json,php,md,styl,jade,html,config,py,cpp,c,go,hs,rb,conf,jl,cs,re,rs}"
-  \ -g "!{.git,node_modules,vendor}/*" '
+" let g:rg_command = 'rg --column --line-number --fixed-strings --smart-case --no-ignore -g "!{.git,node_modules,vendor}/*" '
 
-" Likewise, Files command with preview window
-" command! -bang -nargs=? -complete=dir Files
-"   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-
-" Similarly, we can apply it to fzf#vim#grep. To use ripgrep instead of ag:
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   g:rg_command.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
-" command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 0, <bang>0)
-
-map <silent><Leader>c :TComment<esc>
-map <silent><Leader>r :Rg<esc>
+map <silent><Leader>c :TComment<CR>
+map <silent><Leader>r :Rg<CR>
 
 " Moving inside tmux/vim
 function! TmuxMove(direction)
@@ -181,5 +166,5 @@ let g:LanguageClient_serverCommands = {
 
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <Leader>d :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
