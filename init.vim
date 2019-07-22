@@ -8,8 +8,6 @@ Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 Plug 'godlygeek/tabular'
-" Plug 'sbdchd/neoformat'
-" Plug 'w0rp/ale'
 
 Plug 'andreypopp/vim-colors-plain'
 Plug 'uarun/vim-protobuf'
@@ -24,6 +22,7 @@ Plug 'jordwalke/vim-reasonml'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+
 " Plug 'plasticboy/vim-markdown'
 
 call plug#end()
