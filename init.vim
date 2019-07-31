@@ -162,7 +162,12 @@ let g:LanguageClient_serverCommands = {
 \ 'rust': ['rustup', 'run', 'stable', 'rls'],
 \ 'python': ['pyls'],
 \ 'go': ['gopls'],
+\ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+\ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
 \ }
+
+" Run gofmt on save
+autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
 
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
@@ -182,3 +187,7 @@ if has('persistent_undo')
     " finally, enable undo persistence.
     set undofile
 endif
+
+" autoreload
+set autoread
+au FocusGained * :checktime

@@ -109,9 +109,11 @@ export PATH=/usr/local/anaconda3/bin:$PATH
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH="$PATH:/Applications/Julia-1.1.app/Contents/Resources/julia/bin/"
 export PATH=$PATH:$HOME/go/bin
+export PATH=$PATH:$HOME/ocean/backend/bin
 export PATH=$PATH:$HOME/bin
 export PATH=$PATH:$HOME/julia/usr/bin
 export PATH=$PATH:$HOME/.gem/ruby/2.3.0/bin
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 
 export GOPATH=$HOME/ocean/backend:$GOPATH
 
