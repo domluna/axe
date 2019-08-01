@@ -1,5 +1,4 @@
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'andreypopp/vim-colors-plain'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
@@ -8,17 +7,11 @@ Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 Plug 'godlygeek/tabular'
-" Plug 'sbdchd/neoformat'
-" Plug 'w0rp/ale'
 
 Plug 'andreypopp/vim-colors-plain'
 Plug 'uarun/vim-protobuf'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 
 Plug 'jordwalke/vim-reasonml'
 Plug 'JuliaEditorSupport/julia-vim'
@@ -28,6 +21,29 @@ Plug 'mxw/vim-jsx'
 
 call plug#end()
 
+let g:coc_global_extensions = [
+\  'coc-emoji',
+\  'coc-git',
+\  'coc-pairs',
+\  'coc-eslint',
+\  'coc-prettier',
+\  'coc-tsserver',
+\  'coc-css',
+\  'coc-json',
+\  'coc-python',
+\  'coc-yaml',
+\  'coc-rls',
+\]
+
+" Better display for messages
+set cmdheight=2
+" Smaller updatetime for CursorHold & CursorHoldI
+set updatetime=300
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+" always show signcolumns
+set signcolumn=yes
+
 " Escapes
 inoremap jj <Esc>
 inoremap jk <Esc>
@@ -35,8 +51,6 @@ inoremap kj <Esc>
 inoremap JJ <Esc>
 inoremap JK <Esc>
 inoremap KJ <Esc>
-
-let g:deoplete#enable_at_startup = 1
 
 set background=dark
 colorscheme plain
@@ -130,49 +144,9 @@ nnoremap <silent> <c-l> :call TmuxMove('l')<cr>
 autocmd Filetype csharp setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype julia setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype javascript setlocal ts=2 sw=2 sts=0 expandtab
+autocmd Filetype json setlocal ts=2 sw=2 sts=0 expandtab
 autocmd Filetype markdown setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype vimscript setlocal ts=4 sw=4 sts=0 expandtab
-
-" \ 'javascript': ['javascript-typescript-stdio'],
-" \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
-" \ 'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
-" \       using LanguageServer;
-" \       using StaticLint;
-" \       using SymbolServer;
-" \       using Pkg;
-" \       env_path = dirname(Pkg.Types.Context().env.project_file);
-" \       server = LanguageServer.LanguageServerInstance(stdin, stdout, false, env_path, "", Dict());
-" \       server.runlinter = true;
-" \       run(server);
-" \   '],
-
-let g:LanguageClient_loggingFile = expand('~/.config/nvim/LanguageClient.log')
-let g:LanguageClient_serverStderr = expand('~/.config/nvim/LanguageServer.log')
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_completionPreferTextEdit = 1
-
-let g:LanguageClient_rootMarkers = {
-\ 'go': ['go.mod', 'Gopkg.toml'],
-\ 'rust': ['Cargo.toml'],
-\ 'javascript': ['package.json'],
-\ 'julia': ['Project.toml'],
-\ }
-
-let g:LanguageClient_serverCommands = {
-\ 'rust': ['rustup', 'run', 'stable', 'rls'],
-\ 'python': ['pyls'],
-\ 'go': ['gopls'],
-\ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
-\ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
-\ }
-
-" Run gofmt on save
-autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
-
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> <Leader>d :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
 if has('persistent_undo')
     " define a path to store persistent undo files.
@@ -191,3 +165,28 @@ endif
 " autoreload
 set autoread
 au FocusGained * :checktime
+
+" nmap <silent> <leader>d <Plug>(coc-definition)
+" nmap <silent> <leader>f <Plug>(coc-references)
+" Remap keys for gotos
+nmap <silent> <leader>ld <Plug>(coc-definition)
+nmap <silent> <leader>lt <Plug>(coc-type-definition)
+nmap <silent> <leader>li <Plug>(coc-implementation)
+nmap <silent> <leader>lf <Plug>(coc-references)
+
+" Remap for rename current word
+nmap <leader>lr <Plug>(coc-rename)
+
+" Use K for show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
