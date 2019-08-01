@@ -33,7 +33,14 @@ let g:coc_global_extensions = [
 \  'coc-python',
 \  'coc-yaml',
 \  'coc-rls',
+\  'coc-go',
+\  'coc-elixir',
+\  'coc-sql',
+\  'coc-gitignore',
 \]
+
+" set background=dark
+colorscheme plain
 
 " Better display for messages
 set cmdheight=2
@@ -52,9 +59,6 @@ inoremap JJ <Esc>
 inoremap JK <Esc>
 inoremap KJ <Esc>
 
-set background=dark
-colorscheme plain
-
 set hidden
 set number
 set mouse=a
@@ -64,7 +68,6 @@ set clipboard^=unnamedplus
 " no backups / swapfiles
 set noswapfile
 set nobackup
-
 
 let mapleader=","
 nnoremap ; :
@@ -169,10 +172,10 @@ au FocusGained * :checktime
 " nmap <silent> <leader>d <Plug>(coc-definition)
 " nmap <silent> <leader>f <Plug>(coc-references)
 " Remap keys for gotos
-nmap <silent> <leader>ld <Plug>(coc-definition)
-nmap <silent> <leader>lt <Plug>(coc-type-definition)
-nmap <silent> <leader>li <Plug>(coc-implementation)
-nmap <silent> <leader>lf <Plug>(coc-references)
+nmap <silent> <leader>d <Plug>(coc-definition)
+nmap <silent> <leader>t <Plug>(coc-type-definition)
+nmap <silent> <leader>i <Plug>(coc-implementation)
+nmap <silent> <leader>f <Plug>(coc-references)
 
 " Remap for rename current word
 nmap <leader>lr <Plug>(coc-rename)
