@@ -2,6 +2,7 @@
 
 # remove old files
 rm ~/.config/nvim/init.vim
+rm ~/.config/nvim/coc-settings.json
 rm ~/.tmux.conf
 rm ~/.gitconfig
 rm ~/.bashrc
@@ -25,6 +26,7 @@ else
 	ln -s $PWD/alacritty_linux.yml ~/.config/alacritty/alacritty.yml
 fi
 ln -s $PWD/init.vim ~/.config/nvim/init.vim
+ln -s $PWD/coc-settings.json ~/.config/nvim/coc-settings.json
 ln -s $PWD/tmux.conf ~/.tmux.conf
 ln -s $PWD/gitconfig ~/.gitconfig
 ln -s $PWD/startup.jl ~/.julia/config/startup.jl
