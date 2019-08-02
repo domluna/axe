@@ -1,3 +1,4 @@
+push!(LOAD_PATH, "$(homedir())/.julia/dev")
 atreplinit() do repl
     try
         @eval using Revise

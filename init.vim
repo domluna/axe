@@ -17,6 +17,7 @@ Plug 'jordwalke/vim-reasonml'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+
 " Plug 'plasticboy/vim-markdown'
 
 call plug#end()
@@ -147,8 +148,9 @@ nnoremap <silent> <c-l> :call TmuxMove('l')<cr>
 autocmd Filetype csharp setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype julia setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype javascript setlocal ts=2 sw=2 sts=0 expandtab
+autocmd Filetype markdown setlocal ts=2 sw=2 sts=0 expandtab
+autocmd Filetype vimscript setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype json setlocal ts=2 sw=2 sts=0 expandtab
-autocmd Filetype markdown setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype vimscript setlocal ts=4 sw=4 sts=0 expandtab
 
 if has('persistent_undo')
@@ -165,13 +167,10 @@ if has('persistent_undo')
     set undofile
 endif
 
-" autoreload
+" reload file if it has changed on disk
 set autoread
-au FocusGained * :checktime
+au FocusGained,VimEnter,WinEnter,BufWinEnter * silent! :checktime
 
-" nmap <silent> <leader>d <Plug>(coc-definition)
-" nmap <silent> <leader>f <Plug>(coc-references)
-" Remap keys for gotos
 nmap <silent> <leader>d <Plug>(coc-definition)
 nmap <silent> <leader>t <Plug>(coc-type-definition)
 nmap <silent> <leader>i <Plug>(coc-implementation)
