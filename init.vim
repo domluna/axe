@@ -129,8 +129,10 @@ nnoremap <silent> <c-l> :call TmuxMove('l')<cr>
 autocmd Filetype csharp setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype julia setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype javascript setlocal ts=2 sw=2 sts=0 expandtab
-autocmd Filetype markdown setlocal ts=4 sw=4 sts=0 expandtab
+autocmd Filetype markdown setlocal ts=2 sw=2 sts=0 expandtab
 autocmd Filetype vimscript setlocal ts=4 sw=4 sts=0 expandtab
+
+au BufRead,BufNewFile *.mdx setfiletype markdown
 
 " \ 'javascript': ['javascript-typescript-stdio'],
 " \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
@@ -181,3 +183,8 @@ if has('persistent_undo')
     " finally, enable undo persistence.
     set undofile
 endif
+
+" reload file if it has changed on disk
+" set autoread
+" autocmd FocusGained * silent! checktime
+au FocusGained,VimEnter,WinEnter,BufWinEnter * :checktime
