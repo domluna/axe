@@ -169,7 +169,7 @@ endif
 
 " reload file if it has changed on disk
 set autoread
-au FocusGained,VimEnter,WinEnter,BufWinEnter * silent! :checktime
+au FocusGained * silent! :checktime
 
 nmap <silent> <leader>d <Plug>(coc-definition)
 nmap <silent> <leader>t <Plug>(coc-type-definition)
