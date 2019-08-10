@@ -1,5 +1,4 @@
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'andreypopp/vim-colors-plain'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
@@ -8,25 +7,48 @@ Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 Plug 'godlygeek/tabular'
-" Plug 'sbdchd/neoformat'
-" Plug 'w0rp/ale'
 
 Plug 'andreypopp/vim-colors-plain'
 Plug 'uarun/vim-protobuf'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 
 Plug 'jordwalke/vim-reasonml'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+
 " Plug 'plasticboy/vim-markdown'
 
 call plug#end()
+
+let g:coc_global_extensions = [
+\  'coc-emoji',
+\  'coc-git',
+\  'coc-pairs',
+\  'coc-eslint',
+\  'coc-prettier',
+\  'coc-css',
+\  'coc-json',
+\  'coc-python',
+\  'coc-yaml',
+\  'coc-rls',
+\  'coc-elixir',
+\  'coc-sql',
+\  'coc-gitignore',
+\]
+
+" set background=dark
+colorscheme plain
+
+" Better display for messages
+set cmdheight=2
+" Smaller updatetime for CursorHold & CursorHoldI
+set updatetime=300
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+" always show signcolumns
+set signcolumn=yes
 
 " Escapes
 inoremap jj <Esc>
@@ -35,11 +57,6 @@ inoremap kj <Esc>
 inoremap JJ <Esc>
 inoremap JK <Esc>
 inoremap KJ <Esc>
-
-let g:deoplete#enable_at_startup = 1
-
-set background=dark
-colorscheme plain
 
 set hidden
 set number
@@ -50,7 +67,6 @@ set clipboard^=unnamedplus
 " no backups / swapfiles
 set noswapfile
 set nobackup
-
 
 let mapleader=","
 nnoremap ; :
@@ -130,44 +146,10 @@ nnoremap <silent> <c-l> :call TmuxMove('l')<cr>
 autocmd Filetype csharp setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype julia setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype javascript setlocal ts=2 sw=2 sts=0 expandtab
-autocmd Filetype markdown setlocal ts=4 sw=4 sts=0 expandtab
+autocmd Filetype markdown setlocal ts=2 sw=2 sts=0 expandtab
 autocmd Filetype vimscript setlocal ts=4 sw=4 sts=0 expandtab
-
-" \ 'javascript': ['javascript-typescript-stdio'],
-" \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
-" \ 'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
-" \       using LanguageServer;
-" \       using StaticLint;
-" \       using SymbolServer;
-" \       using Pkg;
-" \       env_path = dirname(Pkg.Types.Context().env.project_file);
-" \       server = LanguageServer.LanguageServerInstance(stdin, stdout, false, env_path, "", Dict());
-" \       server.runlinter = true;
-" \       run(server);
-" \   '],
-
-let g:LanguageClient_loggingFile = expand('~/.config/nvim/LanguageClient.log')
-let g:LanguageClient_serverStderr = expand('~/.config/nvim/LanguageServer.log')
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_completionPreferTextEdit = 1
-
-let g:LanguageClient_rootMarkers = {
-\ 'go': ['go.mod', 'Gopkg.toml'],
-\ 'rust': ['Cargo.toml'],
-\ 'javascript': ['package.json'],
-\ 'julia': ['Project.toml'],
-\ }
-
-let g:LanguageClient_serverCommands = {
-\ 'rust': ['rustup', 'run', 'stable', 'rls'],
-\ 'python': ['pyls'],
-\ 'go': ['gopls'],
-\ }
-
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> <Leader>d :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+autocmd Filetype json setlocal ts=2 sw=2 sts=0 expandtab
+autocmd Filetype vimscript setlocal ts=4 sw=4 sts=0 expandtab
 
 if has('persistent_undo')
     " define a path to store persistent undo files.
@@ -182,3 +164,31 @@ if has('persistent_undo')
     " finally, enable undo persistence.
     set undofile
 endif
+
+" reload file if it has changed on disk
+set autoread
+au FocusGained * silent! :checktime
+
+nmap <silent> <leader>d <Plug>(coc-definition)
+nmap <silent> <leader>t <Plug>(coc-type-definition)
+nmap <silent> <leader>i <Plug>(coc-implementation)
+nmap <silent> <leader>f <Plug>(coc-references)
+
+" Remap for rename current word
+nmap <leader>lr <Plug>(coc-rename)
+
+" Use K for show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
