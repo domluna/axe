@@ -112,6 +112,7 @@ export PATH="$PATH:/usr/local/cuda/bin"
 export EDITOR=nvim
 
 alias j1='julia'
+alias jn='$HOME/julia/julia'
 alias ls='exa'
 alias tree='ls --tree'
 alias cat='bat'
