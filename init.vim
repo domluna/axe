@@ -190,3 +190,5 @@ endfunction
 
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
+
+autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
