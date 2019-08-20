@@ -107,7 +107,6 @@ export PATH=/usr/local/anaconda3/bin:$PATH
 
 # Go
 export PATH="/usr/local/opt/openssl/bin:$PATH"
-export PATH="$PATH:/Applications/Julia-1.1.app/Contents/Resources/julia/bin/"
 export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/ocean/backend/bin
 export PATH=$PATH:$HOME/bin
