@@ -8,11 +8,14 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 Plug 'godlygeek/tabular'
 
+" Colorscehmes
 Plug 'andreypopp/vim-colors-plain'
-Plug 'uarun/vim-protobuf'
+Plug 'nightsense/snow'
+Plug 'rakr/vim-two-firewatch'
 
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 
+Plug 'uarun/vim-protobuf'
 Plug 'jordwalke/vim-reasonml'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'pangloss/vim-javascript'
@@ -38,8 +41,17 @@ let g:coc_global_extensions = [
 \  'coc-gitignore',
 \]
 
-" set background=dark
+" Light mode if between 7am-7pm
+if strftime('%H') >= 7 && strftime('%H') < 19
+  set background=light
+else
+  set background=dark
+endif
 colorscheme plain
+
+if has('nvim') || has('termguicolors')
+  set termguicolors
+endif
 
 " Better display for messages
 set cmdheight=2
@@ -179,6 +191,7 @@ nmap <leader>lr <Plug>(coc-rename)
 
 " Use K for show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
+nmap <silent> F2 <Plug>(coc-rename)
 
 function! s:show_documentation()
   if &filetype == 'vim'
