@@ -42,11 +42,12 @@ let g:coc_global_extensions = [
 \]
 
 " Light mode if between 7am-7pm
-if strftime('%H') >= 7 && strftime('%H') < 19
-  set background=light
-else
-  set background=dark
-endif
+" if strftime('%H') >= 7 && strftime('%H') < 19
+"   set background=light
+" else
+"   set background=dark
+" endif
+set background=dark
 colorscheme plain
 
 if has('nvim') || has('termguicolors')
@@ -112,7 +113,6 @@ autocmd  FileType fzf set laststatus=0 noshowmode noruler
 " nnoremap <silent><Leader>f 	:Files<CR>
 nnoremap <silent><C-p> :Files<CR>
 nnoremap <silent><Leader>b :Buffers<CR>
-nnoremap <silent><Leader>l :Lines<CR>
 nnoremap <silent><Leader>` :Marks<CR>
 
 let g:fzf_layout = { 'down': '~30%' }

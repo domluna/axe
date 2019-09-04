@@ -110,7 +110,6 @@ export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/ocean/backend/bin
 export PATH=$PATH:$HOME/bin
-export PATH=$PATH:$HOME/julia/usr/bin
 export PATH=$PATH:$HOME/.gem/ruby/2.3.0/bin
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 
@@ -128,7 +127,6 @@ alias ....='cd ../../..'
 alias vim='nvim'
 alias vi='nvim'
 alias v='nvim'
-alias jn=$HOME/julia/usr/bin/julia
 alias gst='git status'
 alias ga='git add'
 alias gc='git commit'
@@ -152,3 +150,7 @@ tm() {
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 eval "$(jump shell)"
+export PATH="/usr/local/opt/node@8/bin:$PATH"
+
+export ANDROID_HOME=$HOME/.android/
+export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/tools/:$ANDROID_HOME/platform-tools:$PATH
