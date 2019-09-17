@@ -20,5 +20,6 @@
       "settings": {},
       "rootPatterns": [".flowconfig"]
     }
-  }
+  },
+  "java.errors.incompleteClasspath.severity": "ignore"
 }

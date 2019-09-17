@@ -39,6 +39,7 @@ let g:coc_global_extensions = [
 \  'coc-elixir',
 \  'coc-sql',
 \  'coc-gitignore',
+\  'coc-java',
 \]
 
 " Light mode if between 7am-7pm
@@ -53,6 +54,8 @@ colorscheme plain
 if has('nvim') || has('termguicolors')
   set termguicolors
 endif
+
+set relativenumber
 
 " Better display for messages
 set cmdheight=2
@@ -136,7 +139,7 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-" let g:rg_command = 'rg --column --line-number --fixed-strings --smart-case --no-ignore -g "!{.git,node_modules,vendor}/*" '
+" let g:rg_command = 'rg -i --column --line-number --fixed-strings --no-ignore -g "!{.git,node_modules,vendor}/*" '
 
 map <silent><Leader>c :TComment<CR>
 map <silent><Leader>r :Rg<CR>
@@ -162,6 +165,7 @@ autocmd Filetype markdown setlocal ts=2 sw=2 sts=0 expandtab
 autocmd Filetype vimscript setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype json setlocal ts=2 sw=2 sts=0 expandtab
 autocmd Filetype vimscript setlocal ts=4 sw=4 sts=0 expandtab
+autocmd Filetype java setlocal ts=4 sw=4 sts=0 expandtab
 
 if has('persistent_undo')
     " define a path to store persistent undo files.
