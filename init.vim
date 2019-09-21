@@ -47,7 +47,7 @@ if strftime('%H') >= 7 && strftime('%H') < 19
 else
   set background=dark
 endif
-colorscheme plain
+colorscheme two-firewatch
 
 if has('nvim') || has('termguicolors')
   set termguicolors
@@ -136,7 +136,7 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-" let g:rg_command = 'rg --column --line-number --fixed-strings --smart-case --no-ignore -g "!{.git,node_modules,vendor}/*" '
+let g:rg_command = 'rg -i --column --line-number --fixed-strings --no-ignore -g "!{.git,node_modules,vendor}/*" '
 
 map <silent><Leader>c :TComment<CR>
 map <silent><Leader>r :Rg<CR>
