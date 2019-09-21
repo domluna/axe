@@ -53,6 +53,8 @@ if has('nvim') || has('termguicolors')
   set termguicolors
 endif
 
+set relativenumber
+
 " Better display for messages
 set cmdheight=2
 " Smaller updatetime for CursorHold & CursorHoldI
