@@ -1,4 +1,5 @@
 push!(LOAD_PATH, "$(homedir())/.julia/dev")
+push!(LOAD_PATH, "$(homedir())/ocean/optimization/Wideload")
 atreplinit() do repl
     try
         @eval using Revise

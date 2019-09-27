@@ -20,6 +20,7 @@ Plug 'jordwalke/vim-reasonml'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+Plug 'keith/swift.vim'
 
 " Plug 'plasticboy/vim-markdown'
 
@@ -42,19 +43,10 @@ let g:coc_global_extensions = [
 \  'coc-java',
 \]
 
-" Light mode if between 7am-7pm
-" if strftime('%H') >= 7 && strftime('%H') < 19
-"   set background=light
-" else
-"   set background=dark
-" endif
 set background=dark
-colorscheme plain
+colorscheme snow
 
-if has('nvim') || has('termguicolors')
-  set termguicolors
-endif
-
+set termguicolors
 set relativenumber
 
 " Better display for messages
@@ -166,6 +158,7 @@ autocmd Filetype vimscript setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype json setlocal ts=2 sw=2 sts=0 expandtab
 autocmd Filetype vimscript setlocal ts=4 sw=4 sts=0 expandtab
 autocmd Filetype java setlocal ts=4 sw=4 sts=0 expandtab
+autocmd Filetype swift setlocal ts=4 sw=4 sts=0 expandtab
 
 if has('persistent_undo')
     " define a path to store persistent undo files.
