@@ -41,17 +41,8 @@ let g:coc_global_extensions = [
 \  'coc-gitignore',
 \]
 
-" Light mode if between 7am-7pm
-if strftime('%H') >= 7 && strftime('%H') < 19
-  set background=light
-else
-  set background=dark
-endif
-colorscheme two-firewatch
-
-if has('nvim') || has('termguicolors')
-  set termguicolors
-endif
+colorscheme snow
+set termguicolors
 
 set relativenumber
 
