@@ -145,3 +145,7 @@ tm() {
 eval "$(jump shell)"
 
 export PATH="/home/domluna/anaconda3/bin:$PATH"
+
+if [ -f "$HOME/.tokens" ]; then
+    source $HOME/.tokens
+fi

@@ -12,11 +12,12 @@ Plug 'godlygeek/tabular'
 Plug 'andreypopp/vim-colors-plain'
 Plug 'nightsense/snow'
 Plug 'rakr/vim-two-firewatch'
+Plug 'ayu-theme/ayu-vim'
+Plug 'cocopon/iceberg.vim'
 
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 
 Plug 'uarun/vim-protobuf'
-Plug 'jordwalke/vim-reasonml'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
@@ -41,8 +42,9 @@ let g:coc_global_extensions = [
 \  'coc-gitignore',
 \]
 
-colorscheme snow
 set termguicolors
+
+colo iceberg
 
 set relativenumber
 
