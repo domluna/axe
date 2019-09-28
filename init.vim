@@ -44,7 +44,9 @@ let g:coc_global_extensions = [
 
 set termguicolors
 
-colo iceberg
+set background=dark
+colo ayu
+" colo iceberg
 
 set relativenumber
 
@@ -138,12 +140,12 @@ map <silent><Leader>r :Rg<CR>
 
 " Moving inside tmux/vim
 function! TmuxMove(direction)
-        let wnr = winnr()
-        silent! execute 'wincmd ' . a:direction
-        " If the winnr is still the same after we moved, it is the last pane
-        if wnr == winnr()
-                call system('tmux select-pane -' . tr(a:direction, 'phjkl', 'lLDUR'))
-        end
+    let wnr = winnr()
+    silent! execute 'wincmd ' . a:direction
+    " If the winnr is still the same after we moved, it is the last pane
+    if wnr == winnr()
+        call system('tmux select-pane -' . tr(a:direction, 'phjkl', 'lLDUR'))
+    end
 endfunction
 nnoremap <silent> <c-h> :call TmuxMove('h')<cr>
 nnoremap <silent> <c-j> :call TmuxMove('j')<cr>
