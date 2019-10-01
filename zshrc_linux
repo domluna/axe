@@ -106,14 +106,13 @@ export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"
 export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
 
-export PATH="$PATH:$HOME/julia-1.2.0/bin"
+export PATH="$PATH:$HOME/julia/usr/bin"
 export PATH="$PATH:/usr/local/cuda/bin"
 export PATH="$PATH:$HOME/.fzf/bin"
 
 export EDITOR=nvim
 
 alias j1='julia'
-alias jn='$HOME/julia/julia'
 alias ls='exa'
 alias tree='ls --tree'
 alias cat='bat'
@@ -146,3 +145,7 @@ tm() {
 eval "$(jump shell)"
 
 export PATH="/home/domluna/anaconda3/bin:$PATH"
+
+if [ -f "$HOME/.tokens" ]; then
+    source $HOME/.tokens
+fi

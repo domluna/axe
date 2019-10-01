@@ -12,11 +12,12 @@ Plug 'godlygeek/tabular'
 Plug 'andreypopp/vim-colors-plain'
 Plug 'nightsense/snow'
 Plug 'rakr/vim-two-firewatch'
+Plug 'ayu-theme/ayu-vim'
+Plug 'cocopon/iceberg.vim'
 
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 
 Plug 'uarun/vim-protobuf'
-Plug 'jordwalke/vim-reasonml'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
@@ -43,10 +44,11 @@ let g:coc_global_extensions = [
 \  'coc-java',
 \]
 
-set background=dark
-colorscheme snow
-
 set termguicolors
+
+set background=dark
+colo ayu
+
 set relativenumber
 
 " Better display for messages
@@ -131,19 +133,19 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-" let g:rg_command = 'rg -i --column --line-number --fixed-strings --no-ignore -g "!{.git,node_modules,vendor}/*" '
+let g:rg_command = 'rg -i --column --line-number --fixed-strings --no-ignore -g "!{.git,node_modules,vendor}/*" '
 
 map <silent><Leader>c :TComment<CR>
 map <silent><Leader>r :Rg<CR>
 
 " Moving inside tmux/vim
 function! TmuxMove(direction)
-        let wnr = winnr()
-        silent! execute 'wincmd ' . a:direction
-        " If the winnr is still the same after we moved, it is the last pane
-        if wnr == winnr()
-                call system('tmux select-pane -' . tr(a:direction, 'phjkl', 'lLDUR'))
-        end
+    let wnr = winnr()
+    silent! execute 'wincmd ' . a:direction
+    " If the winnr is still the same after we moved, it is the last pane
+    if wnr == winnr()
+        call system('tmux select-pane -' . tr(a:direction, 'phjkl', 'lLDUR'))
+    end
 endfunction
 nnoremap <silent> <c-h> :call TmuxMove('h')<cr>
 nnoremap <silent> <c-j> :call TmuxMove('j')<cr>

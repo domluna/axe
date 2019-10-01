@@ -128,7 +128,6 @@ alias ....='cd ../../..'
 alias vim='nvim'
 alias vi='nvim'
 alias v='nvim'
-alias jn=$HOME/julia/usr/bin/julia
 alias gst='git status'
 alias ga='git add'
 alias gc='git commit'
