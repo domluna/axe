@@ -1,0 +1,100 @@
+# cool stuff bucko
+export PS1="λ \w: "
+
+export HISTSIZE=1000000
+export HISEFILESIZE=1000000
+# Avoid duplicates
+HISTCONTROL=ignoredups:erasedups
+# When the shell exits, append to the history file instead of overwriting it
+shopt -s histappend
+
+# After each command, append to the history file and reread it
+PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+
+export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"
+export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
+
+if [ -f "$HOME/.tokens" ]; then
+  source $HOME/.tokens
+fi
+
+# julia
+export JULIA_REVISE_INCLUDE=1
+export JULIA_STACKTRACE_MINIMAL=true
+
+export PATH="$PATH:$HOME/julia-1.7.0/bin"
+export PATH="$PATH:$HOME/.fzf/bin"
+
+export EDITOR=nvim
+
+alias j='julia'
+alias jn='$HOME/julia/julia'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias vim='nvim'
+alias vi='nvim'
+alias v='nvim'
+alias gst='git status'
+alias ga='git add'
+alias gc='git commit'
+alias md='mkdir -p'
+alias gp='git push'
+
+export FZF_DEFAULT_OPTS='--height 96% --reverse --inline-info'
+export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude '{.git,.mypy_cache,node_modules,vendor}/'"
+
+bind -x '"\C-p": nvim $(fzf);'
+
+tm() {
+ [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
+ if [ $1 ]; then
+    tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
+ fi
+ session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
+}
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+eval "$(zoxide init bash)"
+
+export DUMP1=/media/domluna/c2ad5753-ddfb-460f-af6d-c708af9b0874
+
+# /mnt/c2ad5753-ddfb-460f-af6d-c708af9b0874
+#
+# ln -s /mnt/c2ad5753-ddfb-460f-af6d-c708af9b0874 $HOME/mount1
+
+export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig:$PKG_CONFIG_PATH
+
+export GO111MODULE=on
+export PATH="/home/domluna/go/bin:$PATH"
+
+export PATH="/home/domluna/.deno/bin:$PATH"
+
+if [ -e /home/domluna/.nix-profile/etc/profile.d/nix.sh ]; then . /home/domluna/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+# easy place to put manually downloaded binaries
+export PATH="/home/domluna/bin:$PATH"
+
+function checkout-branch() {
+   git branch | grep --invert-match '\*' | cut -c 3- |
+      fzf --multi --preview="git log {}" |
+      xargs --no-run-if-empty git checkout
+}
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/domluna/google-cloud-sdk/path.bash.inc' ]; then . '/home/domluna/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/domluna/google-cloud-sdk/completion.bash.inc' ]; then . '/home/domluna/google-cloud-sdk/completion.bash.inc'; fi
+. "$HOME/.cargo/env"
+
+# rust
+. "$HOME/.cargo/env"
+
+# solana
+export PATH="/home/domluna/.local/share/solana/install/active_release/bin:$PATH"
+
+export PATH="/home/domluna/anaconda3/bin:$PATH"  # commented out by conda initialize
+
+export PATH="/usr/local/cuda/bin:$PATH"
