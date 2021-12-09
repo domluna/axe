@@ -16,9 +16,6 @@ set updatetime=200
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
 
-" Escapes
-inoremap jj <Esc>
-
 " no backups / swapfiles
 set noswapfile
 set nobackup
@@ -129,4 +126,3 @@ augroup END
 set completeopt=menuone,noselect,noinsert
 set noshowmode
 set shortmess+=c
-

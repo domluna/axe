@@ -7,10 +7,9 @@ cmd('filetype plugin indent on')
 
 -- cmd('colorscheme base16-gruvbox-dark-soft')
 -- cmd('colorscheme base16-gruvbox-light-soft')
-cmd('colorscheme base16-grayscale-light')
+-- cmd('colorscheme base16-grayscale-light')
 -- cmd('colorscheme base16-grayscale-dark')
--- cmd('colorscheme base16-mocha')
--- cmd('colorscheme base16-ia-light')
+cmd('colorscheme base16-mocha')
 -- cmd('colorscheme base16-solarized-light')
 
 vim.g.mapleader = ","

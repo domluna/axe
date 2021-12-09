@@ -23,13 +23,12 @@ fi
 export JULIA_REVISE_INCLUDE=1
 export JULIA_STACKTRACE_MINIMAL=true
 
-export PATH="$PATH:$HOME/julia-1.7.0/bin"
 export PATH="$PATH:$HOME/.fzf/bin"
 
 export EDITOR=nvim
 
-alias j='julia'
-alias jn='$HOME/julia/julia'
+alias j='julialauncher'
+alias jn='julialauncher +dev'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
@@ -87,7 +86,6 @@ if [ -f '/home/domluna/google-cloud-sdk/path.bash.inc' ]; then . '/home/domluna/
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/domluna/google-cloud-sdk/completion.bash.inc' ]; then . '/home/domluna/google-cloud-sdk/completion.bash.inc'; fi
-. "$HOME/.cargo/env"
 
 # rust
 . "$HOME/.cargo/env"
