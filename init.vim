@@ -69,7 +69,7 @@ require('telescope').setup{
 EOF
 
 lua require('telescope').load_extension('gh')
-lua require('telescope').load_extension('packer')
+" lua require('telescope').load_extension('packer')
 
 " Using lua functions
 nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files({previewer = false})<cr>
