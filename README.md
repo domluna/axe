@@ -4,6 +4,6 @@ Things to install:
 * tmux
 * neovim
 * exa (ls replacement)
-* fzf (via fzf.vim)
+* fzf
 * tmux plugins https://github.com/tmux-plugins/tpm
 * zoxide (jump to dirs)
