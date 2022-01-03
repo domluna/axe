@@ -1,3 +1,4 @@
+#!/bin/bash
 # cool stuff bucko
 export PS1="λ \w: "
 
@@ -42,10 +43,17 @@ alias gc='git commit'
 alias md='mkdir -p'
 alias gp='git push'
 
-export FZF_DEFAULT_OPTS='--height 96% --reverse --inline-info'
+export FZF_DEFAULT_OPTS='--height 80% --reverse --inline-info'
 export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude '{.git,.mypy_cache,node_modules,vendor}/'"
 
 bind -x '"\C-p": nvim $(fzf);'
+
+# INITIAL_QUERY=""
+# RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+# # FZF_DEFAULT_COMMAND="$RG_PREFIX '$INITIAL_QUERY'" \
+# bind -x '"\C-r": fzf --bind "change:reload:$RG_PREFIX {q} || true" \
+#       --ansi --query "$INITIAL_QUERY" \
+#       --height=50% --layout=reverse'
 
 tm() {
  [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"

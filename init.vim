@@ -5,6 +5,13 @@ lua require('lsp')
 lua require('nvim_comment').setup()
 map <silent><Leader>c :CommentToggle<CR>
 
+" when you enter a (new) buffer
+augroup set-commentstring-ag
+autocmd!
+autocmd BufEnter *.jl :lua vim.api.nvim_buf_set_option(0, "commentstring", "# %s")
+autocmd BufFilePost *.jl :lua vim.api.nvim_buf_set_option(0, "commentstring", "# %s")
+auground END
+
 set colorcolumn=93
 highlight Normal ctermbg=NONE
 
