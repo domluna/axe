@@ -29,6 +29,8 @@ if command -v exa > /dev/null; then
 fi
 alias j='julialauncher'
 alias jn='julialauncher +dev'
+alias py='python3'
+alias ipy='ipython'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
@@ -66,14 +68,11 @@ tm() {
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 eval "$(zoxide init bash)"
 
-# /mnt/c2ad5753-ddfb-460f-af6d-c708af9b0874
-#
-# ln -s /mnt/c2ad5753-ddfb-460f-af6d-c708af9b0874 $HOME/mount1
-
 export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig:$PKG_CONFIG_PATH
 
 export GO111MODULE=on
 export PATH="/usr/local/go/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
 
 export PATH="$HOME/.deno/bin:$PATH"
 
@@ -91,7 +90,24 @@ function cob() {
 # rust
 . "$HOME/.cargo/env"
 
-# export PATH="$HOME/anaconda3/bin:$PATH"  # commented out by conda initialize
-# export PATH="/usr/local/cuda/bin:$PATH"
-
 export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
+export PATH="/home/dom/anaconda3/bin:$PATH"
+
+if command -v fzf-share >/dev/null; then
+  source "$(fzf-share)/key-bindings.bash"
+  source "$(fzf-share)/completion.bash"
+fi
+
+RG() {
+  RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+  INITIAL_QUERY="$1"
+  local selected=$(
+    FZF_DEFAULT_COMMAND="$RG_PREFIX '$INITIAL_QUERY' || true" \
+      fzf --bind "change:reload:$RG_PREFIX {q} || true" \
+          --ansi --disabled --query "$INITIAL_QUERY" \
+          --delimiter : \
+          --preview 'bat --style=full --color=always --highlight-line {2} {1}' \
+          --preview-window '~3:+{2}+3/2'
+  )
+  [ -n "$selected" ] && $EDITOR "$selected"
+}

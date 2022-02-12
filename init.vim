@@ -10,7 +10,9 @@ augroup set-commentstring-ag
 autocmd!
 autocmd BufEnter *.jl :lua vim.api.nvim_buf_set_option(0, "commentstring", "# %s")
 autocmd BufFilePost *.jl :lua vim.api.nvim_buf_set_option(0, "commentstring", "# %s")
-auground END
+autocmd BufEnter *.sql :lua vim.api.nvim_buf_set_option(0, "commentstring", "-- %s")
+autocmd BufFilePost *.sql :lua vim.api.nvim_buf_set_option(0, "commentstring", "-- %s")
+augroup END
 
 set colorcolumn=93
 highlight Normal ctermbg=NONE

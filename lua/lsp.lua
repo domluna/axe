@@ -18,12 +18,12 @@ cmp.setup({
     }),
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
   },
-  sources = cmp.config.sources({
+  sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
-  }, {
+    { name = 'path' },
     { name = 'buffer' },
-  })
+  },
 })
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
