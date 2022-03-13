@@ -94,3 +94,12 @@ if [ -f '/home/domluna/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/dom
 
 # solana
 export PATH="/home/domluna/.local/share/solana/install/active_release/bin:$PATH"
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+path=('/home/dom/.juliaup/bin' $path)
+export PATH
+
+# <<< juliaup initialize <<<

@@ -81,7 +81,7 @@ if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc
 # easy place to put manually downloaded binaries
 export PATH="$HOME/bin:$PATH"
 
-function cob() {
+function gcob() {
    git branch | grep --invert-match '\*' | cut -c 3- |
       fzf --multi --preview="git log {}" |
       xargs --no-run-if-empty git checkout
@@ -111,3 +111,22 @@ RG() {
   )
   [ -n "$selected" ] && $EDITOR "$selected"
 }
+
+command -v bat  > /dev/null && export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}'"
+
+is_in_git_repo() {
+  git rev-parse HEAD > /dev/null 2>&1
+}
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+case ":$PATH:" in *:/home/dom/.juliaup/bin:*);; *)
+    export PATH=/home/dom/.juliaup/bin${PATH:+:${PATH}};;
+esac
+
+# <<< juliaup initialize <<<
+
+# avm (Anchor)
+export PATH="/home/dom/.avm/bin:$PATH"
