@@ -18,12 +18,12 @@ cmp.setup({
     }),
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
   },
-  sources = cmp.config.sources({
+  sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
-  }, {
+    { name = 'path' },
     { name = 'buffer' },
-  })
+  },
 })
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
@@ -32,6 +32,11 @@ cmp.setup.cmdline('/', {
     { name = 'buffer' }
   }
 })
+
+-- Enable inline errors
+vim.lsp.handlers["textDocument/publishDiagnostics"] =
+    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
+      {update_in_insert = true})
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 -- cmp.setup.cmdline(':', {
@@ -48,11 +53,46 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 local lspconfig = require('lspconfig')
 
 lspconfig.gopls.setup {
-  capabilities = capabilities
+  capabilities = capabilities,
+  completeUnimported = true,
+  staticcheck = true,
+  analyses = {unusedparams = true},
 }
 lspconfig.rust_analyzer.setup {
-  capabilities = capabilities
+  capabilities = capabilities,
 }
 lspconfig.tsserver.setup {
-  capabilities = capabilities
+  capabilities = capabilities,
 }
+lspconfig.pyright.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+}
+lspconfig.solargraph.setup {
+  capabilities = capabilities,
+}
+
+-- require'nvim-treesitter.configs'.setup {
+--   -- One of "all", "maintained" (parsers with maintainers), or a list of languages
+--   ensure_installed = "maintained",
+-- 
+--   -- Install languages synchronously (only applied to `ensure_installed`)
+--   sync_install = false,
+-- 
+--   -- List of parsers to ignore installing
+--   ignore_install = { "javascript", "julia" },
+-- 
+--   highlight = {
+--     -- `false` will disable the whole extension
+--     enable = true,
+-- 
+--     -- list of language that will be disabled
+--     disable = { "c", "rust" },
+-- 
+--     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+--     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+--     -- Using this option may slow down your editor, and you may see some duplicate highlights.
+--     -- Instead of true it can also be a list of languages
+--     additional_vim_regex_highlighting = false,
+--   },
+-- }

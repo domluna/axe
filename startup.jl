@@ -1,11 +1,9 @@
 push!(LOAD_PATH, "$(homedir())/.julia/dev")
-push!(LOAD_PATH, "$(homedir())/dev/ml-projects")
 
 try
     using Revise
     using OhMyREPL
-    #= using FuzzyCompletions =#
-
+    using FuzzyCompletions
 catch e
     @warn "Error initializing" exception=(e, catch_backtrace())
 end
