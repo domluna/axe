@@ -19,7 +19,6 @@ mkdir -p $HOME/.config/kitty
 if [ "$(uname -s)" == "Darwin" ]
 then
 	echo "On MacOS ..."
-	ln -s $PWD/bashrc ~/.bashrc
 	ln -s $PWD/zshrc $HOME/.zshrc
 else
 	echo "On Linux ...?"
