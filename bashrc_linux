@@ -130,3 +130,5 @@ esac
 
 # avm (Anchor)
 export PATH="/home/dom/.avm/bin:$PATH"
+
+export PATH="$PATH:/home/dom/.foundry/bin"
