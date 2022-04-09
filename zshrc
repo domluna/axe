@@ -9,24 +9,37 @@ export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/bin
 export PATH=$PATH:$HOME/nvim-osx64/bin
 
-export EDITOR=nvim
+# julia
+export JULIA_REVISE_INCLUDE=1
+export JULIA_STACKTRACE_MINIMAL=true
 
 alias j='julia'
-#alias ls='exa'
-#alias cat='bat'
+
+if [ -n "${commands[exa]}" ]; then
+  alias ls='exa'
+fi
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias vim='nvim'
-alias vi='nvim'
-alias v='nvim'
+
+if [ -n "${commands[nvim]}" ]; then
+  alias vim='nvim'
+  alias vi='nvim'
+  alias v='nvim'
+  export EDITOR=nvim
+  # export EDITOR=nvim messes with the keybindings in the terminal
+  # this sets it back to emacs style
+  bindkey -e
+fi
+
 alias gst='git status'
 alias ga='git add'
 alias gc='git commit'
+alias gp='git push'
 alias md='mkdir -p'
 
 export FZF_DEFAULT_OPTS='--height 80% --reverse --inline-info'
-export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude '{.git,node_modules,vendor}/'"
+export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude '{.git,mypy_cache,node_modules,vendor}/'"
 
 bindkey -s '\C-p' 'nvim $(fzf)\n'
 
@@ -71,3 +84,14 @@ fi
 
 export DENO_INSTALL="/Users/lunaticd/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
+
+if [ -n "${commands[bat]}" ]; then
+  export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}'"
+  alias cat='bat'
+fi
+
+# function gcob() {
+#    git branch | grep --invert-match '\*' | cut -c 3- |
+#       fzf --multi --preview="git log {}" |
+#       xargs --no-run-if-empty git checkout
+# }
