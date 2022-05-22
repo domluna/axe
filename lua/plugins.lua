@@ -54,6 +54,8 @@ return require('packer').startup({
 
     -- use 'nvim-treesitter/nvim-treesitter'
 
+    use 'andreypopp/julia-repl-vim'
+
   end,
 })
 

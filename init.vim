@@ -86,7 +86,7 @@ nnoremap <leader>r <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>ht <cmd>lua require('telescope.builtin').help_tags()<cr>
 nnoremap <leader>hc <cmd>lua require('telescope.builtin').commands()<cr>
-nnoremap <leader>ds <cmd>lua require('telescope.builtin').file_browser()<cr>
+" nnoremap <leader>ds <cmd>lua require('telescope.builtin').file_browser()<cr>
 
 " Moving inside tmux/vim
 function! TmuxMove(direction)
