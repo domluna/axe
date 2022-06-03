@@ -95,3 +95,7 @@ fi
 #       fzf --multi --preview="git log {}" |
 #       xargs --no-run-if-empty git checkout
 # }
+#
+
+# increase limit from 256
+ulimit -n 200000
