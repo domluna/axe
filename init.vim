@@ -135,3 +135,5 @@ augroup END
 set completeopt=menuone,noselect,noinsert
 set noshowmode
 set shortmess+=c
+
+let g:vim_svelte_plugin_load_full_syntax = 1

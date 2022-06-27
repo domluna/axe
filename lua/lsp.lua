@@ -55,9 +55,9 @@ cmp.setup({
     { name = 'path' },
     { name = 'buffer' },
   },
-  experimental = {
-    ghost_text = true,
-  },
+  -- experimental = {
+  --   ghost_text = true,
+  -- },
 })
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).

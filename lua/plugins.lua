@@ -56,6 +56,12 @@ return require('packer').startup({
 
     use 'andreypopp/julia-repl-vim'
 
+    use {
+      'stefanvanburen/rams', requires = { 'rktjmp/lush.nvim' }
+    }
+
+    use 'leafOfTree/vim-svelte-plugin'
+
   end,
 })
 
