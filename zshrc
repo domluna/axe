@@ -98,4 +98,4 @@ fi
 #
 
 # increase limit from 256
-ulimit -n 200000
+ulimit -n 250000
