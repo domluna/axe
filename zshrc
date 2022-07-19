@@ -3,6 +3,8 @@ export PS1="λ %~: "
 if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh; fi # added by Nix installer
 if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix.sh ]; then source /nix/var/nix/profiles/default/etc/profile.d/nix.sh; fi # added by Nix installer
 
+export NIX_PATH=${NIX_PATH:+$NIX_PATH:}$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels
+
 export GO111MODULE=on
 # Go
 export PATH=$PATH:$HOME/go/bin
