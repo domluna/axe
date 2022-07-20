@@ -9,7 +9,7 @@ export GO111MODULE=on
 # Go
 export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/bin
-export PATH=$PATH:$HOME/nvim-osx64/bin
+export PATH=$PATH:$HOME/nvim-macos/bin
 
 # julia
 export JULIA_REVISE_INCLUDE=1
@@ -101,3 +101,14 @@ fi
 
 # increase limit from 256
 ulimit -n 250000
+
+export PATH="$PATH:/Users/lunaticd/.foundry/bin"
+
+export PATH="$PATH:/Users/lunaticd/.foundry/bin"
+
+# bun completions
+[ -s "/Users/lunaticd/.bun/_bun" ] && source "/Users/lunaticd/.bun/_bun"
+
+# bun
+export BUN_INSTALL="/Users/lunaticd/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
