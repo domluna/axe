@@ -17,6 +17,8 @@ augroup END
 set colorcolumn=93
 highlight Normal ctermbg=NONE
 
+set relativenumber
+
 " Better display for messages
 set cmdheight=2
 " Smaller updatetime for CursorHold & CursorHoldI

@@ -3,11 +3,13 @@ export PS1="λ %~: "
 if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh; fi # added by Nix installer
 if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix.sh ]; then source /nix/var/nix/profiles/default/etc/profile.d/nix.sh; fi # added by Nix installer
 
+export NIX_PATH=${NIX_PATH:+$NIX_PATH:}$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels
+
 export GO111MODULE=on
 # Go
 export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/bin
-export PATH=$PATH:$HOME/nvim-osx64/bin
+export PATH=$PATH:$HOME/nvim-macos/bin
 
 # julia
 export JULIA_REVISE_INCLUDE=1
@@ -98,4 +100,15 @@ fi
 #
 
 # increase limit from 256
-ulimit -n 200000
+ulimit -n 250000
+
+export PATH="$PATH:/Users/lunaticd/.foundry/bin"
+
+export PATH="$PATH:/Users/lunaticd/.foundry/bin"
+
+# bun completions
+[ -s "/Users/lunaticd/.bun/_bun" ] && source "/Users/lunaticd/.bun/_bun"
+
+# bun
+export BUN_INSTALL="/Users/lunaticd/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

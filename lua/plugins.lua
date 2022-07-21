@@ -57,7 +57,20 @@ return require('packer').startup({
     use 'andreypopp/julia-repl-vim'
 
     use {
-      'stefanvanburen/rams', requires = { 'rktjmp/lush.nvim' }
+      "folke/trouble.nvim",
+      requires = "kyazdani42/nvim-web-devicons",
+      config = function()
+        require("trouble").setup {
+          -- your configuration comes here
+          -- or leave it empty to use the default settings
+          -- refer to the configuration section below
+        }
+      end
+    }
+
+    use {
+      'stefanvanburen/rams',
+      requires = { 'rktjmp/lush.nvim' }
     }
 
     use 'leafOfTree/vim-svelte-plugin'
