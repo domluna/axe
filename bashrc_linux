@@ -136,3 +136,6 @@ export PATH="$PATH:/home/dom/.foundry/bin"
 
 export FLYCTL_INSTALL="/home/dom/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
+
+BUN_INSTALL="/home/dom/.bun"
+PATH="$BUN_INSTALL/bin:$PATH"
