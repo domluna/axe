@@ -112,3 +112,9 @@ export PATH="$PATH:/Users/lunaticd/.foundry/bin"
 # bun
 export BUN_INSTALL="/Users/lunaticd/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/lunaticd/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/lunaticd/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/lunaticd/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/lunaticd/google-cloud-sdk/completion.zsh.inc'; fi

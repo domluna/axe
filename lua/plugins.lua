@@ -75,6 +75,28 @@ return require('packer').startup({
 
     use 'leafOfTree/vim-svelte-plugin'
 
+    use({
+      "Pocco81/true-zen.nvim",
+      config = function()
+         require("true-zen").setup {
+          -- your config goes here
+          -- or just leave it empty :)
+         }
+      end,
+    })
+
+    use {
+      "amrbashir/nvim-docs-view",
+      opt = true,
+      cmd = { "DocsViewToggle" },
+      config = function()
+        require("docs-view").setup {
+          position = "right",
+          width = 60,
+        }
+      end
+    }
+
   end,
 })
 

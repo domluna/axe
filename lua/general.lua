@@ -1,9 +1,7 @@
 local cmd = vim.cmd -- to execute Vim commands e.g. cmd('pwd')
 local fn = vim.fn -- to call Vim functions e.g. fn.bufnr()
+local api = vim.api
 
-cmd('syntax enable')
-cmd('syntax on')
-cmd('filetype plugin indent on')
 
 -- cmd('colorscheme base16-gruvbox-dark-soft')
 -- cmd('colorscheme base16-gruvbox-light-soft')
@@ -11,6 +9,11 @@ cmd('filetype plugin indent on')
 -- cmd('colorscheme base16-grayscale-dark')
 cmd('colorscheme base16-mocha')
 -- cmd('colorscheme base16-solarized-light')
+-- cmd('colorscheme rams')
+
+cmd('syntax enable')
+cmd('syntax on')
+cmd('filetype plugin indent on')
 
 vim.g.mapleader = ","
 
@@ -42,28 +45,16 @@ vim.g.do_filetype_lua = 1
 vim.g.did_load_filetypes = 0
 
 local function map(mode, lhs, rhs)
-    vim.api.nvim_set_keymap(mode, lhs, rhs, { noremap = true, silent = true })
+    api.nvim_set_keymap(mode, lhs, rhs, { noremap = true, silent = true })
 end
 
 -- Lua
-vim.api.nvim_set_keymap("n", "<leader>xx", "<cmd>Trouble<cr>",
-  {silent = true, noremap = true}
-)
-vim.api.nvim_set_keymap("n", "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>",
-  {silent = true, noremap = true}
-)
-vim.api.nvim_set_keymap("n", "<leader>xd", "<cmd>Trouble document_diagnostics<cr>",
-  {silent = true, noremap = true}
-)
-vim.api.nvim_set_keymap("n", "<leader>xl", "<cmd>Trouble loclist<cr>",
-  {silent = true, noremap = true}
-)
-vim.api.nvim_set_keymap("n", "<leader>xq", "<cmd>Trouble quickfix<cr>",
-  {silent = true, noremap = true}
-)
--- vim.api.nvim_set_keymap("n", "gR", "<cmd>Trouble lsp_references<cr>",
---   {silent = true, noremap = true}
--- )
+map("n", "<leader>xx", "<cmd>Trouble<cr>")
+map("n", "<leader>xw", "<cmd>Trouble workspace_diagnostics<cr>")
+map("n", "<leader>xd", "<cmd>Trouble document_diagnostics<cr>")
+map("n", "<leader>xl", "<cmd>Trouble loclist<cr>")
+map("n", "<leader>xq", "<cmd>Trouble quickfix<cr>")
+-- map("n", "gR", "<cmd>Trouble lsp_references<cr>")
 
 local actions = require("telescope.actions")
 local trouble = require("trouble.providers.telescope")
@@ -78,3 +69,9 @@ telescope.setup {
     },
   },
 }
+
+-- map("n", "<leader>n", ":TZNarrow<CR>")
+-- map("v", "<leader>n", ":'<,'>TZNarrow<CR>")
+-- map("n", "<leader>n", ":TZFocus<CR>")
+-- map("n", "<leader>n", ":TZMinimalist<CR>")
+-- map("n", "<leader>n", ":TZAtaraxis<CR>")
