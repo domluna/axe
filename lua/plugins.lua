@@ -75,6 +75,14 @@ return require('packer').startup({
 
     use 'leafOfTree/vim-svelte-plugin'
 
+    use {
+       "quarto-dev/quarto-vim",
+       requires = {
+          {"vim-pandoc/vim-pandoc-syntax"},
+       },
+       ft = {"quarto"},
+    }
+
   end,
 })
 

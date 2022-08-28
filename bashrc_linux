@@ -20,8 +20,6 @@ fi
 export JULIA_REVISE_INCLUDE=1
 export JULIA_STACKTRACE_MINIMAL=true
 
-export PATH="$PATH:$HOME/.fzf/bin"
-
 export EDITOR=nvim
 
 if command -v exa > /dev/null; then
@@ -139,3 +137,5 @@ export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
 BUN_INSTALL="/home/dom/.bun"
 PATH="$BUN_INSTALL/bin:$PATH"
+
+eval "$(direnv hook bash)"
