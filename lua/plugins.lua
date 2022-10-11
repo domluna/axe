@@ -12,7 +12,7 @@ return require('packer').startup({
   function()
     use 'wbthomason/packer.nvim'
 
-    use 'sheerun/vim-polyglot'
+    -- use 'sheerun/vim-polyglot'
     use 'JuliaEditorSupport/julia-vim'
 
     use 'junegunn/vim-easy-align'
@@ -52,7 +52,7 @@ return require('packer').startup({
 
     use 'windwp/nvim-autopairs'
 
-    -- use 'nvim-treesitter/nvim-treesitter'
+    use 'nvim-treesitter/nvim-treesitter'
 
     use 'andreypopp/julia-repl-vim'
 
@@ -74,16 +74,6 @@ return require('packer').startup({
     }
 
     use 'leafOfTree/vim-svelte-plugin'
-
-    use({
-      "Pocco81/true-zen.nvim",
-      config = function()
-         require("true-zen").setup {
-          -- your config goes here
-          -- or just leave it empty :)
-         }
-      end,
-    })
 
     use {
       "amrbashir/nvim-docs-view",

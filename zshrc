@@ -118,3 +118,11 @@ if [ -f '/Users/lunaticd/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/lunati
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/lunaticd/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/lunaticd/google-cloud-sdk/completion.zsh.inc'; fi
+
+export WASMTIME_HOME="$HOME/.wasmtime"
+
+export PATH="$WASMTIME_HOME/bin:$PATH"
+
+if [ -f "$HOME/.tokens" ]; then
+  source $HOME/.tokens
+fi
