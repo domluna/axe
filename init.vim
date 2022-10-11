@@ -1,6 +1,7 @@
 lua require('plugins')
 lua require('general')
 lua require('lsp')
+" lua require('treesitter')
 
 lua require('nvim_comment').setup()
 map <silent><Leader>c :CommentToggle<CR>
