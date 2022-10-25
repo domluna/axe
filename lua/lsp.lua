@@ -1,4 +1,32 @@
 local cmp = require'cmp'
+-- Create icons for autocompletion types
+local kind_icons = {
+	Text = "",
+	Method = "",
+	Function = "",
+	Constructor = "",
+	Field = "",
+	Variable = "",
+	Class = "",
+	Interface = "",
+	Module = "",
+	Property = "",
+	Unit = "",
+	Value = "",
+	Enum = "",
+	Keyword = "",
+	Snippet = "✂",
+	Color = "",
+	File = "",
+	Reference = "",
+	Folder = "",
+	EnumMember = "",
+	Constant = "",
+	Struct = "",
+	Event = "",
+	Operator = "",
+	TypeParameter = "",
+}
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -39,18 +67,78 @@ cmp.setup({
     end,
   },
   mapping = {
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.abort(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<C-k>'] = cmp.mapping.select_prev_item(),
+    ['<C-j>'] = cmp.mapping.select_next_item(),
+
+    ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
+    ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
+    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+    -- Aborts autocomption selection process
+	["<C-e>"] = cmp.mapping({
+		i = cmp.mapping.abort(),
+		c = cmp.mapping.close(),
+	}),
+
+	-- Accept currently selected item. If none selected, `select` first item.
+	-- Set `select` to `false` to only confirm explicitly selected items.
+	["<CR>"] = cmp.mapping.confirm({ select = true }),
+
+-- Set what tab does
+		["<Tab>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			elseif luasnip.expandable() then
+				luasnip.expand()
+			elseif luasnip.expand_or_jumpable() then
+				luasnip.expand_or_jump()
+			elseif check_backspace() then
+				fallback()
+			else
+				fallback()
+			end
+		end, {
+			"i",
+			"s",
+		}),
   },
   sources = {
     { name = 'nvim_lsp' },
-    { name = 'luasnip' },
+    { name = 'nvim_lua' },
+    -- { name = 'luasnip' },
     -- { name = 'path' },
     { name = 'buffer' },
   },
+
+  confirm_opts = {
+	  behavior = cmp.ConfirmBehavior.Replace,
+	  select = false,
+  },
+
+  window = {
+	  completion = cmp.config.window.bordered(),
+	  documentation = cmp.config.window.bordered(),
+  },
+
+  -- Formatting for autocompletion menu
+  formatting = {
+	fields = { "kind", "abbr", "menu" },
+	format = function(entry, vim_item)
+		vim_item.kind = kind_icons[vim_item.kind]
+		vim_item.menu = ({
+			nvim_lsp = "",
+			nvim_lua = "",
+			luasnip = "",
+			buffer = "",
+			path = "",
+			emoji = "",
+		})[entry.source.name]
+		return vim_item
+	end,
+  },
+
+  experimental = {
+	  ghost_text = true,
+  }
 })
 
 -- Set configuration for specific filetype.
@@ -86,7 +174,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] =
       {update_in_insert = true})
 
 -- Setup lspconfig.
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local lspconfig = require('lspconfig')
 

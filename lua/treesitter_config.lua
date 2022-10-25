@@ -4,6 +4,10 @@ require'nvim-treesitter.configs'.setup {
     "c", "lua", "rust", "go", "julia", "typescript", "javascript", "sql", "html", "css", "scss", "python", "norg", "vim", "zig", "solidity",
   },
 
+  indent = {
+	  enable = true,
+  },
+
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
 

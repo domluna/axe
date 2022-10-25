@@ -1,7 +1,7 @@
 lua require('plugins')
 lua require('general')
 lua require('lsp')
-" lua require('treesitter')
+lua require('treesitter_config')
 
 lua require('nvim_comment').setup()
 map <silent><Leader>c :CommentToggle<CR>
@@ -27,10 +27,6 @@ set updatetime=200
 
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
-
-" no backups / swapfiles
-set noswapfile
-set nobackup
 
 nnoremap ; :
 vnoremap ; :
@@ -119,8 +115,6 @@ if has('persistent_undo')
   set undofile
 endif
 
-" reload file if it has changed on disk
-set autoread
 au FocusGained * silent! :checktime
 
 " => resize splits when vim is resized

@@ -30,8 +30,17 @@ vim.o.mouse = 'a'
 vim.o.clipboard = "unnamedplus"
 vim.o.inccommand = 'nosplit'             -- Show effects of a command incrementally
 
-vim.wo.signcolumn = "yes"
+vim.opt.sessionoptions = "tabpages,globals"     -- Remember tab names upon session save
+vim.wo.signcolumn = "yes:2" -- width of 2
 vim.wo.number = true
+
+vim.opt.termguicolors = true -- Enable 24-bit RGB colors
+vim.opt.autoread = true -- reload file if it has changed on disk
+vim.opt.cursorline = true -- highlight current line
+vim.opt.splitbelow = true                       -- force all horizontal splits to go below current window
+vim.opt.splitright = true                       -- force all vertical splits to go to the right of current window
+vim.opt.swapfile = false                        -- creates a swapfile
+vim.opt.writebackup = false                     -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
 
 -- Substitute LaTeX symbols after typing.
 vim.g.latex_to_unicode_auto = true
@@ -40,6 +49,8 @@ vim.g.latex_to_unicode_auto = true
 vim.g.julia_indent_align_brackets = 0
 vim.g.julia_indent_align_funcargs = 0
 vim.g.julia_indent_align_import = 0
+vim.g.latex_to_unicode_tab = "off"
+vim.g.latex_to_unicode_auto = 1
 
 vim.g.do_filetype_lua = 1
 vim.g.did_load_filetypes = 0
@@ -75,3 +86,9 @@ telescope.setup {
 -- map("n", "<leader>n", ":TZFocus<CR>")
 -- map("n", "<leader>n", ":TZMinimalist<CR>")
 -- map("n", "<leader>n", ":TZAtaraxis<CR>")
+
+-- Automatically update buffers if a change to the file system was detected
+vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
+  command = "if mode() != 'c' | checktime | endif",
+  pattern = { "*" },
+})
