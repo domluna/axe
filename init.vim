@@ -21,8 +21,6 @@ set relativenumber
 
 " Better display for messages
 set cmdheight=2
-" Smaller updatetime for CursorHold & CursorHoldI
-set updatetime=200
 
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
@@ -139,3 +137,5 @@ set noshowmode
 set shortmess+=c
 
 let g:vim_svelte_plugin_load_full_syntax = 1
+
+set laststatus=3

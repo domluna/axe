@@ -47,12 +47,13 @@ return require('packer').startup({
     use 'hrsh7th/cmp-cmdline'
     use 'hrsh7th/nvim-cmp'
 
-    use 'L3MON4D3/LuaSnip'
-    use 'saadparwaiz1/cmp_luasnip'
+    -- use 'L3MON4D3/LuaSnip'
+    -- use 'saadparwaiz1/cmp_luasnip'
 
     use 'windwp/nvim-autopairs'
 
-    -- use 'nvim-treesitter/nvim-treesitter'
+    use 'nvim-treesitter/nvim-treesitter'
+    use 'nvim-treesitter/playground'
 
     use 'andreypopp/julia-repl-vim'
 
@@ -81,6 +82,28 @@ return require('packer').startup({
           {"vim-pandoc/vim-pandoc-syntax"},
        },
        ft = {"quarto"},
+    }
+
+    use {
+      "Pocco81/true-zen.nvim",
+      config = function()
+         require("true-zen").setup {
+          -- your config goes here
+          -- or just leave it empty :)
+         }
+      end,
+    }
+
+    use {
+      "amrbashir/nvim-docs-view",
+      opt = true,
+      cmd = { "DocsViewToggle" },
+      config = function()
+        require("docs-view").setup {
+          position = "right",
+          width = 60,
+        }
+      end
     }
 
   end,
