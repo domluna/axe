@@ -52,6 +52,7 @@ return require('packer').startup({
     use 'windwp/nvim-autopairs'
 
     use 'nvim-treesitter/nvim-treesitter'
+    use 'nvim-treesitter/playground'
 
     use 'andreypopp/julia-repl-vim'
 
@@ -73,6 +74,24 @@ return require('packer').startup({
     }
 
     use 'leafOfTree/vim-svelte-plugin'
+
+    use {
+       "quarto-dev/quarto-vim",
+       requires = {
+          {"vim-pandoc/vim-pandoc-syntax"},
+       },
+       ft = {"quarto"},
+    }
+
+    use {
+      "Pocco81/true-zen.nvim",
+      config = function()
+         require("true-zen").setup {
+          -- your config goes here
+          -- or just leave it empty :)
+         }
+      end,
+    }
 
     use {
       "amrbashir/nvim-docs-view",

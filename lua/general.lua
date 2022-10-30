@@ -17,21 +17,28 @@ cmd('filetype plugin indent on')
 
 vim.g.mapleader = ","
 
-vim.o.encoding = 'utf-8' -- Default file encoding
 vim.o.fileencoding = 'utf-8' --  Default file encoding
-vim.o.fileencodings = 'utf-8' --  Default file encoding
 vim.o.autochdir = false --  Don't change dirs automatically
 vim.o.errorbells = false --  No sound
 
 local indent = 4
 
 vim.o.hidden = true
-vim.o.mouse = 'a'
+vim.o.mouse = "a"
 vim.o.clipboard = "unnamedplus"
 vim.o.inccommand = 'nosplit'             -- Show effects of a command incrementally
 
-vim.opt.sessionoptions = "tabpages,globals"     -- Remember tab names upon session save
-vim.wo.signcolumn = "yes:2" -- width of 2
+vim.o.signcolumn = "yes:2"
+vim.o.sessionoptions = "tabpages,globals"     -- Remember tab names upon session save
+vim.o.autoread = true				-- Check for updates to files on system
+vim.o.updatetime = 200
+
+vim.o.splitbelow = true
+vim.o.splitright = true
+vim.o.termguicolors = true
+
+vim.o.cursorline = true
+
 vim.wo.number = true
 
 vim.opt.termguicolors = true -- Enable 24-bit RGB colors
