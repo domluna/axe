@@ -12,7 +12,7 @@ return require('packer').startup({
   function()
     use 'wbthomason/packer.nvim'
 
-    -- use 'sheerun/vim-polyglot'
+    use 'sheerun/vim-polyglot'
     use 'JuliaEditorSupport/julia-vim'
 
     use 'junegunn/vim-easy-align'
