@@ -138,4 +138,9 @@ export PATH="$FLYCTL_INSTALL/bin:$PATH"
 BUN_INSTALL="/home/dom/.bun"
 PATH="$BUN_INSTALL/bin:$PATH"
 
+export PATH="$HOME/nvim-linux64/bin:$PATH"
+
 eval "$(direnv hook bash)"
+
+# Add $HOME/code/python-libs to PYTHONPATH
+export PYTHONPATH="$HOME/code/python-libs:$PYTHONPATH"
