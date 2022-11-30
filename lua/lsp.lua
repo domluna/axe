@@ -211,3 +211,9 @@ lspconfig.solargraph.setup {
   flags = {
   },
 }
+lspconfig.elixirls.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+  flags = {
+  },
+}

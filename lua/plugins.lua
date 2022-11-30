@@ -51,8 +51,8 @@ return require('packer').startup({
 
     use 'windwp/nvim-autopairs'
 
-    use 'nvim-treesitter/nvim-treesitter'
-    use 'nvim-treesitter/playground'
+    -- use 'nvim-treesitter/nvim-treesitter'
+    -- use 'nvim-treesitter/playground'
 
     use 'andreypopp/julia-repl-vim'
 
@@ -104,6 +104,8 @@ return require('packer').startup({
         }
       end
     }
+
+    use 'edluffy/hologram.nvim'
 
   end,
 })
