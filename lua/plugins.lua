@@ -107,6 +107,8 @@ return require('packer').startup({
 
     use 'edluffy/hologram.nvim'
 
+    use 'ziglang/zig.vim'
+
   end,
 })
 

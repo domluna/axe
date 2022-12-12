@@ -21,6 +21,13 @@ vim.o.fileencoding = 'utf-8' --  Default file encoding
 vim.o.autochdir = false --  Don't change dirs automatically
 vim.o.errorbells = false --  No sound
 
+vim.bo.tabstop = 4
+vim.bo.softtabstop = 4
+vim.bo.shiftwidth = 4
+vim.bo.autoindent = true
+vim.bo.expandtab = true
+vim.bo.smartindent = true
+
 local indent = 4
 
 vim.o.hidden = true

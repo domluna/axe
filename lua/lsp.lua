@@ -217,3 +217,10 @@ lspconfig.elixirls.setup {
   flags = {
   },
 }
+lspconfig.zls.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+  flags = {
+  },
+}
+
