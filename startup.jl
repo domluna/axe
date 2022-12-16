@@ -2,7 +2,7 @@ push!(LOAD_PATH, "$(homedir())/.julia/dev")
 import Pkg
 
 let
-    pkgs = ["Revise", "OhMyREPL", "REPLVim", "Term", "IJulia"]
+    pkgs = ["Revise", "OhMyREPL", "REPLVim", "Term", "IJulia", "JuliaFormatter", "JET"]
     for pkg in pkgs
         if Base.find_package(pkg) === nothing
             if pkg === "REPLVim"
