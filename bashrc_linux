@@ -143,4 +143,8 @@ export PATH="$HOME/nvim-linux64/bin:$PATH"
 eval "$(direnv hook bash)"
 
 # Add $HOME/code/python-libs to PYTHONPATH
-export PYTHONPATH="$HOME/code/python-libs:$PYTHONPATH"
+# export PYTHONPATH="$HOME/code/python-libs:$PYTHONPATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
