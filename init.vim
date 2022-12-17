@@ -3,9 +3,6 @@ lua require('general')
 lua require('lsp')
 " lua require('treesitter_config')
 
-lua require('nvim_comment').setup()
-map <silent><Leader>c :CommentToggle<CR>
-
 " when you enter a (new) buffer
 augroup set-commentstring-ag
 autocmd!
@@ -49,41 +46,6 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
-
-lua << EOF
-require('telescope').setup{
-  defaults = {
-    file_ignore_patterns = {'node_modules'},
-    vimgrep_arguments = {
-      'rg',
-      '--color=never',
-      '--no-heading',
-      '--with-filename',
-      '--line-number',
-      '--column',
-      '--smart-case'
-    },
-    sorting_strategy = "ascending",
-    layout_strategy = "flex",
-    layout_config = {
-      flex = {
-        flip_columns = 130
-      }
-    }
-  }
-}
-EOF
-
-lua require('telescope').load_extension('gh')
-" lua require('telescope').load_extension('packer')
-
-" Using lua functions
-nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files({previewer = false})<cr>
-nnoremap <leader>r <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader>ht <cmd>lua require('telescope.builtin').help_tags()<cr>
-nnoremap <leader>hc <cmd>lua require('telescope.builtin').commands()<cr>
-" nnoremap <leader>ds <cmd>lua require('telescope.builtin').file_browser()<cr>
 
 " Moving inside tmux/vim
 function! TmuxMove(direction)
@@ -134,3 +96,5 @@ set shortmess+=c
 let g:vim_svelte_plugin_load_full_syntax = 1
 
 set laststatus=3
+
+
