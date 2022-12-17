@@ -110,3 +110,6 @@ vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGai
 require('hologram').setup{
   auto_display = true,
 }
+
+local quarto = require'quarto'
+vim.keymap.set('n', '<leader>qp', quarto.quartoPreview, {silent = true, noremap = true})
