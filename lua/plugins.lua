@@ -108,6 +108,8 @@ return require('packer').startup({
 
     use 'ziglang/zig.vim'
 
+    use 'ggandor/leap.nvim'
+
   end,
 })
 

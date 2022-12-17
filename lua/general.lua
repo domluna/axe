@@ -149,3 +149,5 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 require('nvim_comment').setup()
 map("n", "<leader>c", "<cmd>CommentToggle<cr>", { silent = true })
+
+require('leap').add_default_mappings()
