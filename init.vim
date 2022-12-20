@@ -17,6 +17,8 @@ highlight Normal ctermbg=NONE
 
 set relativenumber
 
+set laststatus=3
+
 " Better display for messages
 set cmdheight=2
 
@@ -94,7 +96,3 @@ set noshowmode
 set shortmess+=c
 
 let g:vim_svelte_plugin_load_full_syntax = 1
-
-set laststatus=3
-
-

@@ -3,7 +3,10 @@ require("mason-lspconfig").setup({
     ensure_installed = {
         "sumneko_lua", "rust_analyzer",
         "gopls", "pyright", "julials", "zls", "tsserver", "solargraph",
-        "elixirls"
+        "elixirls",
+        "svelte",
+        "tailwindcss",
+        "html",
     },
 })
 
@@ -66,7 +69,7 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.format{async=true}<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.format{timeout_ms = 2000}<CR>', opts)
 end
 
 cmp.setup({
@@ -220,6 +223,14 @@ lspconfig.zls.setup {
     on_attach = on_attach,
 }
 lspconfig.sumneko_lua.setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+}
+lspconfig.svelte.setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+}
+lspconfig.tailwindcss.setup {
     capabilities = capabilities,
     on_attach = on_attach,
 }

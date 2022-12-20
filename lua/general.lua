@@ -144,10 +144,15 @@ require('telescope').load_extension('gh')
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<C-p>', builtin.find_files, {})
 vim.keymap.set('n', '<leader>r', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+vim.keymap.set('n', '<leader>b', builtin.buffers, {})
 
-require('nvim_comment').setup()
+require('nvim_comment').setup({
+    comment_empty = false,
+    -- hook = function()
+    --     require("ts_context_commentstring.internal").update_commentstring()
+    -- end,
+})
 map("n", "<leader>c", "<cmd>CommentToggle<cr>", { silent = true })
+map("v", "<leader>c", ":CommentToggle<cr>", { silent = true })
 
 require('leap').add_default_mappings()

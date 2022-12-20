@@ -79,16 +79,16 @@ return require('packer').startup({
     use 'leafOfTree/vim-svelte-plugin'
 
     use { 'quarto-dev/quarto-nvim',
-      requires = {'neovim/nvim-lspconfig'}
+      requires = { 'neovim/nvim-lspconfig' }
     }
 
     use {
       "Pocco81/true-zen.nvim",
       config = function()
-         require("true-zen").setup {
+        require("true-zen").setup {
           -- your config goes here
           -- or just leave it empty :)
-         }
+        }
       end,
     }
 
@@ -110,6 +110,8 @@ return require('packer').startup({
 
     use 'ggandor/leap.nvim'
 
+    -- requires treesitter
+    -- use 'JoosepAlviste/nvim-ts-context-commentstring'
+
   end,
 })
-
