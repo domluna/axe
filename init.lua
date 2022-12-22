@@ -175,6 +175,8 @@ vim.o.shortmess = 'c'
 vim.o.cmdheight = 2
 vim.o.laststatus = 3
 
+vim.opt.swapfile = false -- creates a swapfile
+
 -- [[ Basic Keymaps ]]
 -- Set <space> as the leader key
 -- See `:help mapleader`
@@ -425,12 +427,18 @@ end
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
-  -- clangd = {},
-  -- gopls = {},
-  -- pyright = {},
-  -- rust_analyzer = {},
-  -- tsserver = {},
-
+  clangd = {},
+  rust_analyzer = {},
+  gopls = {},
+  pyright = {},
+  julials = {},
+  zls = {},
+  tsserver = {},
+  solargraph = {},
+  elixirls = {},
+  svelte = {},
+  tailwindcss = {},
+  html = {},
   sumneko_lua = {
     Lua = {
       workspace = { checkThirdParty = false },
@@ -514,19 +522,19 @@ cmp.setup {
 }
 
 cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-        { name = 'path' }
-    }, {
-        { name = 'cmdline' }
-    })
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
 })
 
 require('leap').add_default_mappings()
 
 vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
-    command = "if mode() != 'c' | checktime | endif",
-    pattern = { "*" },
+  command = "if mode() != 'c' | checktime | endif",
+  pattern = { "*" },
 })
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
