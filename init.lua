@@ -11,6 +11,8 @@ require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
 
+  use 'folke/tokyonight.nvim'
+
   use { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     requires = {
@@ -74,7 +76,7 @@ require('packer').startup(function(use)
     end
   }
 
-  use 'leafOfTree/vim-svelte-plugin'
+  -- use 'leafOfTree/vim-svelte-plugin'
 
   use { 'quarto-dev/quarto-nvim',
     requires = { 'neovim/nvim-lspconfig' }
@@ -167,7 +169,7 @@ vim.o.relativenumber = true
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme base16-mocha]]
+vim.cmd [[colorscheme tokyonight-moon]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect,noinsert'
@@ -305,7 +307,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'julia', 'svelte', 'html', 'css' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'julia', 'svelte', 'html', 'css', 'vim' },
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
@@ -415,11 +417,16 @@ local on_attach = function(_, bufnr)
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format()
+    vim.lsp.buf.format({ timeout_ms = 2000 })
   end, { desc = 'Format current buffer with LSP' })
 
   nmap('<leader>f', '<CMD>Format<CR>', '[F]ormat Current File')
 end
+--
+-- Enable inline errors
+vim.lsp.handlers["textDocument/publishDiagnostics"] =
+vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
+  { update_in_insert = true })
 
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -439,6 +446,7 @@ local servers = {
   svelte = {},
   tailwindcss = {},
   html = {},
+  cssls = {},
   sumneko_lua = {
     Lua = {
       workspace = { checkThirdParty = false },
@@ -495,15 +503,15 @@ cmp.setup {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-    ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
+    -- ['<Tab>'] = cmp.mapping(function(fallback)
+    --   if cmp.visible() then
+    --     cmp.select_next_item()
+    --   elseif luasnip.expand_or_jumpable() then
+    --     luasnip.expand_or_jump()
+    --   else
+    --     fallback()
+    --   end
+    -- end, { 'i', 's' }),
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
@@ -516,8 +524,13 @@ cmp.setup {
   },
   sources = {
     { name = 'nvim_lsp' },
-    { name = 'luasnip' },
+    { name = 'nvim_lua' },
+    -- { name = 'luasnip' },
     { name = 'path' },
+  },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
   },
 }
 

@@ -34,8 +34,6 @@ return require('packer').startup({
     use 'nvim-telescope/telescope-github.nvim'
     use 'nvim-telescope/telescope-packer.nvim'
 
-    use 'RRethy/nvim-base16'
-
     use 'terrortylor/nvim-comment'
 
     use 'github/copilot.vim'
@@ -61,7 +59,7 @@ return require('packer').startup({
 
     use {
       "folke/trouble.nvim",
-      requires = "kyazdani42/nvim-web-devicons",
+      reuires = "kyazdani42/nvim-web-devicons",
       config = function()
         require("trouble").setup {
           -- your configuration comes here
