@@ -157,20 +157,23 @@ vim.o.splitbelow = true
 vim.o.splitright = true
 vim.o.autoread = true
 vim.o.cursorline = true
-
+vim.o.clipboard = 'unnamedplus'
 -- Decrease update time
 vim.o.updatetime = 200
-vim.wo.signcolumn = 'yes'
+vim.wo.signcolumn = 'yes:2'
 
 vim.o.colorcolumn = 93
 vim.o.relativenumber = true
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme onedark]]
+vim.cmd [[colorscheme base16-mocha]]
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
+vim.o.completeopt = 'menuone,noselect,noinsert'
+vim.o.shortmess = 'c'
+vim.o.cmdheight = 2
+vim.o.laststatus = 3
 
 -- [[ Basic Keymaps ]]
 -- Set <space> as the leader key
@@ -213,14 +216,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- Set lualine as statusline
 -- See `:help lualine.txt`
-require('lualine').setup {
-  options = {
-    icons_enabled = false,
-    theme = 'onedark',
-    component_separators = '|',
-    section_separators = '',
-  },
-}
+-- require('lualine').setup {
+--   options = {
+--     icons_enabled = false,
+--     theme = 'onedark',
+--     component_separators = '|',
+--     section_separators = '',
+--   },
+-- }
 
 -- Enable Comment.nvim
 require('Comment').setup {
@@ -506,10 +509,24 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
+    { name = 'path' },
   },
 }
 
+cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+        { name = 'path' }
+    }, {
+        { name = 'cmdline' }
+    })
+})
+
 require('leap').add_default_mappings()
 
+vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
+    command = "if mode() != 'c' | checktime | endif",
+    pattern = { "*" },
+})
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
