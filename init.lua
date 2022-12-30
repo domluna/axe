@@ -451,7 +451,7 @@ local servers = {
   bashls = {},
   jsonls = {},
   vimls = {},
-  rnix_lsp = {},
+  -- rnix_lsp = {},
   sumneko_lua = {
     Lua = {
       workspace = { checkThirdParty = false },
