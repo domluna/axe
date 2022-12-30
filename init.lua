@@ -13,6 +13,8 @@ require('packer').startup(function(use)
 
   use 'folke/tokyonight.nvim'
 
+  use 'nyoom-engineering/oxocarbon.nvim'
+
   use { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     requires = {
@@ -76,12 +78,6 @@ require('packer').startup(function(use)
     end
   }
 
-  -- use 'leafOfTree/vim-svelte-plugin'
-
-  use { 'quarto-dev/quarto-nvim',
-    requires = { 'neovim/nvim-lspconfig' }
-  }
-
   use {
     'stefanvanburen/rams',
     requires = { 'rktjmp/lush.nvim' }
@@ -96,7 +92,7 @@ require('packer').startup(function(use)
   use {
     'numToStr/Navigator.nvim',
     config = function()
-      require('Navigator').setup()
+      require('Navigator').setup({})
     end
   }
 
@@ -164,12 +160,14 @@ vim.o.clipboard = 'unnamedplus'
 vim.o.updatetime = 200
 vim.wo.signcolumn = 'yes:2'
 
-vim.o.colorcolumn = 93
+vim.o.colorcolumn = "93"
 vim.o.relativenumber = true
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme tokyonight-moon]]
+vim.opt.background = "dark" -- set this to dark or light
+vim.cmd [[colorscheme oxocarbon]]
+-- vim.cmd [[colorscheme tokyonight-moon]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect,noinsert'
@@ -190,6 +188,8 @@ vim.g.maplocalleader = ','
 -- See `:help vim.keymap.set()`
 -- vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n', 'v' }, ';', ':', { silent = true })
+vim.keymap.set({ 'n' }, 'Y', 'y$', { silent = true })
+vim.keymap.set({ 'n' }, '0', '^', { silent = true })
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -200,7 +200,7 @@ vim.keymap.set({ 'n' }, '<C-k>', '<C-W>k', { silent = true })
 vim.keymap.set({ 'n' }, '<C-h>', '<C-W>h', { silent = true })
 vim.keymap.set({ 'n' }, '<C-l>', '<C-W>l', { silent = true })
 
-require('Navigator').setup()
+-- require('Navigator').setup({})
 vim.keymap.set({ 'n', 't' }, '<C-h>', '<CMD>NavigatorLeft<CR>')
 vim.keymap.set({ 'n', 't' }, '<C-l>', '<CMD>NavigatorRight<CR>')
 vim.keymap.set({ 'n', 't' }, '<C-k>', '<CMD>NavigatorUp<CR>')
@@ -307,7 +307,8 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'julia', 'svelte', 'html', 'css', 'vim' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'julia', 'svelte', 'html', 'css', 'bash', 'json',
+    'vim', 'prisma' },
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
@@ -447,6 +448,9 @@ local servers = {
   tailwindcss = {},
   html = {},
   cssls = {},
+  prismals = {},
+  bashls = {},
+  jsonls = {},
   sumneko_lua = {
     Lua = {
       workspace = { checkThirdParty = false },
