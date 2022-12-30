@@ -308,7 +308,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
   ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'julia', 'svelte', 'html', 'css', 'bash', 'json',
-    'vim', 'prisma' },
+    'vim', 'prisma', 'nix' },
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
@@ -442,7 +442,6 @@ local servers = {
   julials = {},
   zls = {},
   tsserver = {},
-  solargraph = {},
   elixirls = {},
   svelte = {},
   tailwindcss = {},
@@ -451,6 +450,8 @@ local servers = {
   prismals = {},
   bashls = {},
   jsonls = {},
+  vimls = {},
+  rnix_lsp = {},
   sumneko_lua = {
     Lua = {
       workspace = { checkThirdParty = false },

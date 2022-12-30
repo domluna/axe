@@ -1,6 +1,8 @@
 #!/bin/bash
 # cool stuff bucko
 export PS1="λ \w: "
+export LC_ALL="C.UTF8"
+export LANG="C.UTF8"
 
 export HISTSIZE=1000000
 export HISEFILESIZE=1000000
@@ -45,6 +47,9 @@ alias gp='git push'
 alias sudo2='sudo -E env "PATH=$PATH"'
 if command -v bat > /dev/null; then
    alias cat='bat'
+fi
+if command -v python3.11 > /dev/null; then
+   alias python='python3.11'
 fi
 
 export FZF_DEFAULT_OPTS='--height 80% --reverse --inline-info'
@@ -93,7 +98,6 @@ function gcob() {
 . "$HOME/.cargo/env"
 
 export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
-export PATH="/home/dom/anaconda3/bin:$PATH"
 
 if command -v fzf-share >/dev/null; then
   source "$(fzf-share)/key-bindings.bash"
@@ -146,7 +150,7 @@ export PATH="$HOME/nvim-linux64/bin:$PATH"
 eval "$(direnv hook bash)"
 
 # Add $HOME/code/python-libs to PYTHONPATH
-# export PYTHONPATH="$HOME/code/python-libs:$PYTHONPATH"
+export PYTHONPATH="$HOME/code/python-libs:$PYTHONPATH"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -158,3 +162,14 @@ export WASMER_DIR="/home/dom/.wasmer"
 
 # add ziglang to path
 export PATH="$PATH:/home/dom/ziglang"
+
+export WASMTIME_HOME="$HOME/.wasmtime"
+
+export PATH="$WASMTIME_HOME/bin:$PATH"
+
+export PATH="$HOME/.local/bin:$PATH"
+
+# export PYENV_ROOT="$HOME/.pyenv"
+# command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
