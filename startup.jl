@@ -7,7 +7,7 @@ if isinteractive()
         for pkg in pkgs
             if Base.find_package(pkg) === nothing
                 if pkg === "REPLVim"
-                    Pkg.add(url="https://github.com/andreypopp/julia-repl-vim")
+                    Pkg.add(url = "https://github.com/andreypopp/julia-repl-vim")
                 else
                     Pkg.add(pkg)
                 end
