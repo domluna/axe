@@ -438,7 +438,18 @@ local servers = {
   clangd = {},
   rust_analyzer = {},
   gopls = {},
-  pyright = {},
+  pyright = {
+    settings = {
+      extraPaths = { "/home/dom/.local/lib/python3.11/site-packages" },
+      python = {
+        analysis = {
+          typeCheckingMode = 'off',
+          autoSearchPaths = true,
+          useLibraryCodeForTypes = true,
+        },
+      },
+    },
+  },
   julials = {},
   zls = {},
   tsserver = {},
