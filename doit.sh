@@ -25,7 +25,6 @@ else
 	ln -s $PWD/bashrc_linux $HOME/.bashrc
 	ln -s $PWD/zshrc_linux $HOME/.zshrc
 fi
-# ln -s $PWD/init.vim $HOME/.config/nvim/init.vim
 ln -s $PWD/init.lua $HOME/.config/nvim/init.lua
 ln -s $PWD/.stylua.toml $HOME/.config/nvim/stylua.toml
 ln -s $PWD/tmux.conf $HOME/.tmux.conf
