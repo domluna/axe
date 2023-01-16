@@ -135,3 +135,5 @@ export PATH="$PATH:/Users/lunaticd/zig-macos"
 
 export FLYCTL_INSTALL="/Users/lunaticd/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
