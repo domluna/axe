@@ -441,12 +441,13 @@ local servers = {
   gopls = {},
   pyright = {
     settings = {
-      extraPaths = { "/home/dom/.local/lib/python3.11/site-packages" },
       python = {
         analysis = {
+          extraPaths = { "/home/dom/.local/lib/python3.11/site-packages" },
           typeCheckingMode = 'off',
           autoSearchPaths = true,
           useLibraryCodeForTypes = true,
+          autoImportCompletions = true,
         },
       },
     },
