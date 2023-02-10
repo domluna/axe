@@ -10,6 +10,7 @@ export GO111MODULE=on
 export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/bin
 export PATH=$PATH:$HOME/nvim-macos/bin
+export PATH=$PATH:$HOME/.local/bin
 
 # julia
 export JULIA_REVISE_INCLUDE=1
