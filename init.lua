@@ -52,7 +52,6 @@ require('packer').startup(function(use)
   use 'tpope/vim-rhubarb'
   use 'lewis6991/gitsigns.nvim'
 
-  use 'navarasu/onedark.nvim' -- Theme inspired by Atom
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
@@ -166,8 +165,8 @@ vim.o.relativenumber = true
 -- Set colorscheme
 vim.o.termguicolors = true
 vim.opt.background = "dark" -- set this to dark or light
--- vim.cmd [[colorscheme oxocarbon]]
-vim.cmd [[colorscheme tokyonight-moon]]
+vim.cmd [[colorscheme oxocarbon]]
+-- vim.cmd [[colorscheme tokyonight-moon]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect,noinsert'

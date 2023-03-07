@@ -7,12 +7,11 @@ export PATH=$PATH:$HOME/bin
 export PATH=$PATH:$HOME/nvim-macos/bin
 export PATH=$PATH:$HOME/.local/bin
 
-# julia
-export JULIA_REVISE_INCLUDE=1
 export JULIA_STACKTRACE_MINIMAL=true
 
 alias j='julia'
 alias jn='$HOME/julia/julia'
+alias jfmt='julia --startup=no -e "using JuliaFormatter; format(\".\")"'
 
 if [ -n "${commands[exa]}" ]; then
   alias ls='exa'
