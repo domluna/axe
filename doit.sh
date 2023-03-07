@@ -9,6 +9,7 @@ rm $HOME/.bashrc
 rm $HOME/.zshrc
 rm $HOME/.config/kitty/kitty.conf
 rm $HOME/.julia/config/startup.jl
+rm $HOME/.config/nixpkgs/home.nix
 
 # symlinks
 
@@ -33,3 +34,4 @@ ln -s $PWD/startup.jl $HOME/.julia/config/startup.jl
 ln -s $PWD/lua/*.lua $HOME/.config/nvim/lua/
 ln -s $PWD/vim/* $HOME/.config/nvim/vim/
 ln -s $PWD/kitty.conf $HOME/.config/kitty/kitty.conf
+ln -s $PWD/home.nix $HOME/.config/nixpkgs/home.nix

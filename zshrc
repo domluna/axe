@@ -1,10 +1,5 @@
 export PS1="λ %~: "
 
-if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh; fi # added by Nix installer
-if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix.sh ]; then source /nix/var/nix/profiles/default/etc/profile.d/nix.sh; fi # added by Nix installer
-
-export NIX_PATH=${NIX_PATH:+$NIX_PATH:}$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels
-
 export GO111MODULE=on
 # Go
 export PATH=$PATH:$HOME/go/bin
@@ -17,6 +12,7 @@ export JULIA_REVISE_INCLUDE=1
 export JULIA_STACKTRACE_MINIMAL=true
 
 alias j='julia'
+alias jn='$HOME/julia/julia'
 
 if [ -n "${commands[exa]}" ]; then
   alias ls='exa'
@@ -131,3 +127,7 @@ export FLYCTL_INSTALL="/Users/lunaticd/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# Wasmer
+export WASMER_DIR="/Users/lunaticd/.wasmer"
+[ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
