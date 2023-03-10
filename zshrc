@@ -30,6 +30,11 @@ if [ -n "${commands[nvim]}" ]; then
   bindkey -e
 fi
 
+# if $HOME/.tokens exists source it
+if [ -f "$HOME/.tokens" ]; then
+  source "$HOME/.tokens"
+fi
+
 alias gst='git status'
 alias ga='git add'
 alias gc='git commit'
@@ -130,3 +135,6 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # Wasmer
 export WASMER_DIR="/Users/lunaticd/.wasmer"
 [ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
+
+[[ "$(uname)" != "Darwin" ]] && LLVM_ENABLE_LLD="ON" || LLVM_ENABLE_LLD="OFF"
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"

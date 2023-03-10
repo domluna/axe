@@ -11,8 +11,6 @@ require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
 
-  use 'folke/tokyonight.nvim'
-
   use 'nyoom-engineering/oxocarbon.nvim'
 
   use { -- LSP Configuration & Plugins
@@ -77,16 +75,9 @@ require('packer').startup(function(use)
     end
   }
 
-  use {
-    'stefanvanburen/rams',
-    requires = { 'rktjmp/lush.nvim' }
-  }
-
   use 'andreypopp/julia-repl-vim'
 
   use 'github/copilot.vim'
-
-  use 'RRethy/nvim-base16'
 
   use {
     'numToStr/Navigator.nvim',
@@ -96,6 +87,28 @@ require('packer').startup(function(use)
   }
 
   use 'JoosepAlviste/nvim-ts-context-commentstring'
+
+  use { 'quarto-dev/quarto-nvim',
+    requires = {
+      'jmbuhr/otter.nvim',
+      'neovim/nvim-lspconfig'
+    },
+    config = function()
+      require 'quarto'.setup {
+        lspFeatures = {
+          enabled = true,
+          languages = { 'r', 'python', 'julia' },
+          diagnostics = {
+            enabled = true,
+            triggers = { "BufWrite" }
+          },
+          completion = {
+            enabled = true
+          }
+        }
+      }
+    end
+  }
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -165,7 +178,9 @@ vim.o.relativenumber = true
 -- Set colorscheme
 vim.o.termguicolors = true
 vim.opt.background = "dark" -- set this to dark or light
+-- vim.opt.background = "light" -- set this to dark or light
 vim.cmd [[colorscheme oxocarbon]]
+-- vim.cmd [[colorscheme rams]]
 -- vim.cmd [[colorscheme tokyonight-moon]]
 
 -- Set completeopt to have a better completion experience
@@ -306,7 +321,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'julia', 'svelte', 'html', 'css',
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'julia', 'svelte', 'html', 'css', 'markdown',
     'bash', 'json',
     'vim', 'prisma', 'nix' },
 
