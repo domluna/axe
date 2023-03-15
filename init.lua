@@ -11,8 +11,6 @@ require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
 
-  use 'folke/tokyonight.nvim'
-
   use 'nyoom-engineering/oxocarbon.nvim'
 
   use { -- LSP Configuration & Plugins
@@ -52,7 +50,6 @@ require('packer').startup(function(use)
   use 'tpope/vim-rhubarb'
   use 'lewis6991/gitsigns.nvim'
 
-  use 'navarasu/onedark.nvim' -- Theme inspired by Atom
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
@@ -78,16 +75,9 @@ require('packer').startup(function(use)
     end
   }
 
-  use {
-    'stefanvanburen/rams',
-    requires = { 'rktjmp/lush.nvim' }
-  }
-
   use 'andreypopp/julia-repl-vim'
 
   use 'github/copilot.vim'
-
-  use 'RRethy/nvim-base16'
 
   use {
     'numToStr/Navigator.nvim',
@@ -97,6 +87,28 @@ require('packer').startup(function(use)
   }
 
   use 'JoosepAlviste/nvim-ts-context-commentstring'
+
+  use { 'quarto-dev/quarto-nvim',
+    requires = {
+      'jmbuhr/otter.nvim',
+      'neovim/nvim-lspconfig'
+    },
+    config = function()
+      require 'quarto'.setup {
+        lspFeatures = {
+          enabled = true,
+          languages = { 'r', 'python', 'julia' },
+          diagnostics = {
+            enabled = true,
+            triggers = { "BufWrite" }
+          },
+          completion = {
+            enabled = true
+          }
+        }
+      }
+    end
+  }
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -166,8 +178,10 @@ vim.o.relativenumber = true
 -- Set colorscheme
 vim.o.termguicolors = true
 vim.opt.background = "dark" -- set this to dark or light
--- vim.cmd [[colorscheme oxocarbon]]
-vim.cmd [[colorscheme tokyonight-moon]]
+-- vim.opt.background = "light" -- set this to dark or light
+vim.cmd [[colorscheme oxocarbon]]
+-- vim.cmd [[colorscheme rams]]
+-- vim.cmd [[colorscheme tokyonight-moon]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect,noinsert'
@@ -307,7 +321,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'julia', 'svelte', 'html', 'css',
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'julia', 'svelte', 'html', 'css', 'markdown',
     'bash', 'json',
     'vim', 'prisma', 'nix' },
 
@@ -375,7 +389,7 @@ require('nvim-treesitter.configs').setup {
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+-- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
 -- LSP settings.
@@ -427,8 +441,8 @@ end
 --
 -- Enable inline errors
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
-vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
-  { update_in_insert = true })
+    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
+      { update_in_insert = true })
 
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -464,13 +478,9 @@ local servers = {
   bashls = {},
   jsonls = {},
   vimls = {},
-  -- rnix_lsp = {},
-  sumneko_lua = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    },
-  },
+  ruff_lsp = {},
+  lua_ls = {},
+  rnix = {},
 }
 
 -- Setup neovim lua configuration
@@ -514,7 +524,7 @@ cmp.setup {
     end,
   },
   mapping = cmp.mapping.preset.insert {
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-d>'] = cmp.mapping.scroll_docs( -4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm {
@@ -533,8 +543,8 @@ cmp.setup {
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
+      elseif luasnip.jumpable( -1) then
+        luasnip.jump( -1)
       else
         fallback()
       end

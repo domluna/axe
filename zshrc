@@ -1,21 +1,17 @@
 export PS1="λ %~: "
 
-if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh; fi # added by Nix installer
-if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix.sh ]; then source /nix/var/nix/profiles/default/etc/profile.d/nix.sh; fi # added by Nix installer
-
-export NIX_PATH=${NIX_PATH:+$NIX_PATH:}$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels
-
 export GO111MODULE=on
 # Go
 export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/bin
 export PATH=$PATH:$HOME/nvim-macos/bin
+export PATH=$PATH:$HOME/.local/bin
 
-# julia
-export JULIA_REVISE_INCLUDE=1
 export JULIA_STACKTRACE_MINIMAL=true
 
 alias j='julia'
+alias jn='$HOME/julia/julia'
+alias jfmt='julia --startup=no -e "using JuliaFormatter; format(\".\")"'
 
 if [ -n "${commands[exa]}" ]; then
   alias ls='exa'
@@ -32,6 +28,11 @@ if [ -n "${commands[nvim]}" ]; then
   # export EDITOR=nvim messes with the keybindings in the terminal
   # this sets it back to emacs style
   bindkey -e
+fi
+
+# if $HOME/.tokens exists source it
+if [ -f "$HOME/.tokens" ]; then
+  source "$HOME/.tokens"
 fi
 
 alias gst='git status'
@@ -104,8 +105,6 @@ ulimit -n 250000
 
 export PATH="$PATH:/Users/lunaticd/.foundry/bin"
 
-export PATH="$PATH:/Users/lunaticd/.foundry/bin"
-
 # bun completions
 [ -s "/Users/lunaticd/.bun/_bun" ] && source "/Users/lunaticd/.bun/_bun"
 
@@ -122,11 +121,6 @@ if [ -f '/Users/lunaticd/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/
 export WASMTIME_HOME="$HOME/.wasmtime"
 
 export PATH="$WASMTIME_HOME/bin:$PATH"
-
-if [ -f "$HOME/.tokens" ]; then
-  source $HOME/.tokens
-fi
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -135,3 +129,12 @@ export PATH="$PATH:/Users/lunaticd/zig-macos"
 
 export FLYCTL_INSTALL="/Users/lunaticd/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# Wasmer
+export WASMER_DIR="/Users/lunaticd/.wasmer"
+[ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
+
+[[ "$(uname)" != "Darwin" ]] && LLVM_ENABLE_LLD="ON" || LLVM_ENABLE_LLD="OFF"
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
