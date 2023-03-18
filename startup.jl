@@ -17,8 +17,9 @@ if isinteractive()
 
     using Revise
     using OhMyREPL
-    # using Term
-    using REPLVim
 
-    @async REPLVim.serve()
+    # using Term
+
+    # using REPLVim
+    # @async REPLVim.serve()
 end
