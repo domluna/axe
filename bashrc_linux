@@ -18,8 +18,6 @@ if [ -f "$HOME/.tokens" ]; then
   source $HOME/.tokens
 fi
 
-# julia
-export JULIA_REVISE_INCLUDE=1
 export JULIA_STACKTRACE_MINIMAL=true
 
 export EDITOR=nvim
@@ -30,8 +28,6 @@ fi
 alias j='julialauncher'
 alias jn='julialauncher +dev'
 alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
 if command -v nvim > /dev/null; then
    alias vim='nvim'
    alias vi='nvim'
@@ -54,9 +50,9 @@ fi
 alias ipy='ipython'
 # alias jfmt='julia --startup=no -e "using JuliaFormatter; format(\".\")"'
 jfmt () {
-      local dir=${1:-.}
-      julia --startup=no -e "using JuliaFormatter; format(\"$dir\")"
-  }
+   local dir=${1:-.}
+   julia --startup=no -e "using JuliaFormatter; format(\"$dir\")"
+}
 
 export FZF_DEFAULT_OPTS='--height 80% --reverse --inline-info'
 export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude '{.git,.mypy_cache,node_modules,vendor}/'"
@@ -71,11 +67,11 @@ bind -x '"\C-p": nvim $(fzf);'
 #       --height=50% --layout=reverse'
 
 tm() {
- [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
- if [ $1 ]; then
-    tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
- fi
- session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
+   [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
+   if [ $1 ]; then
+      tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
+   fi
+   session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
 }
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
@@ -185,3 +181,50 @@ if [ -f '/home/dom/google-cloud-sdk/path.bash.inc' ]; then . '/home/dom/google-c
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/dom/google-cloud-sdk/completion.bash.inc' ]; then . '/home/dom/google-cloud-sdk/completion.bash.inc'; fi
+
+# Enable programmable completion features
+if [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+fi
+
+# Custom directory cycling completion with contents display
+_cycle_dirs_with_contents() {
+    local cur prev dir_prefix dirs
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    dir_prefix="$1"
+
+    if [[ ${prev} == cd ]]; then
+        dirs=$(find . -maxdepth 1 -type d -name "${cur}*" -exec basename {} \; 2>/dev/null)
+        COMPREPLY=( $(compgen -W "${dirs}" -- ${cur}) )
+
+        return 0
+    fi
+}
+
+complete -F _cycle_dirs_with_contents cd
+
+# Change the behavior of the Tab key to cycle through the available options
+bind 'TAB:menu-complete'
+
+# Custom cd with fzf integration using fd
+function cdf() {
+  local dir
+  dir=$(fd --type d --max-depth 3 --hidden --exclude '{.git,.mypy_cache,node_modules,vendor,__pycache__,.ipynb_checkpoints}/' . | fzf --preview 'ls -lah --color=always {}' --preview-window=up:50%:wrap)
+  if [[ -n "$dir" ]]; then
+    cd "$dir" || return 1
+  fi
+}
+
+# Tab completion for custom cd
+complete -C 'compgen -A directory' cdf
+
+# Custom ... function to navigate upwards with fzf using fd
+function ...() {
+  local dir
+  dir=$(fd --type d --max-depth 1 --hidden --exclude '{.git,.mypy_cache,node_modules,vendor,__pycache__,.ipynb_checkpoints}/' --search-path .. | fzf --preview 'ls -lah --color=always {}' --preview-window=up:50%:wrap)
+  if [[ -n "$dir" ]]; then
+    cd "$dir" || return 1
+  fi
+}

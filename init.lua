@@ -47,10 +47,10 @@ require('packer').startup(function(use)
     end,
   }
 
-  use { -- Additional text objects via treesitter
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    after = 'nvim-treesitter',
-  }
+  -- use { -- Additional text objects via treesitter
+  --   'nvim-treesitter/nvim-treesitter-textobjects',
+  --   after = 'nvim-treesitter',
+  -- }
 
   -- Git related plugins
   use 'tpope/vim-fugitive'
@@ -116,6 +116,19 @@ require('packer').startup(function(use)
       }
     end
   }
+
+  use({
+    "utilyre/barbecue.nvim",
+    tag = "*",
+    requires = {
+      "SmiteshP/nvim-navic",
+      "nvim-tree/nvim-web-devicons", -- optional dependency
+    },
+    after = "nvim-web-devicons", -- keep this if you're using NvChad
+    config = function()
+      require("barbecue").setup()
+    end,
+  })
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -274,6 +287,8 @@ require('gitsigns').setup {
   },
 }
 
+local telescopeactions = require('telescope.actions')
+
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
@@ -300,6 +315,8 @@ require('telescope').setup {
         ['<C-u>'] = false,
         ['<C-d>'] = false,
       },
+      n = {
+      }
     },
   },
 }
@@ -328,66 +345,32 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'julia', 'svelte', 'html', 'css',
+  ensure_installed = {
+    'tsx',
+    'c',
+    'go',
+    'lua',
+    'python',
+    'rust',
+    'typescript',
+    'javascript',
+    'help',
+    'julia',
+    'svelte',
+    'html',
+    'css',
     'markdown',
-    'bash', 'json',
-    'vim', 'prisma', 'nix' },
-
-  highlight = { enable = true },
-  indent = { enable = true, disable = { 'python' } },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = '<c-space>',
-      node_incremental = '<c-space>',
-      scope_incremental = '<c-s>',
-      node_decremental = '<c-backspace>',
-    },
+    'bash',
+    'yaml',
+    'latex',
+    'json',
+    'vim',
+    'prisma',
+    'nix'
   },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ['aa'] = '@parameter.outer',
-        ['ia'] = '@parameter.inner',
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['ac'] = '@class.outer',
-        ['ic'] = '@class.inner',
-      },
-    },
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        [']m'] = '@function.outer',
-        [']]'] = '@class.outer',
-      },
-      goto_next_end = {
-        [']M'] = '@function.outer',
-        [']['] = '@class.outer',
-      },
-      goto_previous_start = {
-        ['[m'] = '@function.outer',
-        ['[['] = '@class.outer',
-      },
-      goto_previous_end = {
-        ['[M'] = '@function.outer',
-        ['[]'] = '@class.outer',
-      },
-    },
-    swap = {
-      enable = true,
-      swap_next = {
-        ['<leader>a'] = '@parameter.inner',
-      },
-      swap_previous = {
-        ['<leader>A'] = '@parameter.inner',
-      },
-    },
-  },
+  autopairs = { enable = true },
+  highlight = { enable = true, disable = { 'css' } },
+  indent = { enable = true, disable = { 'python', 'css' } },
   context_commentstring = {
     enable = true,
     enable_autocmd = false,
@@ -440,11 +423,11 @@ local on_attach = function(_, bufnr)
   end, '[W]orkspace [L]ist Folders')
 
   -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format({ timeout_ms = 2000 })
-  end, { desc = 'Format current buffer with LSP' })
-
-  nmap('<leader>f', '<CMD>Format<CR>', '[F]ormat Current File')
+  -- vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+  --   vim.lsp.buf.format({ timeout_ms = 2000 })
+  -- end, { desc = 'Format current buffer with LSP' })
+  --
+  -- nmap('<leader>f', '<CMD>Format<CR>', '[F]ormat Current File')
 end
 --
 -- Enable inline errors
@@ -525,6 +508,35 @@ require('fidget').setup()
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 
+--   פּ ﯟ   some other good icons
+local kind_icons = {
+	Text = "",
+	Method = "m",
+	Function = "",
+	Constructor = "",
+	Field = "",
+	Variable = "",
+	Class = "",
+	Interface = "",
+	Module = "",
+	Property = "",
+	Unit = "",
+	Value = "",
+	Enum = "",
+	Keyword = "",
+	Snippet = "",
+	Color = "",
+	File = "",
+	Reference = "",
+	Folder = "",
+	EnumMember = "",
+	Constant = "",
+	Struct = "",
+	Event = "",
+	Operator = "",
+	TypeParameter = "",
+}
+
 cmp.setup {
   snippet = {
     expand = function(args)
@@ -532,6 +544,8 @@ cmp.setup {
     end,
   },
   mapping = cmp.mapping.preset.insert {
+    ['<C-k>'] = cmp.mapping.select_prev_item(),
+    ['<C-j>'] = cmp.mapping.select_next_item(),
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
@@ -540,15 +554,17 @@ cmp.setup {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-    -- ['<Tab>'] = cmp.mapping(function(fallback)
-    --   if cmp.visible() then
-    --     cmp.select_next_item()
-    --   elseif luasnip.expand_or_jumpable() then
-    --     luasnip.expand_or_jump()
-    --   else
-    --     fallback()
-    --   end
-    -- end, { 'i', 's' }),
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expandable() then
+        luasnip.expand()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
@@ -561,12 +577,25 @@ cmp.setup {
   },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
-    -- { name = 'nvim_lua' },
-    -- { name = 'luasnip' },
-    { name = 'path' },
-  }, {
+    { name = 'luasnip' },
     { name = 'buffer' },
+    { name = 'path' },
   }),
+  formatting = {
+    fields = { "kind", "abbr", "menu" },
+    format = function(entry, vim_item)
+      -- Kind icons
+      vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
+      -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+      vim_item.menu = ({
+        nvim_lsp = "[LSP]",
+        luasnip = "[Snippet]",
+        buffer = "[Buffer]",
+        path = "[Path]",
+      })[entry.source.name]
+      return vim_item
+    end,
+  },
   window = {
     completion = cmp.config.window.bordered(),
     documentation = cmp.config.window.bordered(),
