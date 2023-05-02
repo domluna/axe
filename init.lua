@@ -12,6 +12,7 @@ require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   use 'nyoom-engineering/oxocarbon.nvim'
+  use "EdenEast/nightfox.nvim" -- Packer
 
   use { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
@@ -440,6 +441,7 @@ vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
 --
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
+
 local servers = {
   clangd = {},
   rust_analyzer = {},
@@ -448,7 +450,6 @@ local servers = {
     settings = {
       python = {
         analysis = {
-          extraPaths = { "/home/dom/.local/lib/python3.11/site-packages" },
           typeCheckingMode = 'off',
           autoSearchPaths = true,
           useLibraryCodeForTypes = true,
@@ -493,11 +494,21 @@ mason_lspconfig.setup {
 
 mason_lspconfig.setup_handlers {
   function(server_name)
-    require('lspconfig')[server_name].setup {
+    local s = {
       capabilities = capabilities,
       on_attach = on_attach,
       settings = servers[server_name],
     }
+    if server_name == 'pyright' then
+      -- do  this for linux only
+      if vim.fn.has('unix') == 1 then
+        s.before_init = function(_, config)
+          config.settings.python.pythonPath = '/usr/bin/python3.11'
+          config.settings.python.analysis.extraPaths = { '/home/dom/.local/lib/python3.11/site-packages/' }
+        end
+      end
+    end
+    require('lspconfig')[server_name].setup (s)
   end,
 }
 
@@ -554,26 +565,26 @@ cmp.setup {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-    ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expandable() then
-        luasnip.expand()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
+    -- ['<Tab>'] = cmp.mapping(function(fallback)
+    --   if cmp.visible() then
+    --     cmp.select_next_item()
+    --   elseif luasnip.expandable() then
+    --     luasnip.expand()
+    --   elseif luasnip.expand_or_jumpable() then
+    --     luasnip.expand_or_jump()
+    --   else
+    --     fallback()
+    --   end
+    -- end, { 'i', 's' }),
+    -- ['<S-Tab>'] = cmp.mapping(function(fallback)
+    --   if cmp.visible() then
+    --     cmp.select_prev_item()
+    --   elseif luasnip.jumpable(-1) then
+    --     luasnip.jump(-1)
+    --   else
+    --     fallback()
+    --   end
+    -- end, { 'i', 's' }),
   },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
