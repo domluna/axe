@@ -28,3 +28,5 @@
 	defaultBranch = main
 [safe]
 	directory = /Users/lunaticd/work/ocean
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/

@@ -4,6 +4,8 @@ export PS1="λ \w: "
 export LC_ALL="C.UTF8"
 export LANG="C.UTF8"
 
+export GOPATH="$HOME/go"
+
 export HISTSIZE=1000000
 export HISEFILESIZE=1000000
 # Avoid duplicates
@@ -150,9 +152,6 @@ PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$HOME/nvim-linux64/bin:$PATH"
 
 eval "$(direnv hook bash)"
-
-# Add $HOME/code/python-libs to PYTHONPATH
-export PYTHONPATH="$HOME/code/python-libs:$PYTHONPATH"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
