@@ -227,3 +227,8 @@ function ...() {
     cd "$dir" || return 1
   fi
 }
+
+export CUDA_HOME="$HOME/local/cuda-11.8"
+export CUDA_VERSION="118"
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/dom/local/cuda-11.8/lib64
+export PATH=$PATH:/home/dom/local/cuda-11.8/bin

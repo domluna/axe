@@ -370,7 +370,7 @@ require('nvim-treesitter.configs').setup {
     'nix'
   },
   autopairs = { enable = true },
-  highlight = { enable = true, disable = { 'css' } },
+  highlight = { enable = true  },
   indent = { enable = true, disable = { 'python', 'css' } },
   context_commentstring = {
     enable = true,
@@ -424,9 +424,9 @@ local on_attach = function(_, bufnr)
   end, '[W]orkspace [L]ist Folders')
 
   -- Create a command `:Format` local to the LSP buffer
-  -- vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-  --   vim.lsp.buf.format({ timeout_ms = 2000 })
-  -- end, { desc = 'Format current buffer with LSP' })
+  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+    vim.lsp.buf.format({ timeout_ms = 2000 })
+  end, { desc = 'Format current buffer with LSP' })
   --
   -- nmap('<leader>f', '<CMD>Format<CR>', '[F]ormat Current File')
 end
@@ -471,7 +471,12 @@ local servers = {
   jsonls = {},
   vimls = {},
   ruff_lsp = {},
-  lua_ls = {},
+  lua_ls = {
+    Lua = {
+      workspace = { checkThirdParty = false },
+      telemetry = { enable = false },
+    }
+  },
   rnix = {},
 }
 
@@ -518,36 +523,6 @@ require('fidget').setup()
 -- nvim-cmp setup
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
-
---   פּ ﯟ   some other good icons
-local kind_icons = {
-	Text = "",
-	Method = "m",
-	Function = "",
-	Constructor = "",
-	Field = "",
-	Variable = "",
-	Class = "",
-	Interface = "",
-	Module = "",
-	Property = "",
-	Unit = "",
-	Value = "",
-	Enum = "",
-	Keyword = "",
-	Snippet = "",
-	Color = "",
-	File = "",
-	Reference = "",
-	Folder = "",
-	EnumMember = "",
-	Constant = "",
-	Struct = "",
-	Event = "",
-	Operator = "",
-	TypeParameter = "",
-}
-
 cmp.setup {
   snippet = {
     expand = function(args)
@@ -592,21 +567,6 @@ cmp.setup {
     { name = 'buffer' },
     { name = 'path' },
   }),
-  formatting = {
-    fields = { "kind", "abbr", "menu" },
-    format = function(entry, vim_item)
-      -- Kind icons
-      vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
-      -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-      vim_item.menu = ({
-        nvim_lsp = "[LSP]",
-        luasnip = "[Snippet]",
-        buffer = "[Buffer]",
-        path = "[Path]",
-      })[entry.source.name]
-      return vim_item
-    end,
-  },
   window = {
     completion = cmp.config.window.bordered(),
     documentation = cmp.config.window.bordered(),
