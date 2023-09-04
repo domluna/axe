@@ -458,7 +458,7 @@ local servers = {
   },
   julials = {},
   zls = {},
-  tsserver = {},
+  -- tsserver = {},
   elixirls = {},
   svelte = {},
   tailwindcss = {},
