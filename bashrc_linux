@@ -53,7 +53,7 @@ alias ipy='ipython'
 # alias jfmt='julia --startup=no -e "using JuliaFormatter; format(\".\")"'
 jfmt () {
    local dir=${1:-.}
-   julia --startup=no -e "using JuliaFormatter; format(\"$dir\")"
+   julia --startup=no -t auto -e "using JuliaFormatter; format(\"$dir\")"
 }
 
 export FZF_DEFAULT_OPTS='--height 80% --reverse --inline-info'
