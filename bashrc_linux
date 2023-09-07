@@ -24,9 +24,6 @@ export JULIA_STACKTRACE_MINIMAL=true
 
 export EDITOR=nvim
 
-if command -v exa > /dev/null; then
-   alias ls='exa'
-fi
 alias j='julialauncher'
 alias jn='julialauncher +dev'
 alias ..='cd ..'

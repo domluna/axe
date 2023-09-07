@@ -13,9 +13,6 @@ alias j='julia'
 alias jn='$HOME/julia/julia'
 alias jfmt='julia --startup=no -e "using JuliaFormatter; format(\".\")"'
 
-if [ -n "${commands[exa]}" ]; then
-  alias ls='exa'
-fi
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
