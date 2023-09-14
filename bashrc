@@ -6,7 +6,6 @@ export GO111MODULE=on
 export EDITOR=nvim
 
 alias j1='julia'
-alias ls='exa'
 alias cat='bat'
 alias tree='ls --tree'
 alias ..='cd ..'
