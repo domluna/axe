@@ -11,8 +11,17 @@ require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
 
+  use "plan9-for-vimspace/acme-colors"
+
   use 'nyoom-engineering/oxocarbon.nvim'
   use "EdenEast/nightfox.nvim" -- Packer
+
+  use  {
+  'stefanvanburen/rams',
+    requires = {
+    'rktjmp/lush.nvim',
+    },
+  }
 
   use { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
@@ -202,7 +211,8 @@ vim.opt.background = "dark" -- set this to dark or light
 -- vim.opt.background = "light" -- set this to dark or light
 vim.cmd [[colorscheme oxocarbon]]
 -- vim.cmd [[colorscheme rams]]
--- vim.cmd [[colorscheme tokyonight-moon]]
+-- syntax off
+vim.cmd("syntax off")
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect,noinsert'
@@ -288,7 +298,7 @@ require('gitsigns').setup {
   },
 }
 
-local telescopeactions = require('telescope.actions')
+-- local telescopeactions = require('telescope.actions')
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
@@ -325,6 +335,7 @@ require('telescope').setup {
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
 
+-- HERE !!!
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader>b', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
