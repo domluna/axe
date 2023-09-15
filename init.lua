@@ -15,6 +15,7 @@ require('packer').startup(function(use)
 
   use 'nyoom-engineering/oxocarbon.nvim'
   use "EdenEast/nightfox.nvim" -- Packer
+use 'chriskempson/base16-vim'
 
   use  {
   'stefanvanburen/rams',
@@ -209,7 +210,9 @@ vim.o.relativenumber = true
 vim.o.termguicolors = true
 vim.opt.background = "dark" -- set this to dark or light
 -- vim.opt.background = "light" -- set this to dark or light
-vim.cmd [[colorscheme oxocarbon]]
+-- vim.cmd [[colorscheme base16-grayscale-dark]]
+vim.cmd [[colorscheme base16-grayscale-light]]
+-- vim.cmd [[colorscheme oxocarbon]]
 -- vim.cmd [[colorscheme rams]]
 -- syntax off
 vim.cmd("syntax off")
@@ -475,11 +478,9 @@ local servers = {
   tailwindcss = {},
   html = {},
   cssls = {},
-  prismals = {},
   bashls = {},
   jsonls = {},
   vimls = {},
-  ruff_lsp = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
