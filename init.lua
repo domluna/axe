@@ -211,7 +211,8 @@ vim.o.termguicolors = true
 vim.opt.background = "dark" -- set this to dark or light
 -- vim.opt.background = "light" -- set this to dark or light
 -- vim.cmd [[colorscheme base16-grayscale-dark]]
-vim.cmd [[colorscheme base16-grayscale-light]]
+vim.cmd [[colorscheme base16-onedark]]
+-- vim.cmd [[colorscheme base16-grayscale-light]]
 -- vim.cmd [[colorscheme oxocarbon]]
 -- vim.cmd [[colorscheme rams]]
 -- syntax off
