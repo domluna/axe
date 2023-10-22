@@ -93,8 +93,6 @@ use 'chriskempson/base16-vim'
     end
   }
 
-  use 'andreypopp/julia-repl-vim'
-
   use 'github/copilot.vim'
 
   use {
@@ -105,28 +103,6 @@ use 'chriskempson/base16-vim'
   }
 
   use 'JoosepAlviste/nvim-ts-context-commentstring'
-
-  use { 'quarto-dev/quarto-nvim',
-    requires = {
-      'jmbuhr/otter.nvim',
-      'neovim/nvim-lspconfig'
-    },
-    config = function()
-      require 'quarto'.setup {
-        lspFeatures = {
-          enabled = true,
-          languages = { 'r', 'python', 'julia' },
-          diagnostics = {
-            enabled = true,
-            triggers = { "BufWrite" }
-          },
-          completion = {
-            enabled = true
-          }
-        }
-      }
-    end
-  }
 
   use({
     "utilyre/barbecue.nvim",
@@ -364,6 +340,7 @@ require('nvim-treesitter.configs').setup {
   ensure_installed = {
     'tsx',
     'c',
+    'cpp',
     'go',
     'lua',
     'python',
