@@ -14,7 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   {
     "folke/tokyonight.nvim",
-    lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
       -- load the colorscheme here
@@ -22,7 +22,7 @@ require("lazy").setup({
     end,
   },
   "folke/which-key.nvim",
-  { "folke/neoconf.nvim", cmd = "Neoconf" },
+  { "folke/neoconf.nvim",                       cmd = "Neoconf" },
   "folke/neodev.nvim",
   "williamboman/mason.nvim",
 
@@ -30,12 +30,10 @@ require("lazy").setup({
 
   'nvim-lualine/lualine.nvim',
   'numToStr/Comment.nvim',
-
-  { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
+  { 'nvim-telescope/telescope.nvim',            branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
-  { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 },
-
+  { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make',     cond = vim.fn.executable 'make' == 1 },
   'ggandor/leap.nvim',
 
   'tpope/vim-fugitive',
@@ -280,9 +278,9 @@ local on_attach = function(_, bufnr)
   -- end, '[W]orkspace [L]ist Folders')
 
   -- Create a command `:Format` local to the LSP buffer
-  -- vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-  --   vim.lsp.buf.format({ timeout_ms = 2000 })
-  -- end, { desc = 'Format current buffer with LSP' })
+  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+    vim.lsp.buf.format({ timeout_ms = 2000 })
+  end, { desc = 'Format current buffer with LSP' })
   --
   -- nmap('<leader>f', '<CMD>Format<CR>', '[F]ormat Current File')
 end
@@ -326,11 +324,12 @@ local setuplsp = function(server_name)
     elseif vim.fn.has('macunix') == 1 then
       s.before_init = function(_, config)
         config.settings.python.pythonPath = '/opt/homebrew/bin/python3.11'
-        config.settings.python.analysis.extraPaths = { '/opt/homebrew/Cellar/python@3.11/3.11.5/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/' }
+        config.settings.python.analysis.extraPaths = {
+          '/opt/homebrew/Cellar/python@3.11/3.11.5/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/' }
       end
     end
   end
-  require('lspconfig')[server_name].setup (s)
+  require('lspconfig')[server_name].setup(s)
 end
 
 for server_name, _ in pairs(servers) do
