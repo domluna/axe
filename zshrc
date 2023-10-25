@@ -135,3 +135,9 @@ export WASMER_DIR="/Users/lunaticd/.wasmer"
 
 [[ "$(uname)" != "Darwin" ]] && LLVM_ENABLE_LLD="ON" || LLVM_ENABLE_LLD="OFF"
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
+
+ export PATH="/Users/lunaticd/code/executorch/third-party/flatbuffers/cmake-out:${PATH}"
