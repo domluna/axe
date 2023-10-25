@@ -24,6 +24,7 @@ require("lazy").setup({
   "folke/which-key.nvim",
   { "folke/neoconf.nvim", cmd = "Neoconf" },
   "folke/neodev.nvim",
+  "williamboman/mason.nvim",
 
   "sheerun/vim-polyglot",
 
@@ -285,12 +286,8 @@ local on_attach = function(_, bufnr)
   --
   -- nmap('<leader>f', '<CMD>Format<CR>', '[F]ormat Current File')
 end
---
--- Enable the following language servers
---  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
---
---  Add any additional override configuration in the following tables. They will be passed to
---  the `settings` field of the server config. You must look up that documentation yourself.
+
+require("mason").setup()
 
 local servers = {
   clangd = {},
@@ -306,9 +303,7 @@ local servers = {
   cssls = {},
   bashls = {},
   jsonls = {},
-  vimls = {},
   lua_ls = {},
-  rnix = {},
 }
 --
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
@@ -417,5 +412,3 @@ vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGai
   command = "if mode() != 'c' | checktime | endif",
   pattern = { "*" },
 })
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
