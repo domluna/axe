@@ -8,6 +8,7 @@ Things to install:
 * zoxide (jump to dirs)
 * ripgrep
 * fd
+* helix
 
 On MacOS just use homebrew - Linux nix + apt-get.
 

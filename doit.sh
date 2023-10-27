@@ -3,6 +3,7 @@
 # remove old files
 rm -rf $HOME/.config/nvim/
 rm -rf $HOME/.config/starship.toml
+rm -rf $HOME/.config/helix/
 rm $HOME/.tmux.conf
 rm $HOME/.gitconfig
 rm $HOME/.bashrc
@@ -16,6 +17,7 @@ rm $HOME/.config/nixpkgs/home.nix
 mkdir -p $HOME/.config/nvim/{lua,vim}
 mkdir -p $HOME/.julia/config
 mkdir -p $HOME/.config/kitty
+mkdir -p $HOME/.config/helix
 
 if [ "$(uname -s)" == "Darwin" ]
 then
@@ -35,3 +37,4 @@ ln -s $PWD/lua/*.lua $HOME/.config/nvim/lua/
 ln -s $PWD/vim/* $HOME/.config/nvim/vim/
 ln -s $PWD/kitty.conf $HOME/.config/kitty/kitty.conf
 ln -s $PWD/home.nix $HOME/.config/nixpkgs/home.nix
+ln -s $PWD/helix/* $HOME/.config/helix/
