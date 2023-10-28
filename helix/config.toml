@@ -1,4 +1,4 @@
-theme = "rose-pine-moon"
+theme = "onedark"
 
 [editor]
 line-number = "relative"
@@ -16,3 +16,8 @@ select = "underline"
 hidden = false
 
 [keys.normal]
+g = { a = "code_action", o = "goto_last_accessed_file" }
+"ret" = ["move_line_down", "goto_first_nonwhitespace"] # Maps the enter key to move to start of next line
+X = "extend_line_above"
+D = "delete_char_backward"
+
