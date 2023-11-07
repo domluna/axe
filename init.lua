@@ -22,7 +22,6 @@ require("lazy").setup({
     end,
   },
   "folke/neodev.nvim",
-  "williamboman/mason.nvim",
 
   "sheerun/vim-polyglot",
 
@@ -282,8 +281,6 @@ local on_attach = function(_, bufnr)
   --
   -- nmap('<leader>f', '<CMD>Format<CR>', '[F]ormat Current File')
 end
-
-require("mason").setup()
 
 local servers = {
   clangd = {},
