@@ -310,17 +310,16 @@ local setuplsp = function(server_name)
     settings = servers[server_name],
   }
   if server_name == 'pyright' then
-    -- do  this for linux only
-    if vim.fn.has('unix') == 1 and not vim.fn.has('mac') == 1 then
-      s.before_init = function(_, config)
-        config.settings.python.pythonPath = '/usr/bin/python3.11'
-        config.settings.python.analysis.extraPaths = { '/home/dom/.local/lib/python3.11/site-packages/' }
-      end
-    elseif vim.fn.has('macunix') == 1 then
+    if vim.fn.has('macunix') == 1 then
       s.before_init = function(_, config)
         config.settings.python.pythonPath = '/opt/homebrew/bin/python3.11'
         config.settings.python.analysis.extraPaths = {
           '/opt/homebrew/Cellar/python@3.11/3.11.5/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/' }
+      end
+    elseif vim.fn.has('unix') == 1 then
+      s.before_init = function(_, config)
+        config.settings.python.pythonPath = '/usr/bin/python3.11'
+        config.settings.python.analysis.extraPaths = { '/home/dom/.local/lib/python3.11/site-packages/' }
       end
     end
   end
