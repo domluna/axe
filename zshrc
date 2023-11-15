@@ -141,3 +141,5 @@ export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
 
  export PATH="/Users/lunaticd/code/executorch/third-party/flatbuffers/cmake-out:${PATH}"
+
+export LLAMACPP_DIR="$HOME/code/llama.cpp"
