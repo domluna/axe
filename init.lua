@@ -422,6 +422,12 @@ require'nvim-treesitter.configs'.setup {
 
   ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
   -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+  indent = {
+	  enable = false,
+  },
+    autotag = {
+        enable = true,
+    },
 
   highlight = {
     enable = true,
@@ -433,12 +439,14 @@ require'nvim-treesitter.configs'.setup {
     -- disable = { "c", "rust" },
     -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
     disable = function(lang, buf)
-        local max_filesize = 100 * 1024 -- 100 KB
-        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-        if ok and stats and stats.size > max_filesize then
-            return true
-        end
+        -- local max_filesize = 100 * 1024 -- 100 KB
+        -- local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+        -- if ok and stats and stats.size > max_filesize then
+        --     return true
+        -- end
+	return false
     end,
+
 
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
@@ -447,3 +455,29 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
+
+vim.o.tabstop = 4 -- A TAB character looks like 4 spaces
+vim.o.expandtab = true -- Pressing the TAB key will insert spaces instead of a TAB character
+vim.o.softtabstop = 4 -- Number of spaces inserted instead of a TAB character
+vim.o.shiftwidth = 4 -- Number of spaces inserted when indenting
+
+
+local set_indent = function(lang, ts)
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = lang,
+        callback = function()
+            vim.opt_local.tabstop = ts
+            vim.opt_local.shiftwidth = ts
+            vim.opt_local.softtabstop = ts
+        end
+    })
+end
+
+set_indent("javascript", 2)
+set_indent("typescript", 2)
+set_indent("svelte", 2)
+set_indent("html", 2)
+set_indent("css", 2)
+set_indent("json", 2)
+set_indent("typescriptreact", 2) -- For TSX files
+set_indent("javascriptreact", 2) -- For JSX files
