@@ -256,21 +256,14 @@ local on_attach = function(_, bufnr)
   end
 
   nmap('<space>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  nmap('<space>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  -- nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-  -- nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
-  -- Lesser used LSP functionality
-  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
   -- nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
   -- nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
   -- nmap('<leader>wl', function()
@@ -279,10 +272,9 @@ local on_attach = function(_, bufnr)
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format({ timeout_ms = 2000 })
+    vim.lsp.buf.format { async = true }
   end, { desc = 'Format current buffer with LSP' })
-  --
-  -- nmap('<leader>f', '<CMD>Format<CR>', '[F]ormat Current File')
+  vim.keymap.set('n', '<space>f', '<CMD>Format<CR>', '[F]ormat Current File')
 end
 
 local servers = {
@@ -316,12 +308,15 @@ local setuplsp = function(server_name)
   if server_name == 'pyright' then
     if vim.fn.has('macunix') == 1 then
       s.before_init = function(_, config)
+	      -- add use fixit for linter
+	config.settings.python.analysis.useLibraryCodeForTypes = true
         config.settings.python.pythonPath = '/opt/homebrew/bin/python3.11'
         config.settings.python.analysis.extraPaths = {
           '/opt/homebrew/Cellar/python@3.11/3.11.5/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/' }
       end
     elseif vim.fn.has('unix') == 1 then
       s.before_init = function(_, config)
+	config.settings.python.analysis.useLibraryCodeForTypes = true
         config.settings.python.pythonPath = '/usr/bin/python3.11'
         config.settings.python.analysis.extraPaths = { '/home/dom/.local/lib/python3.11/site-packages/' }
       end
@@ -333,6 +328,8 @@ end
 for server_name, _ in pairs(servers) do
   setuplsp(server_name)
 end
+
+
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
@@ -426,6 +423,12 @@ require'nvim-treesitter.configs'.setup {
 
   ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
   -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+  indent = {
+	  enable = false,
+  },
+    autotag = {
+        enable = true,
+    },
 
   highlight = {
     enable = true,
@@ -437,12 +440,14 @@ require'nvim-treesitter.configs'.setup {
     -- disable = { "c", "rust" },
     -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
     disable = function(lang, buf)
-        local max_filesize = 100 * 1024 -- 100 KB
-        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-        if ok and stats and stats.size > max_filesize then
-            return true
-        end
+        -- local max_filesize = 100 * 1024 -- 100 KB
+        -- local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+        -- if ok and stats and stats.size > max_filesize then
+        --     return true
+        -- end
+	return false
     end,
+
 
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
@@ -451,3 +456,29 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
+
+vim.o.tabstop = 4 -- A TAB character looks like 4 spaces
+vim.o.expandtab = true -- Pressing the TAB key will insert spaces instead of a TAB character
+vim.o.softtabstop = 4 -- Number of spaces inserted instead of a TAB character
+vim.o.shiftwidth = 4 -- Number of spaces inserted when indenting
+
+
+local set_indent = function(lang, ts)
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = lang,
+        callback = function()
+            vim.opt_local.tabstop = ts
+            vim.opt_local.shiftwidth = ts
+            vim.opt_local.softtabstop = ts
+        end
+    })
+end
+
+set_indent("javascript", 2)
+set_indent("typescript", 2)
+set_indent("svelte", 2)
+set_indent("html", 2)
+set_indent("css", 2)
+set_indent("json", 2)
+set_indent("typescriptreact", 2) -- For TSX files
+set_indent("javascriptreact", 2) -- For JSX files
