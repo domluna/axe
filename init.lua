@@ -292,13 +292,14 @@ local servers = {
   pyright = {},
   zls = {},
   tsserver = {},
+  biome = {},
   -- julials = {},
   svelte = {},
   tailwindcss = {},
-  html = {},
-  cssls = {},
+  -- html = {},
+  -- cssls = {},
+  -- jsonls = {},
   bashls = {},
-  jsonls = {},
   lua_ls = {},
 }
 --

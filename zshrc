@@ -143,3 +143,14 @@ export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
  export PATH="/Users/lunaticd/code/executorch/third-party/flatbuffers/cmake-out:${PATH}"
 
 export LLAMACPP_DIR="$HOME/code/llama.cpp"
+
+mk() {
+    # Extract the directory path from the provided full file path
+    local dir_path=$(dirname "$1")
+
+    # Create the directory if it does not exist
+    mkdir -p "$dir_path"
+
+    # Create the file
+    touch "$1"
+}
