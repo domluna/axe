@@ -13,22 +13,30 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   {
-    "folke/tokyonight.nvim",
-    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+    "catppuccin/nvim",
+    name = "catppuccin",
     priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
-      -- load the colorscheme here
-      vim.cmd([[colorscheme tokyonight]])
+      vim.cmd([[colorscheme catppuccin]])
     end,
+  },
+  {
+    "folke/tokyonight.nvim",
+    lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    -- priority = 1000, -- make sure to load this before all the other start plugins
+    -- config = function()
+    --   -- load the colorscheme here
+    --   vim.cmd([[colorscheme tokyonight]])
+    -- end,
   },
   "folke/neodev.nvim",
 
   'nvim-lualine/lualine.nvim',
   'numToStr/Comment.nvim',
-  { 'nvim-telescope/telescope.nvim',            branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
+  { 'nvim-telescope/telescope.nvim',            tag = '0.1.5', dependencies = { 'nvim-lua/plenary.nvim' } },
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
-  { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make',     cond = vim.fn.executable 'make' == 1 },
+  { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make',  cond = vim.fn.executable 'make' == 1 },
   'ggandor/leap.nvim',
 
   'tpope/vim-fugitive',
@@ -71,8 +79,6 @@ require("lazy").setup({
     'hrsh7th/nvim-cmp',
     dependencies = {
       'hrsh7th/cmp-nvim-lsp',
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
@@ -82,7 +88,8 @@ require("lazy").setup({
   {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
-  }
+  },
+  'JuliaEditorSupport/julia-vim',
 })
 
 
@@ -120,12 +127,12 @@ vim.o.clipboard = 'unnamedplus'
 vim.o.updatetime = 200
 vim.wo.signcolumn = 'yes:2'
 
-vim.o.colorcolumn = "93"
+vim.o.colorcolumn = "80"
 vim.o.relativenumber = true
 
 -- Set colorscheme
-vim.o.termguicolors = true
-vim.opt.background = "dark" -- set this to dark or light
+-- vim.o.termguicolors = true
+-- vim.opt.background = "dark" -- set this to dark or light
 -- vim.opt.background = "light" -- set this to dark or light
 vim.cmd("syntax on")
 
@@ -308,15 +315,15 @@ local setuplsp = function(server_name)
   if server_name == 'pyright' then
     if vim.fn.has('macunix') == 1 then
       s.before_init = function(_, config)
-	      -- add use fixit for linter
-	config.settings.python.analysis.useLibraryCodeForTypes = true
+        -- add use fixit for linter
+        config.settings.python.analysis.useLibraryCodeForTypes = true
         config.settings.python.pythonPath = '/opt/homebrew/bin/python3.11'
         config.settings.python.analysis.extraPaths = {
           '/opt/homebrew/Cellar/python@3.11/3.11.5/Frameworks/Python.framework/Versions/3.11/lib/python3.11/site-packages/' }
       end
     elseif vim.fn.has('unix') == 1 then
       s.before_init = function(_, config)
-	config.settings.python.analysis.useLibraryCodeForTypes = true
+        config.settings.python.analysis.useLibraryCodeForTypes = true
         config.settings.python.pythonPath = '/usr/bin/python3.11'
         config.settings.python.analysis.extraPaths = { '/home/dom/.local/lib/python3.11/site-packages/' }
       end
@@ -333,20 +340,14 @@ end
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
-local luasnip = require 'luasnip'
 cmp.setup {
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
-  },
   mapping = cmp.mapping.preset.insert {
     ['<C-k>'] = cmp.mapping.select_prev_item(),
     ['<C-j>'] = cmp.mapping.select_next_item(),
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
-    -- ['<C-e>'] = cmp.mapping.abort(),
+    -- ['<C-e>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
@@ -354,10 +355,6 @@ cmp.setup {
     -- ['<Tab>'] = cmp.mapping(function(fallback)
     --   if cmp.visible() then
     --     cmp.select_next_item()
-    --   elseif luasnip.expandable() then
-    --     luasnip.expand()
-    --   elseif luasnip.expand_or_jumpable() then
-    --     luasnip.expand_or_jump()
     --   else
     --     fallback()
     --   end
@@ -365,8 +362,6 @@ cmp.setup {
     -- ['<S-Tab>'] = cmp.mapping(function(fallback)
     --   if cmp.visible() then
     --     cmp.select_prev_item()
-    --   elseif luasnip.jumpable(-1) then
-    --     luasnip.jump(-1)
     --   else
     --     fallback()
     --   end
@@ -374,7 +369,6 @@ cmp.setup {
   },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
-    { name = 'luasnip' },
     { name = 'buffer' },
     { name = 'path' },
   }),
@@ -382,6 +376,9 @@ cmp.setup {
     completion = cmp.config.window.bordered(),
     documentation = cmp.config.window.bordered(),
   },
+  completion = {
+    completeopt = "menu,menuone,noselect",
+  }
 }
 
 cmp.setup.cmdline(':', {
@@ -407,71 +404,44 @@ vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGai
   pattern = { "*" },
 })
 
-require'nvim-treesitter.configs'.setup {
+require 'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the five listed parsers should always be installed)
-  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "rust", "go", "julia", "python", "sql", "javascript", "typescript", "svelte", "html", "css", "bash", "json" },
-
-  -- Install parsers synchronously (only applied to `ensure_installed`)
-  sync_install = false,
-
-  -- Automatically install missing parsers when entering buffer
-  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-  auto_install = true,
-
-  -- List of parsers to ignore installing (or "all")
-  -- ignore_install = { "javascript" },
-
-  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-  indent = {
-	  enable = false,
-  },
-    autotag = {
-        enable = true,
-    },
+  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "rust", "go", "julia", "python", "sql", "javascript", "typescript", "svelte", "html", "css", "bash", "json", "markdown" },
 
   highlight = {
     enable = true,
 
-    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
-    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
-    -- the name of the parser)
-    -- list of language that will be disabled
-    -- disable = { "c", "rust" },
-    -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
     disable = function(lang, buf)
-        -- local max_filesize = 100 * 1024 -- 100 KB
-        -- local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-        -- if ok and stats and stats.size > max_filesize then
-        --     return true
-        -- end
-	return false
+      local max_filesize = 10000 * 1024
+      local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+      if ok and stats and stats.size > max_filesize then
+        return true
+      end
+      return false
     end,
 
-
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
   },
+  indent = {
+    enable = true,
+  }
 }
 
-vim.o.tabstop = 4 -- A TAB character looks like 4 spaces
 vim.o.expandtab = true -- Pressing the TAB key will insert spaces instead of a TAB character
-vim.o.softtabstop = 4 -- Number of spaces inserted instead of a TAB character
-vim.o.shiftwidth = 4 -- Number of spaces inserted when indenting
+vim.o.tabstop = 2      -- A TAB character looks like 4 spaces
+vim.o.softtabstop = 2  -- Number of spaces inserted instead of a TAB character
+vim.o.shiftwidth = 2   -- Number of spaces inserted when indenting
 
 
 local set_indent = function(lang, ts)
-    vim.api.nvim_create_autocmd("FileType", {
-        pattern = lang,
-        callback = function()
-            vim.opt_local.tabstop = ts
-            vim.opt_local.shiftwidth = ts
-            vim.opt_local.softtabstop = ts
-        end
-    })
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = lang,
+    callback = function()
+      vim.opt_local.tabstop = ts
+      vim.opt_local.shiftwidth = ts
+      vim.opt_local.softtabstop = ts
+    end
+  })
 end
 
 set_indent("javascript", 2)
