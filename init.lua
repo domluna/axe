@@ -95,6 +95,17 @@ require("lazy").setup({
     run = ':TSUpdate',
   },
   'JuliaEditorSupport/julia-vim',
+
+{
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+    }
+}
 })
 
 
@@ -151,6 +162,8 @@ vim.opt.swapfile = false -- creates a swapfile
 
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
+
+vim.keymap.set('n', '<C-n>', '<CMD>Neotree<CR>')
 
 vim.keymap.set({ 'n', 'v' }, ';', ':', { silent = true })
 vim.keymap.set({ 'n' }, 'Y', 'y$', { silent = true })
@@ -246,8 +259,7 @@ vim.keymap.set('n', '<leader><space>', function()
 end, { desc = '[/] Fuzzily search in current buffer]' })
 
 vim.keymap.set('n', '<C-p>', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
+-- vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>r', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 
 -- LSP settings.
