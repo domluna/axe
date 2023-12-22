@@ -13,17 +13,11 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    priority = 1000, -- make sure to load this before all the other start plugins
-    config = function()
-      vim.cmd([[colorscheme catppuccin]])
-    end,
-  },
-  {
     "ellisonleao/gruvbox.nvim",
-    -- priority = 1000,
-    config = true
+    priority = 1000,
+    config = function()
+      vim.cmd([[colorscheme gruvbox]])
+    end,
   },
   {
     "folke/tokyonight.nvim",
@@ -38,10 +32,77 @@ require("lazy").setup({
 
   'nvim-lualine/lualine.nvim',
   'numToStr/Comment.nvim',
-  { 'nvim-telescope/telescope.nvim',            tag = '0.1.5', dependencies = { 'nvim-lua/plenary.nvim' } },
+  {
+    'nvim-telescope/telescope.nvim',
+    tag = '0.1.5',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require('telescope').setup {
+        defaults = {
+          file_ignore_patterns = { 'node_modules' },
+          vimgrep_arguments = {
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case'
+          },
+          sorting_strategy = "ascending",
+          layout_strategy = "flex",
+          layout_config = {
+            flex = {
+              flip_columns = 130
+            }
+          },
+          mappings = {
+            i = {
+              ['<C-u>'] = false,
+              ['<C-d>'] = false,
+            },
+            n = {
+            }
+          },
+        },
+      }
+    end,
+  },
 
-  -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
-  { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make',  cond = vim.fn.executable 'make' == 1 },
+  {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    build =
+    'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
+    config = function()
+      require('telescope').setup {
+        extensions = {
+          fzf = {
+            fuzzy = true,               -- false will only do exact matching
+            override_generic_sorter = true, -- override the generic sorter
+            override_file_sorter = true, -- override the file sorter
+            case_mode = "smart_case",   -- or "ignore_case" or "respect_case"
+            -- the default case_mode is "smart_case"
+          }
+        }
+      }
+      require('telescope').load_extension('fzf')
+    end
+  },
+  {
+    'nvim-telescope/telescope-ui-select.nvim',
+    config = function()
+      require 'telescope'.setup({
+        extensions = {
+          ['ui-select'] = {
+            -- require('telescope-themes').get_dropdown {
+            -- }
+          }
+        }
+      })
+      require('telescope').load_extension('ui-select')
+    end
+  },
+
   'ggandor/leap.nvim',
 
   'tpope/vim-fugitive',
@@ -55,7 +116,7 @@ require("lazy").setup({
     config = function()
       require("docs-view").setup {
         position = "right",
-        width = 60,
+        width = 80,
       }
     end
   },
@@ -96,7 +157,7 @@ require("lazy").setup({
   },
   'JuliaEditorSupport/julia-vim',
 
-{
+  {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     dependencies = {
@@ -105,7 +166,16 @@ require("lazy").setup({
       "MunifTanjim/nui.nvim",
       -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
     }
-}
+  },
+  {
+    's1n7ax/nvim-window-picker',
+    name = 'window-picker',
+    event = 'VeryLazy',
+    version = '2.*',
+    config = function()
+      require 'window-picker'.setup()
+    end,
+  },
 })
 
 
@@ -211,42 +281,6 @@ require('gitsigns').setup {
   },
 }
 
--- local telescopeactions = require('telescope.actions')
-
--- [[ Configure Telescope ]]
-require('telescope').setup {
-  defaults = {
-    file_ignore_patterns = { 'node_modules' },
-    vimgrep_arguments = {
-      'rg',
-      '--color=never',
-      '--no-heading',
-      '--with-filename',
-      '--line-number',
-      '--column',
-      '--smart-case'
-    },
-    sorting_strategy = "ascending",
-    layout_strategy = "flex",
-    layout_config = {
-      flex = {
-        flip_columns = 130
-      }
-    },
-    mappings = {
-      i = {
-        ['<C-u>'] = false,
-        ['<C-d>'] = false,
-      },
-      n = {
-      }
-    },
-  },
-}
-
--- Enable telescope fzf native, if installed
-pcall(require('telescope').load_extension, 'fzf')
-
 -- HERE !!!
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader>b', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
@@ -287,6 +321,7 @@ local on_attach = function(_, bufnr)
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+  nmap('<leader>ca', vim.lsp.buf.code_action, 'Code [A]ction')
 
   -- nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
   -- nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
@@ -308,11 +343,10 @@ local servers = {
   pyright = {},
   zls = {},
   tsserver = {},
-  biome = {},
   -- julials = {},
   svelte = {},
   tailwindcss = {},
-  -- html = {},
+  html = {},
   -- cssls = {},
   -- jsonls = {},
   bashls = {},
@@ -369,20 +403,6 @@ cmp.setup {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-    -- ['<Tab>'] = cmp.mapping(function(fallback)
-    --   if cmp.visible() then
-    --     cmp.select_next_item()
-    --   else
-    --     fallback()
-    --   end
-    -- end, { 'i', 's' }),
-    -- ['<S-Tab>'] = cmp.mapping(function(fallback)
-    --   if cmp.visible() then
-    --     cmp.select_prev_item()
-    --   else
-    --     fallback()
-    --   end
-    -- end, { 'i', 's' }),
   },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
