@@ -11,7 +11,7 @@ rm $HOME/.zshrc
 rm $HOME/.config/kitty/kitty.conf
 rm $HOME/.julia/config/startup.jl
 rm $HOME/.config/nixpkgs/home.nix
-rm $HOME/.wexterm.lua
+rm $HOME/.wezterm.lua
 
 # symlinks
 
@@ -39,4 +39,4 @@ ln -s $PWD/vim/* $HOME/.config/nvim/vim/
 ln -s $PWD/kitty.conf $HOME/.config/kitty/kitty.conf
 ln -s $PWD/home.nix $HOME/.config/nixpkgs/home.nix
 ln -s $PWD/helix/* $HOME/.config/helix/
-ln -s $PWD/wexterm.lua $HOME/.wexterm.lua
+ln -s $PWD/wezterm.lua $HOME/.wezterm.lua
