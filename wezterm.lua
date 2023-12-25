@@ -4,6 +4,7 @@ local wezterm = require 'wezterm'
 -- This table will hold the configuration.
 local config = {}
 
+
 -- In newer versions of wezterm, use the config_builder which will
 -- help provide clearer error messages
 if wezterm.config_builder then
@@ -13,7 +14,10 @@ end
 -- This is where you actually apply your config choices
 
 -- For example, changing the color scheme:
-config.color_scheme = 'AdventureTime'
+config.font = wezterm.font 'JuliaMono'
+-- config.color_scheme = 'ayu'
+config.color_scheme = 'Gruvbox Dark (Gogh)'
+-- config.color_scheme = 'Chalk (Gogh)'
 
 -- and finally, return the configuration to wezterm
 return config
