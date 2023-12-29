@@ -19,5 +19,8 @@ config.font = wezterm.font 'JuliaMono'
 config.color_scheme = 'Gruvbox Dark (Gogh)'
 -- config.color_scheme = 'Chalk (Gogh)'
 
+config.audible_bell = "Disabled"
 -- and finally, return the configuration to wezterm
 return config
+
+
