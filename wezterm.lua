@@ -32,5 +32,8 @@ config.enable_wayland = true
      action=wezterm.action{PasteFrom="Clipboard"}},
   }
 
+config.audible_bell = "Disabled"
 -- and finally, return the configuration to wezterm
 return config
+
+
