@@ -154,3 +154,5 @@ mk() {
     # Create the file
     touch "$1"
 }
+
+alias c="open $1 -a \"Visual Studio Code\""
