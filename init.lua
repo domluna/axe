@@ -36,6 +36,11 @@ require('lazy').setup {
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   { 'numToStr/Comment.nvim', opts = {} },
   {
+    'davidmh/mdx.nvim',
+    config = true,
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  },
+  {
     'nvim-telescope/telescope.nvim',
     tag = '0.1.5',
     dependencies = { 'nvim-lua/plenary.nvim' },
@@ -284,7 +289,6 @@ require('lazy').setup {
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
         tsserver = {},
-
         lua_ls = {
           -- cmd = {...},
           -- filetypes { ...},
@@ -528,7 +532,10 @@ require('lazy').setup {
         'luap',
         'markdown',
         'markdown_inline',
+        'nix',
+        'zig',
         'python',
+        'ruby',
         'query',
         'regex',
         'toml',
@@ -540,6 +547,7 @@ require('lazy').setup {
         'julia',
         'go',
         'rust',
+        'svelte',
       },
       incremental_selection = {
         enable = true,
@@ -608,7 +616,7 @@ require('lazy').setup {
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        python = { 'isort', 'ruff' },
+        python = { 'ruff_format' },
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.

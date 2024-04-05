@@ -172,12 +172,6 @@ export PATH="$HOME/.local/bin:$PATH"
 # eval "$(pyenv init -)"
 # eval "$(pyenv virtualenv-init -)"
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/dom/google-cloud-sdk/path.bash.inc' ]; then . '/home/dom/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/dom/google-cloud-sdk/completion.bash.inc' ]; then . '/home/dom/google-cloud-sdk/completion.bash.inc'; fi
-
 # Enable programmable completion features
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
@@ -253,3 +247,18 @@ _neonctl_yargs_completions()
 }
 complete -o bashdefault -o default -F _neonctl_yargs_completions neonctl
 ###-end-neonctl-completions-###
+
+# pnpm
+export PNPM_HOME="/home/dom/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+#
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/dom/google-cloud-sdk/path.bash.inc' ]; then . '/home/dom/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/dom/google-cloud-sdk/completion.bash.inc' ]; then . '/home/dom/google-cloud-sdk/completion.bash.inc'; fi
