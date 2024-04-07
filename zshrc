@@ -156,3 +156,6 @@ mk() {
 }
 
 alias c="open $1 -a \"Visual Studio Code\""
+
+# sst
+export PATH=/Users/lunaticd/.sst/bin:$PATH

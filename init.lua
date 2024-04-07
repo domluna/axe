@@ -576,7 +576,7 @@ require('lazy').setup {
       require('nvim-treesitter.configs').setup(opts)
     end,
   },
-  'JuliaEditorSupport/julia-vim',
+  -- 'JuliaEditorSupport/julia-vim',
 
   {
     'nvim-neo-tree/neo-tree.nvim',
@@ -607,12 +607,15 @@ require('lazy').setup {
       },
       formatters_by_ft = {
         lua = { 'stylua' },
+        go = { 'goimports', 'gofmt' },
         -- Conform can also run multiple formatters sequentially
-        python = { 'isort', 'ruff' },
+        python = { 'ruff' },
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
         javascript = { 'prettier' },
+        typescript = { 'prettier' },
+        ['_'] = { 'trim_whitespace' },
       },
     },
   },
