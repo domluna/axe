@@ -177,24 +177,6 @@ if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
-# Custom directory cycling completion with contents display
-_cycle_dirs_with_contents() {
-    local cur prev dir_prefix dirs
-    COMPREPLY=()
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    prev="${COMP_WORDS[COMP_CWORD-1]}"
-    dir_prefix="$1"
-
-    if [[ ${prev} == cd ]]; then
-        dirs=$(find . -maxdepth 1 -type d -name "${cur}*" -exec basename {} \; 2>/dev/null)
-        COMPREPLY=( $(compgen -W "${dirs}" -- ${cur}) )
-
-        return 0
-    fi
-}
-
-complete -F _cycle_dirs_with_contents cd
-
 # Change the behavior of the Tab key to cycle through the available options
 bind 'TAB:menu-complete'
 
@@ -262,3 +244,5 @@ if [ -f '/home/dom/google-cloud-sdk/path.bash.inc' ]; then . '/home/dom/google-c
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/dom/google-cloud-sdk/completion.bash.inc' ]; then . '/home/dom/google-cloud-sdk/completion.bash.inc'; fi
+
+export PYTHONPATH="$HOME/code/recurrentgemma:$PYTHONPATH"
