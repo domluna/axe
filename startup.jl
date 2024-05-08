@@ -20,7 +20,7 @@ if isinteractive()
     #     ["@about"]               => :(using About; macro about(x) Expr(:call, About.about, x) end),
     # ])
 
-    # using OhMyREPL
+    using OhMyREPL
     # colorscheme!("GruvboxDark")
     # using Debugger
 
