@@ -136,8 +136,6 @@ require('lazy').setup {
     end,
   },
 
-  'github/copilot.vim',
-
   {
     'numToStr/Navigator.nvim',
     config = function()
@@ -434,8 +432,8 @@ require('lazy').setup {
         },
         sources = {
           { name = 'nvim_lsp' },
-          { name = 'luasnip' },
           { name = 'path' },
+          { name = 'buffer' },
         },
       }
     end,
