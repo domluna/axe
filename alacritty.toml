@@ -13,7 +13,8 @@ bindings = [
 ]
 
 [font]
-size = 14
-normal = { family = "Cascadia Mono", style = "Regular" }
-bold = { family = "Cascadia Mono", style = "Bold" }
-italic = { family = "Cascadia Mono", style = "Italic" }
+size = 13
+
+normal = { family = "CaskaydiaMono Nerd Font", style = "Regular" }
+bold = { family = "CaskaydiaMono Nerd Font", style = "Bold" }
+italic = { family = "CaskaydiaMono Nerd Font", style = "Italic" }
