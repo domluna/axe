@@ -13,6 +13,14 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup {
   {
+    'rose-pine/neovim',
+    name = 'rose-pine',
+
+    config = function()
+      vim.cmd.colorscheme 'rose-pine'
+    end,
+  },
+  {
     'ellisonleao/gruvbox.nvim',
     lazy = true,
     -- config = function()
@@ -66,9 +74,9 @@ require('lazy').setup {
     lazy = false,
     priority = 1000,
     opts = { style = 'moon' },
-    config = function()
-      vim.cmd.colorscheme 'tokyonight-night'
-    end,
+    -- config = function()
+    --   vim.cmd.colorscheme 'tokyonight-night'
+    -- end,
   },
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
   'nvim-lualine/lualine.nvim',
