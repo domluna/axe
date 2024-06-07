@@ -10,7 +10,6 @@ export PATH=$PATH:$HOME/.local/bin
 export JULIA_STACKTRACE_MINIMAL=true
 
 alias j='julia'
-alias jn='$HOME/julia/julia'
 alias jfmt='julia --startup=no -e "using JuliaFormatter; format(\".\")"'
 alias js='julia --startup=no'
 
@@ -156,7 +155,14 @@ mk() {
     touch "$1"
 }
 
-alias c="open $1 -a \"Visual Studio Code\""
-
 # sst
 export PATH=/Users/lunaticd/.sst/bin:$PATH
+
+# Compression
+compress() { tar -czf "${1%/}.tar.gz" "${1%/}"; }
+alias decompress="tar -xzf"
+
+alias ls='eza -lh --group-directories-first --icons'
+alias lsa='ls -a'
+alias lt='eza --tree --level=2 --long --icons --git'
+alias lta='lt -a'
