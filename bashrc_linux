@@ -25,7 +25,7 @@ export JULIA_STACKTRACE_MINIMAL=true
 export EDITOR=nvim
 
 alias j='julialauncher'
-alias jn='julialauncher +dev'
+alias jn='julialauncher +nightly'
 alias ..='cd ..'
 if command -v nvim > /dev/null; then
    alias vim='nvim'
@@ -245,4 +245,4 @@ if [ -f '/home/dom/google-cloud-sdk/path.bash.inc' ]; then . '/home/dom/google-c
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/dom/google-cloud-sdk/completion.bash.inc' ]; then . '/home/dom/google-cloud-sdk/completion.bash.inc'; fi
 
-export PYTHONPATH="$HOME/code/recurrentgemma:$PYTHONPATH"
+# source "$HOME/.rye/env"
