@@ -13,14 +13,14 @@ bindings = [
 ]
 
 [font]
-size = 13
+size = 12
 
-# normal = { family = "CaskaydiaMono Nerd Font", style = "Regular" }
-# bold = { family = "CaskaydiaMono Nerd Font", style = "Bold" }
-# italic = { family = "CaskaydiaMono Nerd Font", style = "Italic" }
-normal = { family = "JuliaMono", style = "Regular" }
-bold = { family = "JuliaMono", style = "Bold" }
-italic = { family = "JuliaMono", style = "Italic" }
+normal = { family = "CaskaydiaMono Nerd Font", style = "Regular" }
+bold = { family = "CaskaydiaMono Nerd Font", style = "Bold" }
+italic = { family = "CaskaydiaMono Nerd Font", style = "Italic" }
+# normal = { family = "JuliaMono", style = "Regular" }
+# bold = { family = "JuliaMono", style = "Bold" }
+# italic = { family = "JuliaMono", style = "Italic" }
 
 [colors]
 [colors.primary]
