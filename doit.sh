@@ -10,7 +10,7 @@ rm $HOME/.zshrc
 rm $HOME/.config/kitty/kitty.conf
 rm $HOME/.julia/config/startup.jl
 rm $HOME/.wezterm.lua
-rm $HOME/.config/alacritty/alacritty.toml
+rm $HOME/.alacritty.toml
 
 # symlinks
 
@@ -37,4 +37,4 @@ ln -s $PWD/lua/*.lua $HOME/.config/nvim/lua/
 ln -s $PWD/vim/* $HOME/.config/nvim/vim/
 ln -s $PWD/kitty.conf $HOME/.config/kitty/kitty.conf
 ln -s $PWD/wezterm.lua $HOME/.wezterm.lua
-ln -s $PWD/alacritty.toml $HOME/.config/alacritty/alacritty.toml
+ln -s $PWD/alacritty.toml $HOME/.alacritty.toml
