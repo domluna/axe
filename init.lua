@@ -14,22 +14,23 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup {
   {
     'rose-pine/neovim',
+    lazy = false,
     name = 'rose-pine',
 
-    config = function()
-      vim.cmd.colorscheme 'rose-pine'
-    end,
+    -- config = function()
+    --   vim.cmd.colorscheme 'rose-pine'
+    -- end,
   },
   {
     'ellisonleao/gruvbox.nvim',
-    lazy = true,
+    lazy = false,
     -- config = function()
     --   vim.cmd([[colorscheme gruvbox]])
     -- end,
   },
   {
     'catppuccin/nvim',
-    lazy = true,
+    lazy = false,
     name = 'catppuccin',
     opts = {
       integrations = {
@@ -74,11 +75,16 @@ require('lazy').setup {
     lazy = false,
     priority = 1000,
     opts = { style = 'moon' },
-    -- config = function()
-    --   vim.cmd.colorscheme 'tokyonight-night'
-    -- end,
+    config = function()
+      vim.cmd.colorscheme 'tokyonight-night'
+    end,
   },
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  {
+    'folke/todo-comments.nvim',
+    event = 'VimEnter',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    opts = { signs = false },
+  },
   'nvim-lualine/lualine.nvim',
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   { 'numToStr/Comment.nvim', opts = {} },
