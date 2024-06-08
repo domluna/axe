@@ -6,12 +6,15 @@ export LANG="C.UTF8"
 
 export GOPATH="$HOME/go"
 
-export HISTSIZE=1000000
-export HISEFILESIZE=1000000
-# Avoid duplicates
-HISTCONTROL=ignoredups:erasedups
-# When the shell exits, append to the history file instead of overwriting it
+# History control
 shopt -s histappend
+HISTCONTROL=ignoreboth
+HISTSIZE=32768
+HISTFILESIZE="${HISTSIZE}"
+# # Avoid duplicates
+# HISTCONTROL=ignoredups:erasedups
+# When the shell exits, append to the history file instead of overwriting it
+# shopt -s histappend
 
 # After each command, append to the history file and reread it
 PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
@@ -241,3 +244,23 @@ if [ -f '/home/dom/google-cloud-sdk/completion.bash.inc' ]; then . '/home/dom/go
 # source "$HOME/.rye/env"
 #
 export PATH="$PATH:/home/dom/.local/share/omakub/bin"
+
+export OMAKUB_PATH="/home/$USER/.local/share/omakub"
+
+source /usr/share/bash-completion/bash_completion
+# source /usr/share/doc/fzf/examples/key-bindings.bash
+
+# Immediately add a trailing slash when autocompleting symlinks to directories
+set mark-symlinked-directories on
+
+# Do not autocomplete hidden files unless the pattern explicitly begins with a dot
+set match-hidden-files off
+
+# Show all autocomplete results at once
+set page-completions off
+
+# If there are more than 200 possible completions for a word, ask to show them all
+set completion-query-items 200
+
+# Show extra file information when completing, like `ls -F` does
+set visible-stats on
