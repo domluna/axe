@@ -16,8 +16,8 @@ end
 config.font = wezterm.font 'IBM Plex Mono'
 -- config.font = wezterm.font 'JuliaMono'
 -- config.color_scheme = 'ayu'
-config.color_scheme = 'Gruvbox Dark (Gogh)'
--- config.color_scheme = 'Chalk (Gogh)'
+-- config.color_scheme = 'Gruvbox Dark (Gogh)'
+config.color_scheme = 'Chalk (Gogh)'
 
 config.enable_wayland = true
 config.mouse_bindings = {
