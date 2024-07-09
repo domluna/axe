@@ -264,3 +264,5 @@ set completion-query-items 200
 
 # Show extra file information when completing, like `ls -F` does
 set visible-stats on
+
+export DOCKER_HOST=unix:///var/run/docker.sock
