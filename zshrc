@@ -10,8 +10,8 @@ export PATH=$PATH:$HOME/.local/bin
 export JULIA_STACKTRACE_MINIMAL=true
 
 alias j='julia'
-alias jfmt='julia --startup=no -e "using JuliaFormatter; format(\".\")"'
-alias js='julia --startup=no'
+alias jfmt='julia --startup-file=no --history-file=no -e "using JuliaFormatter; format(\".\")"'
+alias js='julia --startup-file=no --history-file=no'
 
 alias ..='cd ..'
 alias ...='cd ../..'
