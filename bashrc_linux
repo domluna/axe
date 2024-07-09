@@ -29,6 +29,8 @@ export EDITOR=nvim
 
 alias j='julialauncher'
 alias jn='julialauncher +nightly'
+alias js='julialauncher --startup-file=no --history-file=no'
+
 alias ..='cd ..'
 if command -v nvim > /dev/null; then
    alias vim='nvim'
@@ -50,10 +52,9 @@ if command -v python3.11 > /dev/null; then
 fi
 # alias python='python3'
 alias ipy='ipython'
-# alias jfmt='julia --startup=no -e "using JuliaFormatter; format(\".\")"'
 jfmt () {
    local dir=${1:-.}
-   julia --startup=no -t auto -e "using JuliaFormatter; format(\"$dir\")"
+   julia startup-file=no --history-file=no -t auto -e "using JuliaFormatter; format(\"$dir\")"
 }
 
 export FZF_DEFAULT_OPTS='--height 80% --reverse --inline-info'
