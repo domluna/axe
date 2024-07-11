@@ -708,7 +708,6 @@ require('lazy').setup {
         python = { 'ruff_format' },
         javascript = { 'prettier' },
         typescript = { 'prettier' },
-        ['_'] = { 'trim_whitespace' },
       },
     },
   },
