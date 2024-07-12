@@ -174,30 +174,6 @@ if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
-# Change the behavior of the Tab key to cycle through the available options
-bind 'TAB:menu-complete'
-
-# Custom cd with fzf integration using fd
-function cdf() {
-  local dir
-  dir=$(fd --type d --max-depth 3 --hidden --exclude '{.git,.mypy_cache,node_modules,vendor,__pycache__,.ipynb_checkpoints}/' . | fzf --preview 'ls -lah --color=always {}' --preview-window=up:50%:wrap)
-  if [[ -n "$dir" ]]; then
-    cd "$dir" || return 1
-  fi
-}
-
-# Tab completion for custom cd
-complete -C 'compgen -A directory' cdf
-
-# Custom ... function to navigate upwards with fzf using fd
-function ...() {
-  local dir
-  dir=$(fd --type d --max-depth 1 --hidden --exclude '{.git,.mypy_cache,node_modules,vendor,__pycache__,.ipynb_checkpoints}/' --search-path .. | fzf --preview 'ls -lah --color=always {}' --preview-window=up:50%:wrap)
-  if [[ -n "$dir" ]]; then
-    cd "$dir" || return 1
-  fi
-}
-
 ###-begin-neonctl-completions-###
 #
 # yargs command completion script
@@ -267,3 +243,7 @@ set completion-query-items 200
 set visible-stats on
 
 export DOCKER_HOST=unix:///var/run/docker.sock
+
+export PATH="$PATH:$HOME/zig0.14/"
+
+export PATH="$PATH:/opt/nvim-linux64/bin"
