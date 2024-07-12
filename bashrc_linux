@@ -32,11 +32,6 @@ alias jn='julialauncher +nightly'
 alias js='julialauncher --startup-file=no --history-file=no'
 
 alias ..='cd ..'
-if command -v nvim > /dev/null; then
-   alias vim='nvim'
-   alias vi='nvim'
-   alias v='nvim'
-fi
 alias gst='git status'
 alias ga='git add'
 alias gc='git commit'
@@ -143,8 +138,6 @@ export PATH="$FLYCTL_INSTALL/bin:$PATH"
 BUN_INSTALL="/home/dom/.bun"
 PATH="$BUN_INSTALL/bin:$PATH"
 
-export PATH="$HOME/nvim-linux64/bin:$PATH"
-
 eval "$(direnv hook bash)"
 
 export NVM_DIR="$HOME/.nvm"
@@ -247,3 +240,8 @@ export DOCKER_HOST=unix:///var/run/docker.sock
 export PATH="$PATH:$HOME/zig0.14/"
 
 export PATH="$PATH:/opt/nvim-linux64/bin"
+if command -v nvim > /dev/null; then
+   alias vim='nvim'
+   alias vi='nvim'
+   alias v='nvim'
+fi
