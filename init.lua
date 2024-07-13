@@ -16,7 +16,6 @@ require('lazy').setup {
     'rose-pine/neovim',
     lazy = false,
     name = 'rose-pine',
-
     -- config = function()
     --   vim.cmd.colorscheme 'rose-pine'
     -- end,
@@ -74,9 +73,10 @@ require('lazy').setup {
     'folke/tokyonight.nvim',
     lazy = false,
     priority = 1000,
-    opts = { style = 'moon' },
+    opts = { style = 'storm' },
     config = function()
       vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.hi 'Comment gui=none'
     end,
   },
   {
@@ -90,13 +90,16 @@ require('lazy').setup {
   { 'numToStr/Comment.nvim', opts = {} },
   {
     'davidmh/mdx.nvim',
-    config = true,
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
   },
   {
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.5',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    branch = '0.1.x',
+    event = 'VimEnter',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+    },
     config = function()
       require('telescope').setup {
         defaults = {
@@ -136,11 +139,10 @@ require('lazy').setup {
       require('telescope').setup {
         extensions = {
           fzf = {
-            fuzzy = true, -- false will only do exact matching
-            override_generic_sorter = true, -- override the generic sorter
-            override_file_sorter = true, -- override the file sorter
-            case_mode = 'smart_case', -- or "ignore_case" or "respect_case"
-            -- the default case_mode is "smart_case"
+            fuzzy = true,
+            override_generic_sorter = true,
+            override_file_sorter = true,
+            case_mode = 'smart_case',
           },
         },
       }
@@ -153,8 +155,7 @@ require('lazy').setup {
       require('telescope').setup {
         extensions = {
           ['ui-select'] = {
-            -- require('telescope-themes').get_dropdown {
-            -- }
+            require('telescope.themes').get_dropdown {},
           },
         },
       }
@@ -202,9 +203,6 @@ require('lazy').setup {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
-
-      -- Useful status updates for LSP.
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim', opts = {} },
     },
     config = function()
@@ -263,17 +261,29 @@ require('lazy').setup {
         -- When you move your cursor, the highlights will be cleared (the second autocommand).
         local client = vim.lsp.get_client_by_id(event.data.client_id)
         if client and client.server_capabilities.documentHighlightProvider then
+          local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
           vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             buffer = event.buf,
+            group = highlight_augroup,
             callback = vim.lsp.buf.document_highlight,
           })
 
           vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
             buffer = event.buf,
+            group = highlight_augroup,
             callback = vim.lsp.buf.clear_references,
+          })
+
+          vim.api.nvim_create_autocmd('LspDetach', {
+            group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
+            callback = function(event2)
+              vim.lsp.buf.clear_references()
+              vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
+            end,
           })
         end
       end
+
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = on_attach,
@@ -284,57 +294,26 @@ require('lazy').setup {
       --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
       --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
       -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       local default_opts = {
         on_attach = on_attach,
         capabilities = capabilities,
       }
 
-      -- Enable the following language servers
-      --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-      --
-      --  Add any additional override configuration in the following tables. Available keys are:
-      --  - cmd (table): Override the default command used to start the server
-      --  - filetypes (table): Override the default list of associated filetypes for the server
-      --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
-      --  - settings (table): Override the default settings passed when initializing the server.
-      --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         clangd = {},
         gopls = {},
         ruff_lsp = {},
         rust_analyzer = {},
-        -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-        --
-        -- Some languages (like typescript) have entire language plugins that can be useful:
-        --    https://github.com/pmizio/typescript-tools.nvim
-        --
-        -- But for many setups, the LSP (`tsserver`) will work just fine
         tsserver = {},
         lua_ls = {
-          -- cmd = {...},
-          -- filetypes { ...},
-          -- capabilities = {},
           settings = {
             Lua = {
-              runtime = { version = 'LuaJIT' },
-              workspace = {
-                checkThirdParty = false,
-                -- Tells lua_ls where to find all the Lua files that you have loaded
-                -- for your neovim configuration.
-                library = {
-                  '${3rd}/luv/library',
-                  unpack(vim.api.nvim_get_runtime_file('', true)),
-                },
-                -- If lua_ls is really slow on your computer, you can try this instead:
-                -- library = { vim.env.VIMRUNTIME },
-              },
               completion = {
                 callSnippet = 'Replace',
               },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
             },
           },
         },
@@ -347,7 +326,7 @@ require('lazy').setup {
                 'using LanguageServer',
                 'using Revise; using LanguageServer; LanguageServer.USE_REVISE[] = true'
               )
-            elseif require(lspconfig).util.path.is_file(julia) then
+            elseif require('lspconfig').util.path.is_file(julia) then
               new_config.cmd[1] = julia
             end
           end,
@@ -364,19 +343,11 @@ require('lazy').setup {
         }),
       }
 
-      -- Ensure the servers and tools above are installed
-      --  To check the current status of installed tools and/or manually install
-      --  other tools, you can run
-      --    :Mason
-      --
-      --  You can press `g?` for help in this menu
       require('mason').setup()
 
-      -- You can add other tools here that you want Mason to install
-      -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format lua code
+        'stylua',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -387,7 +358,7 @@ require('lazy').setup {
             -- This handles overriding only values explicitly passed
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting for tsserver)
-            -- server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
             require('lspconfig')[server_name].setup(server)
           end,
         },
@@ -449,29 +420,8 @@ require('lazy').setup {
         --
         -- No, but seriously. Please read `:help ins-completion`, it is really good!
         mapping = cmp.mapping.preset.insert {
-          -- Select the [n]ext item
-          -- ['<C-n>'] = cmp.mapping.select_next_item(),
-          ['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item { behavior = cmp_types.cmp.SelectBehavior.Insert }),
-          -- ['<C-n>'] = function(fallback)
-          --   if cmp.visible() then
-          --     cmp.select_next_item { behavior = cmp_types.cmp.SelectBehavior.Insert }
-          --   elseif
-          --     (function()
-          --       local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-          --       return col ~= 0
-          --         and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
-          --     end)()
-          --   then
-          --     cmp.complete()
-          --   else
-          --     fallback()
-          --   end
-          -- end,
-          ['<C-e>'] = cmp.mapping.abort(),
-          -- Select the [p]revious item
-          -- ['<C-p>'] = cmp.mapping.select_prev_item(),
-          ['<C-p>'] = cmp.mapping.select_prev_item { behavior = cmp_types.cmp.SelectBehavior.Insert },
-
+          ['<C-n>'] = cmp.mapping.select_next_item(),
+          ['<C-p>'] = cmp.mapping.select_prev_item(),
           -- Accept ([y]es) the completion.
           --  This will auto-import if your LSP supports it.
           --  This will expand snippets if the LSP sent a snippet.
@@ -482,6 +432,8 @@ require('lazy').setup {
           --  completions whenever it has completion options available.
           ['<C-Space>'] = cmp.mapping.complete {},
           ['<CR>'] = cmp.mapping.confirm { select = false },
+          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
 
           -- Think of <c-l> as moving to the right of your snippet expansion.
           --  So if you have a snippet that's like:
@@ -502,24 +454,18 @@ require('lazy').setup {
             end
           end, { 'i', 's' }),
         },
-        -- formatting = {
-        --   format = function(entry, vim_item)
-        --     vim_item.menu = source_mapping[entry.source.name]
-        --     return vim_item
-        --   end,
-        -- },
-        sources = cmp.config.sources({
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
-          { name = 'path' },
-        }, {
-          { name = 'buffer' },
-        }),
-        -- sources = {
+        -- sources = cmp.config.sources({
         --   { name = 'nvim_lsp' },
+        --   { name = 'luasnip' },
         --   { name = 'path' },
+        -- }, {
         --   { name = 'buffer' },
-        -- },
+        -- }),
+        sources = {
+          { name = 'nvim_lsp' },
+          { name = 'path' },
+          { name = 'buffer' },
+        },
       }
     end,
   },
@@ -697,17 +643,29 @@ require('lazy').setup {
     'stevearc/conform.nvim',
     opts = {
       notify_on_error = false,
-      format_on_save = {
-        timeout_ms = 500,
-        lsp_fallback = true,
-      },
+      format_on_save = function(bufnr)
+        local disable_filetypes = { c = true, cpp = true, julia = true }
+        return {
+          timeout_ms = 500,
+          lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+        }
+      end,
       formatters_by_ft = {
         lua = { 'stylua' },
         go = { 'goimports', 'gofmt' },
-        -- Conform can also run multiple formatters sequentially
-        python = { 'ruff_format' },
         javascript = { 'prettier' },
         typescript = { 'prettier' },
+        python = function(bufnr)
+          if require('conform').get_formatter_info('ruff_format', bufnr).available then
+            return { 'ruff_format' }
+          else
+            return { 'isort', 'black' }
+          end
+        end,
+        -- Use the "*" filetype to run formatters on all filetypes.
+        ['*'] = { 'codespell' },
+        -- Use the "_" filetype to run formatters on filetypes that don't
+        -- have other formatters configured.
         ['_'] = { 'trim_whitespace' },
       },
     },
@@ -986,24 +944,17 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
--- HERE !!!
-vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
-vim.keymap.set('n', '<leader>b', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
-vim.keymap.set('n', '<leader><space>', function()
-  -- You can pass additional configuration to telescope to change theme, layout, etc.
-  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-    winblend = 10,
-    previewer = false,
-  })
-end, { desc = '[/] Fuzzily search in current buffer]' })
-
-vim.keymap.set('n', '<C-p>', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
--- vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-vim.keymap.set('n', '<leader>r', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+local builtin = require 'telescope.builtin'
+vim.keymap.set('n', '<leader>fo', builtin.oldfiles, { desc = '[?] Find recently opened files' })
+vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = '[ ] Find existing buffers' })
+vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>r', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
+vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
+vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
 
 -- autogroups
 ---- This file is automatically loaded by lazyvim.config.init.
-
 local function augroup(name)
   return vim.api.nvim_create_augroup('lazyvim_' .. name, { clear = true })
 end
