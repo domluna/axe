@@ -29,12 +29,9 @@ export EDITOR=nvim
 
 alias j='julialauncher'
 alias jn='julialauncher +nightly'
+alias js='julialauncher --startup-file=no --history-file=no'
+
 alias ..='cd ..'
-if command -v nvim > /dev/null; then
-   alias vim='nvim'
-   alias vi='nvim'
-   alias v='nvim'
-fi
 alias gst='git status'
 alias ga='git add'
 alias gc='git commit'
@@ -50,10 +47,9 @@ if command -v python3.11 > /dev/null; then
 fi
 # alias python='python3'
 alias ipy='ipython'
-# alias jfmt='julia --startup=no -e "using JuliaFormatter; format(\".\")"'
 jfmt () {
    local dir=${1:-.}
-   julia --startup=no -t auto -e "using JuliaFormatter; format(\"$dir\")"
+   julia startup-file=no --history-file=no -t auto -e "using JuliaFormatter; format(\"$dir\")"
 }
 
 export FZF_DEFAULT_OPTS='--height 80% --reverse --inline-info'
@@ -142,8 +138,6 @@ export PATH="$FLYCTL_INSTALL/bin:$PATH"
 BUN_INSTALL="/home/dom/.bun"
 PATH="$BUN_INSTALL/bin:$PATH"
 
-export PATH="$HOME/nvim-linux64/bin:$PATH"
-
 eval "$(direnv hook bash)"
 
 export NVM_DIR="$HOME/.nvm"
@@ -172,30 +166,6 @@ export PATH="$HOME/.local/bin:$PATH"
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
-
-# Change the behavior of the Tab key to cycle through the available options
-bind 'TAB:menu-complete'
-
-# Custom cd with fzf integration using fd
-function cdf() {
-  local dir
-  dir=$(fd --type d --max-depth 3 --hidden --exclude '{.git,.mypy_cache,node_modules,vendor,__pycache__,.ipynb_checkpoints}/' . | fzf --preview 'ls -lah --color=always {}' --preview-window=up:50%:wrap)
-  if [[ -n "$dir" ]]; then
-    cd "$dir" || return 1
-  fi
-}
-
-# Tab completion for custom cd
-complete -C 'compgen -A directory' cdf
-
-# Custom ... function to navigate upwards with fzf using fd
-function ...() {
-  local dir
-  dir=$(fd --type d --max-depth 1 --hidden --exclude '{.git,.mypy_cache,node_modules,vendor,__pycache__,.ipynb_checkpoints}/' --search-path .. | fzf --preview 'ls -lah --color=always {}' --preview-window=up:50%:wrap)
-  if [[ -n "$dir" ]]; then
-    cd "$dir" || return 1
-  fi
-}
 
 ###-begin-neonctl-completions-###
 #
@@ -264,3 +234,14 @@ set completion-query-items 200
 
 # Show extra file information when completing, like `ls -F` does
 set visible-stats on
+
+export DOCKER_HOST=unix:///var/run/docker.sock
+
+export PATH="$PATH:$HOME/zig0.14/"
+
+export PATH="$PATH:/opt/nvim-linux64/bin"
+if command -v nvim > /dev/null; then
+   alias vim='nvim'
+   alias vi='nvim'
+   alias v='nvim'
+fi
