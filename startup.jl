@@ -9,16 +9,16 @@ if isinteractive()
             "Debugger",
             "Chairmarks",
             "BasicAutoloads",
-            "OhMyREPL"
-            "LanguageServer"
+            "OhMyREPL",
+            "LanguageServer",
         ]
         for pkg in pkgs
             if Base.find_package(pkg) === nothing
                 if pkg == "OhMyREPL"
-                    Pkg.add(pkg, version="0.5.24")
-                    Pkg.pin(pkg, version="0.5.24")
-            else
-                Pkg.add(pkg)
+                    Pkg.add(pkg, version = "0.5.24")
+                    Pkg.pin(pkg, version = "0.5.24")
+                else
+                    Pkg.add(pkg)
                 end
             end
         end
