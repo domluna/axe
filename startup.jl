@@ -2,6 +2,10 @@ push!(LOAD_PATH, "$(homedir())/.julia/dev")
 
 if isinteractive()
     import Pkg
+    import REPL
+    import REPL.LineEdit
+    import JLFzf
+
     let
         pkgs = [
             "Revise",
@@ -9,17 +13,12 @@ if isinteractive()
             "Debugger",
             "Chairmarks",
             "BasicAutoloads",
-            "OhMyREPL",
             "LanguageServer",
+            "JLFzf",
         ]
         for pkg in pkgs
             if Base.find_package(pkg) === nothing
-                if pkg == "OhMyREPL"
-                    Pkg.add(pkg, version = "0.5.24")
-                    Pkg.pin(pkg, version = "0.5.24")
-                else
-                    Pkg.add(pkg)
-                end
+                Pkg.add(pkg)
             end
         end
     end
@@ -42,10 +41,25 @@ if isinteractive()
         # ["@about"]               => :(using About; macro about(x) Expr(:call, About.about, x) end),
     ])
 
-    using OhMyREPL
-    # using Debugger
     using Revise
-
+    using Debugger
 
     ENV["JULIA_EDITOR"] = "nvim"
+
+    const mykeys = Dict{Any,Any}(
+        # primary history search: most recent first
+        "^R" => function (mistate, o, c)
+            line = JLFzf.inter_fzf(
+                JLFzf.read_repl_hist(),
+                "--read0",
+                "--tiebreak=index",
+                "--height=80%",
+            )
+            JLFzf.insert_history_to_repl(mistate, line)
+        end,
+    )
+    function customize_keys(repl)
+        repl.interface = REPL.setup_interface(repl; extra_repl_keymap = mykeys)
+    end
+    atreplinit(customize_keys)
 end
