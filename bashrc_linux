@@ -23,8 +23,6 @@ if [ -f "$HOME/.tokens" ]; then
   source $HOME/.tokens
 fi
 
-export JULIA_STACKTRACE_MINIMAL=true
-
 export EDITOR=nvim
 
 alias j='julialauncher'
@@ -49,7 +47,7 @@ fi
 alias ipy='ipython'
 jfmt () {
    local dir=${1:-.}
-   julia startup-file=no --history-file=no -t auto -e "using JuliaFormatter; format(\"$dir\")"
+   julialauncher --startup-file=no --history-file=no -e "using JuliaFormatter; format(\"$dir\")"
 }
 
 export FZF_DEFAULT_OPTS='--height 80% --reverse --inline-info'
