@@ -414,7 +414,7 @@ require('lazy').setup {
         },
         -- completion = { completeopt = 'menu,menuone,noinsert' },
         completion = {
-          keyword_length = 4,
+          keyword_length = 3,
           completeopt = 'menu,menuone,noselect',
         },
 
