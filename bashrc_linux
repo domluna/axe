@@ -245,3 +245,5 @@ if command -v nvim > /dev/null; then
 fi
 
 alias ai='howdoi -v -m "mini" --system-prompt "Write your response in markdown format"'
+
+export PATH="$HOME/.local/kitty.app/bin:$PATH"
