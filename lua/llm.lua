@@ -19,9 +19,9 @@ local function get_visual_selection()
   return table.concat(lines, '\n')
 end
 
-function M.run_llm()
+function M.run_llm(opts)
   local input
-  local is_visual = vim.fn.mode() == 'v' or vim.fn.mode() == 'V'
+  local is_visual = opts.range > 0
 
   if is_visual then
     input = get_visual_selection()
