@@ -19,18 +19,16 @@ local function get_visual_selection()
   return table.concat(lines, '\n')
 end
 
-function M.run_llm_normal()
-  local input = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), '\n')
-  M.process_llm(input, false)
-end
+function M.run_llm(opts)
+  local input
+  local is_visual = opts.range > 0
 
-function M.run_llm_visual()
-  local input = get_visual_selection()
-  M.process_llm(input, true)
-end
+  if is_visual then
+    input = get_visual_selection()
+  else
+    input = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), '\n')
+  end
 
-function M.process_llm(input, is_visual)
-  -- Create a temporary file to store the input
   local tmp_file = os.tmpname()
   local f = io.open(tmp_file, 'w')
   if is_visual then
@@ -40,8 +38,7 @@ function M.process_llm(input, is_visual)
   end
   f:close()
 
-  -- Run the howdoi command asynchronously
-  local cmd = { 'howdoi', '-m', 'haiku', '-v', tmp_file }
+  local cmd = { 'howdoi', '-v=false', tmp_file }
   local output = {}
 
   local function on_stdout(_, data)
@@ -55,32 +52,34 @@ function M.process_llm(input, is_visual)
   end
 
   local function on_exit()
-    -- Remove the temporary file
     os.remove(tmp_file)
 
     vim.schedule(function()
+      local cursor_pos = vim.api.nvim_win_get_cursor(0)
+      local cursor_line = cursor_pos[1]
+      local cursor_col = cursor_pos[2]
+
       if is_visual then
-        -- Replace the selected text with the output
         local start_line = vim.fn.line "'<" - 1
         local end_line = vim.fn.line "'>"
         vim.api.nvim_buf_set_lines(0, start_line, end_line, false, output)
       else
-        -- Append the output to the end of the buffer
-        vim.api.nvim_buf_set_lines(0, -1, -1, false, output)
+        vim.api.nvim_buf_set_lines(0, cursor_line - 1, cursor_line - 1, false, output)
       end
+
+      vim.api.nvim_win_set_cursor(0, { cursor_line + #output, cursor_col })
     end)
   end
 
   vim.fn.jobstart(cmd, {
     on_stdout = on_stdout,
-    on_stderr = on_stdout, -- Capture stderr as well
+    on_stderr = on_stdout,
     on_exit = on_exit,
     stdout_buffered = true,
     stderr_buffered = true,
   })
 end
 
-vim.api.nvim_create_user_command('LLM1', M.run_llm_normal, {})
-vim.api.nvim_create_user_command('LLM2', M.run_llm_visual, { range = true })
+vim.api.nvim_create_user_command('LLM', M.run_llm, { range = true })
 
 return M
