@@ -9,12 +9,11 @@ if isinteractive()
     let
         pkgs = [
             "Revise",
-            "JuliaFormatter",
-            "Debugger",
             "Chairmarks",
-            "BasicAutoloads",
-            "LanguageServer",
             "JLFzf",
+            # "BasicAutoloads",
+            # "JuliaFormatter",
+            # "Debugger",
         ]
         for pkg in pkgs
             if Base.find_package(pkg) === nothing
@@ -23,26 +22,26 @@ if isinteractive()
         end
     end
 
-    import BasicAutoloads
-    BasicAutoloads.register_autoloads([
-        ["@b", "@be"] => :(using Chairmarks),
-        [
-            "@test",
-            "@testset",
-            "@test_broken",
-            "@test_deprecated",
-            "@test_logs",
-            "@test_nowarn",
-            "@test_skip",
-            "@test_throws",
-            "@test_warn",
-            "@inferred",
-        ] => :(using Test),
-        # ["@about"]               => :(using About; macro about(x) Expr(:call, About.about, x) end),
-    ])
+    # import BasicAutoloads
+    # BasicAutoloads.register_autoloads([
+    #     ["@b", "@be"] => :(using Chairmarks),
+    #     [
+    #         "@test",
+    #         "@testset",
+    #         "@test_broken",
+    #         "@test_deprecated",
+    #         "@test_logs",
+    #         "@test_nowarn",
+    #         "@test_skip",
+    #         "@test_throws",
+    #         "@test_warn",
+    #         "@inferred",
+    #     ] => :(using Test),
+    #     # ["@about"]               => :(using About; macro about(x) Expr(:call, About.about, x) end),
+    # ])
+    # using Debugger
 
     using Revise
-    using Debugger
 
     ENV["JULIA_EDITOR"] = "nvim"
 
