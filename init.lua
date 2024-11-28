@@ -19,9 +19,11 @@ require('lazy').setup {
     'rose-pine/neovim',
     lazy = false,
     name = 'rose-pine',
-    -- config = function()
-    --   vim.cmd.colorscheme 'rose-pine'
-    -- end,
+    variant = 'auto', -- auto, main, moon, or dawn
+    dark_variant = 'moon', -- main, moon, or dawn
+    config = function()
+      vim.cmd.colorscheme 'rose-pine'
+    end,
   },
   {
     'ellisonleao/gruvbox.nvim',
@@ -72,16 +74,16 @@ require('lazy').setup {
       },
     },
   },
-  {
-    'folke/tokyonight.nvim',
-    lazy = false,
-    priority = 1000,
-    opts = { style = 'storm' },
-    config = function()
-      vim.cmd.colorscheme 'tokyonight-night'
-      vim.cmd.hi 'Comment gui=none'
-    end,
-  },
+  -- {
+  --   'folke/tokyonight.nvim',
+  --   lazy = false,
+  --   priority = 1000,
+  --   opts = { style = 'storm' },
+  --   config = function()
+  --     vim.cmd.colorscheme 'tokyonight-night'
+  --     vim.cmd.hi 'Comment gui=none'
+  --   end,
+  -- },
   {
     'folke/todo-comments.nvim',
     event = 'VimEnter',

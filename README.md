@@ -8,8 +8,15 @@ Things to install:
 * zoxide (jump to dirs)
 * ripgrep
 * fd
-* helix
 
 On MacOS just use homebrew - Linux nix + apt-get.
 
 TODO: figure out how to use nix home-manager
+
+https://github.com/rose-pine/kitty
+
+themes for kitty
+
+kitten +kitten themes
+
+pick rose pine moon and rose pine dawn
