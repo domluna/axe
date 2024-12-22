@@ -13,7 +13,8 @@ end
 -- This is where you actually apply your config choices
 
 -- For example, changing the color scheme:
-config.font = wezterm.font 'IBM Plex Mono'
+-- config.font = wezterm.font 'IBM Plex Mono'
+config.font = wezterm.font 'Berkeley Mono Trial'
 -- config.font = wezterm.font 'JuliaMono'
 -- config.color_scheme = 'ayu'
 -- config.color_scheme = 'Gruvbox Dark (Gogh)'
