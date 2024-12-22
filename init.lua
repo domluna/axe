@@ -25,55 +25,13 @@ require('lazy').setup {
       vim.cmd.colorscheme 'rose-pine'
     end,
   },
-  {
-    'ellisonleao/gruvbox.nvim',
-    lazy = false,
-    -- config = function()
-    --   vim.cmd([[colorscheme gruvbox]])
-    -- end,
-  },
-  {
-    'catppuccin/nvim',
-    lazy = false,
-    name = 'catppuccin',
-    opts = {
-      integrations = {
-        aerial = true,
-        alpha = true,
-        cmp = true,
-        dashboard = true,
-        flash = true,
-        gitsigns = true,
-        headlines = true,
-        illuminate = true,
-        indent_blankline = { enabled = true },
-        leap = true,
-        lsp_trouble = true,
-        mason = true,
-        markdown = true,
-        mini = true,
-        native_lsp = {
-          enabled = true,
-          underlines = {
-            errors = { 'undercurl' },
-            hints = { 'undercurl' },
-            warnings = { 'undercurl' },
-            information = { 'undercurl' },
-          },
-        },
-        navic = { enabled = true, custom_bg = 'lualine' },
-        neotest = true,
-        neotree = true,
-        noice = true,
-        notify = true,
-        semantic_tokens = true,
-        telescope = true,
-        treesitter = true,
-        treesitter_context = true,
-        which_key = true,
-      },
-    },
-  },
+  -- {
+  --   'ellisonleao/gruvbox.nvim',
+  --   lazy = false,
+  --   config = function()
+  --     vim.cmd([[colorscheme gruvbox]])
+  --   end,
+  -- },
   -- {
   --   'folke/tokyonight.nvim',
   --   lazy = false,
@@ -308,41 +266,50 @@ require('lazy').setup {
       }
 
       local servers = {
+        ruff = {},
         clangd = {},
         gopls = {},
-        ruff_lsp = {},
+        ts_ls = {},
         rust_analyzer = {},
-        tsserver = {},
-        lua_ls = {
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
-            },
-          },
-        },
         julials = vim.tbl_extend('force', default_opts, {
-          on_new_config = function(new_config, _)
-            local julia = vim.fn.expand '~/.julia/environments/nvim-lspconfig/bin/julia'
+          on_new_config = function(new_config, root_dir)
+            -- Use the specified project path for the Julia environment
+            local project_path = '~/.julia/environments/nvim-lspconfig'
+            local julia = vim.fn.expand '~/.juliaup/bin/julia'
+
+            -- Modify the command to use the correct project
+            if vim.fn.filereadable(vim.fn.expand(project_path .. '/Project.toml')) == 1 then
+              -- Add --project flag to Julia command
+              new_config.cmd = {
+                julia,
+                '--project=' .. project_path,
+                '--startup-file=no',
+                '--history-file=no',
+                '-e',
+                new_config.cmd[5], -- Preserve the original Julia code command
+              }
+            end
+
+            -- Optional: Revise.jl integration
             local REVISE_LANGUAGESERVER = false
             if REVISE_LANGUAGESERVER then
               new_config.cmd[5] = (new_config.cmd[5]):gsub(
                 'using LanguageServer',
                 'using Revise; using LanguageServer; LanguageServer.USE_REVISE[] = true'
               )
-            elseif require('lspconfig').util.path.is_file(julia) then
-              new_config.cmd[1] = julia
             end
           end,
-          -- This just adds dirname(fname) as a fallback (see nvim-lspconfig#1768).
+
+          -- Root directory detection
           root_dir = function(fname)
             local util = require 'lspconfig.util'
             return util.root_pattern 'Project.toml'(fname) or util.find_git_ancestor(fname) or util.path.dirname(fname)
           end,
+
+          -- Attach handler
           on_attach = function(client, bufnr)
             on_attach(client, bufnr)
-            -- Disable automatic formatexpr since the LS.jl formatter isn't so nice.
+            -- Disable automatic formatexpr since the LS.jl formatter isn't so nice
             vim.bo[bufnr].formatexpr = ''
           end,
         }),
