@@ -15,12 +15,29 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup {
+  -- {
+  --   'jackplus-xyz/binary.nvim',
+  --   opts = {
+  --     style = 'system',
+  --     colors = {
+  --       fg = '#000000', -- Foreground color
+  --       bg = '#ffffff', -- Background color
+  --     },
+  --   },
+  --   config = function()
+  --     vim.cmd.colorscheme 'binary'
+  --   end,
+  -- },
   {
     'rose-pine/neovim',
     lazy = false,
     name = 'rose-pine',
     variant = 'auto', -- auto, main, moon, or dawn
-    dark_variant = 'moon', -- main, moon, or dawn
+    dark_variant = 'main', -- main, moon, or dawn
+    styles = {
+      bold = false,
+      italic = false,
+    },
     config = function()
       vim.cmd.colorscheme 'rose-pine'
     end,
