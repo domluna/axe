@@ -15,28 +15,32 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup {
-  -- {
-  --   'jackplus-xyz/binary.nvim',
-  --   opts = {
-  --     style = 'system',
-  --     colors = {
-  --       fg = '#000000', -- Foreground color
-  --       bg = '#ffffff', -- Background color
-  --     },
-  --   },
-  --   config = function()
-  --     vim.cmd.colorscheme 'binary'
-  --   end,
-  -- },
+  {
+    'jackplus-xyz/binary.nvim',
+    opts = {
+      style = 'system',
+      colors = {
+        fg = '#2C3E50',
+        bg = '#F5F6F7',
+
+        -- fg = '#000000',
+        -- bg = '#ffffff',
+      },
+    },
+    -- config = function()
+    --   vim.cmd.colorscheme 'binary'
+    -- end,
+  },
   {
     'rose-pine/neovim',
-    lazy = false,
     name = 'rose-pine',
-    variant = 'auto', -- auto, main, moon, or dawn
-    dark_variant = 'main', -- main, moon, or dawn
-    styles = {
-      bold = false,
-      italic = false,
+    opts = {
+      variant = 'auto', -- auto, main, moon, or dawn
+      dark_variant = 'main', -- main, moon, or dawn
+      styles = {
+        bold = false,
+        italic = false,
+      },
     },
     config = function()
       vim.cmd.colorscheme 'rose-pine'
@@ -44,14 +48,12 @@ require('lazy').setup {
   },
   -- {
   --   'ellisonleao/gruvbox.nvim',
-  --   lazy = false,
   --   config = function()
   --     vim.cmd([[colorscheme gruvbox]])
   --   end,
   -- },
   -- {
   --   'folke/tokyonight.nvim',
-  --   lazy = false,
   --   priority = 1000,
   --   opts = { style = 'storm' },
   --   config = function()
