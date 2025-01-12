@@ -11,6 +11,7 @@ rm $HOME/.config/kitty/kitty.conf
 rm $HOME/.julia/config/startup.jl
 rm $HOME/.wezterm.lua
 rm $HOME/.alacritty.toml
+rm $HOME/.config/ghostty/config
 
 # symlinks
 
@@ -38,3 +39,4 @@ ln -s $PWD/vim/* $HOME/.config/nvim/vim/
 ln -s $PWD/kitty.conf $HOME/.config/kitty/kitty.conf
 ln -s $PWD/wezterm.lua $HOME/.wezterm.lua
 ln -s $PWD/alacritty.toml $HOME/.alacritty.toml
+ln -s $PWD/ghostty_config $HOME/.config/ghostty/config

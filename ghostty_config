@@ -1,0 +1,8 @@
+theme = light:rose-pine-dawn,dark:rose-pine
+cursor-style = "block"
+shell-integration-features = no-cursor
+font-style = false
+font-style-italic = false
+font-style-bold = false
+font-style-bold-italic = false
+font-synthetic-style = false
