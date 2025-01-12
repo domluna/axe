@@ -146,9 +146,6 @@ export NVM_DIR="$HOME/.nvm"
 export WASMER_DIR="/home/dom/.wasmer"
 [ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
 
-# add ziglang to path
-export PATH="$PATH:/home/dom/ziglang"
-
 export WASMTIME_HOME="$HOME/.wasmtime"
 
 export PATH="$WASMTIME_HOME/bin:$PATH"
@@ -235,7 +232,7 @@ set visible-stats on
 
 export DOCKER_HOST=unix:///var/run/docker.sock
 
-export PATH="$PATH:$HOME/zig0.14/"
+export PATH="$PATH:$HOME/zig-linux-x86_64-0.13.0"
 
 export PATH="$PATH:/opt/nvim-linux64/bin"
 if command -v nvim > /dev/null; then

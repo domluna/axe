@@ -69,10 +69,6 @@ require('lazy').setup {
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   { 'numToStr/Comment.nvim', opts = {} },
   {
-    'davidmh/mdx.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
-  },
-  {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
     event = 'VimEnter',
@@ -524,31 +520,6 @@ require('lazy').setup {
   {
     'windwp/nvim-ts-autotag',
     opts = {},
-  },
-  -- 'JuliaEditorSupport/julia-vim',
-
-  {
-    'nvim-neo-tree/neo-tree.nvim',
-    version = '*',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
-      'MunifTanjim/nui.nvim',
-      '3rd/image.nvim', -- Optional image support in preview window: See `# Preview Mode` for more information
-    },
-    cmd = 'Neotree',
-    keys = {
-      { '\\', ':Neotree reveal<CR>', { desc = 'NeoTree reveal' } },
-    },
-    opts = {
-      filesystem = {
-        window = {
-          mappings = {
-            ['\\'] = 'close_window',
-          },
-        },
-      },
-    },
   },
 
   {
