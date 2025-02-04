@@ -364,7 +364,7 @@ require('lazy').setup {
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
-      keymap = { preset = 'default' },
+      keymap = { preset = 'super-tab' },
 
       appearance = {
         use_nvim_cmp_as_default = true,
@@ -756,6 +756,7 @@ require('lazy').setup {
       }
     end,
   },
+  'github/copilot.vim',
 }
 
 ---
