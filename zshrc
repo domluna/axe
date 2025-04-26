@@ -167,4 +167,6 @@ alias lsa='ls -a'
 alias lt='eza --tree --level=2 --long --icons --git'
 alias lta='lt -a'
 
-alias ai='howdoi -m "mini" --system-prompt "Write your response in markdown format, have a neutral tone and be as informative as possible while still being succinct."'
+alias ai='howdoi -m "sonnet" --system-prompt "Write your response in markdown format, have a neutral tone and be as informative as possible while still being succinct."'
+
+alias py='uv run python'
