@@ -15,13 +15,13 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup {
-  {
-    'rose-pine/neovim',
-    name = 'rose-pine',
-    config = function()
-      vim.cmd.colorscheme 'rose-pine-moon'
-    end,
-  },
+  -- {
+  --   'rose-pine/neovim',
+  --   name = 'rose-pine',
+  --   config = function()
+  --     vim.cmd.colorscheme 'rose-pine-moon'
+  --   end,
+  -- },
   -- {
   --   'folke/tokyonight.nvim',
   --   priority = 1000,
@@ -45,7 +45,7 @@ require('lazy').setup {
     event = 'VimEnter',
     dependencies = {
       'nvim-lua/plenary.nvim',
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font, lazy = true },
     },
     config = function()
       require('telescope').setup {
@@ -82,19 +82,6 @@ require('lazy').setup {
   {
     'nvim-telescope/telescope-fzf-native.nvim',
     build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
-    config = function()
-      require('telescope').setup {
-        extensions = {
-          fzf = {
-            fuzzy = true,
-            override_generic_sorter = true,
-            override_file_sorter = true,
-            case_mode = 'smart_case',
-          },
-        },
-      }
-      require('telescope').load_extension 'fzf'
-    end,
   },
   {
     'nvim-telescope/telescope-ui-select.nvim',
@@ -109,9 +96,6 @@ require('lazy').setup {
       require('telescope').load_extension 'ui-select'
     end,
   },
-
-  'tpope/vim-fugitive',
-  'tpope/vim-rhubarb',
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
@@ -132,7 +116,7 @@ require('lazy').setup {
     config = function()
       require('docs-view').setup {
         position = 'right',
-        width = 80,
+        width = 30,
       }
     end,
   },
@@ -179,7 +163,7 @@ require('lazy').setup {
       completion = {
         -- By default, you may press `<c-space>` to show the documentation.
         -- Optionally, set `auto_show = true` to show the documentation after a delay.
-        documentation = { auto_show = false, auto_show_delay_ms = 500 },
+        documentation = { auto_show = true, auto_show_delay_ms = 500 },
       },
 
       -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
@@ -279,14 +263,17 @@ require('lazy').setup {
           'json',
           'go',
           'gomod',
+          'rust',
           'gosum',
           'editorconfig',
           'http',
           'toml',
+          'zig',
           'sql',
           'promql',
           'nginx',
           'powershell',
+          'julia'
         },
         incremental_selection = {
           enable = true,
@@ -308,20 +295,6 @@ require('lazy').setup {
     enabled = true,
   },
 
-  {
-    'windwp/nvim-ts-autotag',
-    opts = {},
-  },
-
-  {
-    's1n7ax/nvim-window-picker',
-    name = 'window-picker',
-    event = 'VeryLazy',
-    version = '2.*',
-    config = function()
-      require('window-picker').setup()
-    end,
-  },
   { -- Autoformat
     'stevearc/conform.nvim',
     opts = {
@@ -381,23 +354,6 @@ require('lazy').setup {
     },
     main = 'ibl',
   },
-  -- better vim.ui
-  {
-    'stevearc/dressing.nvim',
-    lazy = true,
-    init = function()
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.select = function(...)
-        require('lazy').load { plugins = { 'dressing.nvim' } }
-        return vim.ui.select(...)
-      end
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.input = function(...)
-        require('lazy').load { plugins = { 'dressing.nvim' } }
-        return vim.ui.input(...)
-      end
-    end,
-  },
   {
     'folke/lazydev.nvim',
     ft = 'lua', -- only load on lua files
@@ -409,7 +365,6 @@ require('lazy').setup {
       },
     },
   },
-  { 'Bilal2453/luvit-meta',  lazy = true }, -- optional `vim.uv` typings
   {
     'folke/trouble.nvim',
     opts = {}, -- for default options, refer to the configuration section for custom setup.
@@ -555,7 +510,6 @@ vim.keymap.set({ 'n', 't' }, '<C-h>', '<CMD>NavigatorLeft<CR>')
 vim.keymap.set({ 'n', 't' }, '<C-l>', '<CMD>NavigatorRight<CR>')
 vim.keymap.set({ 'n', 't' }, '<C-k>', '<CMD>NavigatorUp<CR>')
 vim.keymap.set({ 'n', 't' }, '<C-j>', '<CMD>NavigatorDown<CR>')
--- vim.keymap.set({'n', 't'}, '<A-p>', '<CMD>NavigatorPrevious<CR>')
 
 local builtin = require 'telescope.builtin'
 vim.keymap.set('n', '<leader>fo', builtin.oldfiles, { desc = '[?] Find recently opened files' })
