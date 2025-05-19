@@ -36,7 +36,6 @@ require('lazy').setup {
     dependencies = { 'nvim-lua/plenary.nvim' },
     opts = { signs = false },
   },
-  'nvim-lualine/lualine.nvim',
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   { 'numToStr/Comment.nvim', opts = {} },
   {
@@ -243,9 +242,6 @@ require('lazy').setup {
           'markdown_inline',
           'rst',
           'latex',
-          'elixir',
-          'eex',
-          'heex',
           'yaml',
           'html',
           'css',
@@ -254,25 +250,20 @@ require('lazy').setup {
           'query',
           'hcl',
           'terraform',
-          'bicep',
           'csv',
-          'properties',
-          'ini',
           'python',
           'regex',
           'json',
           'go',
           'gomod',
-          'rust',
           'gosum',
+          'rust',
           'editorconfig',
           'http',
           'toml',
           'zig',
           'sql',
-          'promql',
           'nginx',
-          'powershell',
           'julia'
         },
         incremental_selection = {
@@ -309,6 +300,7 @@ require('lazy').setup {
       formatters_by_ft = {
         lua = { 'stylua' },
         go = { 'goimports', 'gofmt' },
+        rust = { 'rustfmt' },
         javascript = { 'prettier' },
         typescript = { 'prettier' },
         javascriptreact = { 'prettier' },
@@ -353,17 +345,6 @@ require('lazy').setup {
       },
     },
     main = 'ibl',
-  },
-  {
-    'folke/lazydev.nvim',
-    ft = 'lua', -- only load on lua files
-    opts = {
-      library = {
-        -- See the configuration section for more details
-        -- Load luvit types when the `vim.uv` word is found
-        { path = 'luvit-meta/library', words = { 'vim%.uv' } },
-      },
-    },
   },
   {
     'folke/trouble.nvim',
