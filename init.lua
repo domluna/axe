@@ -37,7 +37,6 @@ require('lazy').setup {
     opts = { signs = false },
   },
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
-  { 'numToStr/Comment.nvim', opts = {} },
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
@@ -386,7 +385,7 @@ require('lazy').setup {
       require('trouble').setup()
     end,
   },
-  'github/copilot.vim',
+  -- 'github/copilot.vim',
   -- {
   --   'williamboman/mason.nvim',
   --   tag = 'stable',
@@ -460,7 +459,7 @@ opt.wildmode = 'longest:full,full' -- Command-line completion mode
 opt.wrap = true
 opt.linebreak = true
 opt.breakindent = true
-opt.colorcolumn = '92'
+-- opt.colorcolumn = '121'
 opt.hlsearch = true
 
 vim.g.markdown_recommended_style = 0
@@ -510,6 +509,8 @@ vim.lsp.enable 'rust-analyzer'
 vim.lsp.enable 'pyrefly'
 vim.lsp.enable 'lua-language-server'
 vim.lsp.enable 'zls'
+
+vim.diagnostic.config({ virtual_text = true })
 
 -- autogroups
 ---- This file is automatically loaded by lazyvim.config.init.
