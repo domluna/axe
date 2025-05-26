@@ -30,6 +30,53 @@ require('lazy').setup {
   --     vim.cmd.colorscheme 'tokyonight-night'
   --   end,
   -- },
+
+  { -- Collection of various small independent plugins/modules
+    'echasnovski/mini.nvim',
+    config = function()
+      -- Better Around/Inside textobjects
+      --
+      -- Examples:
+      --  - va)  - [V]isually select [A]round [)]paren
+      --  - yinq - [Y]ank [I]nside [N]ext [']quote
+      --  - ci'  - [C]hange [I]nside [']quote
+      require('mini.ai').setup { n_lines = 500 }
+
+      -- Add/delete/replace surroundings (brackets, quotes, etc.)
+      --
+      -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
+      -- - sd'   - [S]urround [D]elete [']quotes
+      -- - sr)'  - [S]urround [R]eplace [)] [']
+      require('mini.surround').setup()
+
+      -- Simple and easy statusline.
+      --  You could remove this setup call if you don't like it,
+      --  and try some other statusline plugin
+      local statusline = require 'mini.statusline'
+      statusline.setup()
+
+      -- You can configure sections in the statusline by overriding their
+      -- default behavior. For example, here we disable the section for
+      -- cursor information because line numbers are already enabled
+      ---@diagnostic disable-next-line: duplicate-set-field
+      statusline.section_location = function()
+        return ''
+      end
+
+      -- ... and there is more!
+      --  Check out: https://github.com/echasnovski/mini.nvim
+
+      require('mini.basics').setup {
+        options = {
+          extra_ui = true,
+        },
+        mappings = {
+          basic = true,
+          windows = true,
+        }
+      }
+    end,
+  },
   {
     'folke/todo-comments.nvim',
     event = 'VimEnter',
@@ -174,42 +221,6 @@ require('lazy').setup {
     },
   },
 
-  { -- Collection of various small independent plugins/modules
-    'echasnovski/mini.nvim',
-    config = function()
-      -- Better Around/Inside textobjects
-      --
-      -- Examples:
-      --  - va)  - [V]isually select [A]round [)]paren
-      --  - yinq - [Y]ank [I]nside [N]ext [']quote
-      --  - ci'  - [C]hange [I]nside [']quote
-      require('mini.ai').setup { n_lines = 500 }
-
-      -- Add/delete/replace surroundings (brackets, quotes, etc.)
-      --
-      -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
-      -- - sd'   - [S]urround [D]elete [']quotes
-      -- - sr)'  - [S]urround [R]eplace [)] [']
-      require('mini.surround').setup()
-
-      -- Simple and easy statusline.
-      --  You could remove this setup call if you don't like it,
-      --  and try some other statusline plugin
-      local statusline = require 'mini.statusline'
-      statusline.setup()
-
-      -- You can configure sections in the statusline by overriding their
-      -- default behavior. For example, here we disable the section for
-      -- cursor information because line numbers are already enabled
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return ''
-      end
-
-      -- ... and there is more!
-      --  Check out: https://github.com/echasnovski/mini.nvim
-    end,
-  },
 
   {
     'nvim-treesitter/nvim-treesitter',
@@ -221,59 +232,10 @@ require('lazy').setup {
     },
     config = function()
       local treesitter = require 'nvim-treesitter.configs'
-
       treesitter.setup {
         highlight = { enable = true },
         indent = { enable = true },
-        auto_install = false,
-        -- language list: https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
-        ensure_installed = {
-          'lua',
-          'comment', -- used for TODO:, FIXME:, XXX: and NOTE:
-          'vim',
-          'vimdoc',
-          'bash',
-          'diff',
-          'make',
-          'gitignore',
-          'gitcommit',
-          'markdown',
-          'markdown_inline',
-          'rst',
-          'latex',
-          'yaml',
-          'html',
-          'css',
-          'javascript',
-          'dockerfile',
-          'query',
-          'hcl',
-          'terraform',
-          'csv',
-          'python',
-          'regex',
-          'json',
-          'go',
-          'gomod',
-          'gosum',
-          'rust',
-          'editorconfig',
-          'http',
-          'toml',
-          'zig',
-          'sql',
-          'nginx',
-          'julia'
-        },
-        incremental_selection = {
-          enable = true,
-          keymaps = {
-            init_selection = '<C-s>',
-            node_incremental = '<C-s>',
-            scope_incremental = false,
-            node_decremental = '<bs>',
-          },
-        },
+        auto_install = true,
       }
     end,
   },
@@ -385,19 +347,15 @@ require('lazy').setup {
       require('trouble').setup()
     end,
   },
-  -- 'github/copilot.vim',
-  -- {
-  --   'williamboman/mason.nvim',
-  --   tag = 'stable',
-  --   lazy = false,
-  --   config = true,
-  -- },
+  'github/copilot.vim',
 }
 
 ---
 --- OPTIONS
 ---
+---
 
+vim.cmd.colorscheme('retrobox')
 -- Hide deprecation warnings
 vim.g.deprecation_warnings = false
 
@@ -413,28 +371,22 @@ opt.clipboard = vim.env.SSH_TTY and '' or 'unnamedplus' -- Sync with system clip
 opt.completeopt = 'menu,menuone,noselect'
 opt.conceallevel = 2                                    -- Hide * markup for bold and italic, but not markers with substitutions
 opt.confirm = true                                      -- Confirm to save changes before exiting modified buffer
-opt.cursorline = true                                   -- Enable highlighting of the current line
-opt.expandtab = true                                    -- Use spaces instead of tabs
-opt.fillchars = {
-  foldopen = '',
-  foldclose = '',
-  fold = ' ',
-  foldsep = ' ',
-  diff = '╱',
-  eob = ' ',
-}
+-- opt.fillchars = {
+--   foldopen = '',
+--   foldclose = '',
+--   fold = ' ',
+--   foldsep = ' ',
+--   diff = '╱',
+--   eob = ' ',
+-- }
 opt.foldlevel = 99
 -- opt.formatexpr = "v:lua.require'lazyvim.util'.format.formatexpr()"
 opt.formatoptions = 'jcroqlnt' -- tcqj
 opt.grepformat = '%f:%l:%c:%m'
 opt.grepprg = 'rg --vimgrep'
-opt.ignorecase = true      -- Ignore case
-opt.smartcase = true       -- Don't ignore case with capitals
 opt.inccommand = 'nosplit' -- preview incremental substitute
 opt.laststatus = 3         -- global statusline
 opt.list = true            -- Show some invisible characters (tabs...
-opt.mouse = 'a'            -- Enable mouse mode
-opt.number = true          -- Print line number
 opt.pumblend = 10          -- Popup blend
 opt.pumheight = 10         -- Maximum number of entries in a popup
 opt.relativenumber = true  -- Relative line numbers
@@ -446,25 +398,19 @@ opt.sidescrolloff = 8    -- Columns of context
 opt.signcolumn = 'yes:2' -- Always show the signcolumn, otherwise it would shift the text each time
 opt.spelllang = { 'en' }
 opt.splitkeep = 'screen'
-opt.splitbelow = true    -- Put new windows below current
-opt.splitright = true    -- Put new windows right of current
 -- opt.statuscolumn = [[%!v:lua.require'lazyvim.util'.ui.statuscolumn()]]
-opt.termguicolors = true -- True color support
-opt.timeoutlen = 300     -- Lower than default (1000) to quickly trigger which-key
-opt.undofile = true
+opt.timeoutlen = 300               -- Lower than default (1000) to quickly trigger which-key
 opt.undolevels = 10000
 opt.updatetime = 250               -- Save swap file and trigger CursorHold
 opt.virtualedit = 'block'          -- Allow cursor to move where there is no text in visual block mode
 opt.wildmode = 'longest:full,full' -- Command-line completion mode
-opt.wrap = true
-opt.linebreak = true
-opt.breakindent = true
--- opt.colorcolumn = '121'
+-- opt.wrap = true
 opt.hlsearch = true
 
 vim.g.markdown_recommended_style = 0
 
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
 
 -- Diagnostic keymaps
 -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
@@ -477,15 +423,9 @@ vim.keymap.set({ 'n' }, 'Y', 'y$', { silent = true })
 vim.keymap.set({ 'n' }, '0', '^', { silent = true })
 
 -- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+-- vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+-- vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
-vim.keymap.set({ 'n' }, '<C-j>', '<C-W>j', { silent = true })
-vim.keymap.set({ 'n' }, '<C-k>', '<C-W>k', { silent = true })
-vim.keymap.set({ 'n' }, '<C-h>', '<C-W>h', { silent = true })
-vim.keymap.set({ 'n' }, '<C-l>', '<C-W>l', { silent = true })
-
--- require('Navigator').setup({})
 vim.keymap.set({ 'n', 't' }, '<C-h>', '<CMD>NavigatorLeft<CR>')
 vim.keymap.set({ 'n', 't' }, '<C-l>', '<CMD>NavigatorRight<CR>')
 vim.keymap.set({ 'n', 't' }, '<C-k>', '<CMD>NavigatorUp<CR>')
@@ -525,14 +465,6 @@ vim.api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
     if vim.o.buftype ~= 'nofile' then
       vim.cmd 'checktime'
     end
-  end,
-})
-
--- Highlight on yank
-vim.api.nvim_create_autocmd('TextYankPost', {
-  group = augroup 'highlight_yank',
-  callback = function()
-    vim.highlight.on_yank()
   end,
 })
 
@@ -631,13 +563,21 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
 -- (e.g. when splitting or zooming with tmux)
 vim.api.nvim_create_autocmd({ 'VimResized' }, { pattern = '*', command = 'wincmd =' })
 
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-})
+-- -- Highlight on yank
+-- vim.api.nvim_create_autocmd('TextYankPost', {
+--   group = augroup 'highlight_yank',
+--   callback = function()
+--     vim.highlight.on_yank()
+--   end,
+-- })
+
+-- vim.api.nvim_create_autocmd('TextYankPost', {
+--   desc = 'Highlight when yanking (copying) text',
+--   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+--   callback = function()
+--     vim.highlight.on_yank()
+--   end,
+-- })
 
 -- vim.api.nvim_create_autocmd('LspAttach', {
 --   group = augroup 'mylsp',
