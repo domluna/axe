@@ -234,12 +234,7 @@ export DOCKER_HOST=unix:///var/run/docker.sock
 
 export PATH="$PATH:$HOME/zig-linux-x86_64-0.13.0"
 
-export PATH="$PATH:/opt/nvim-linux64/bin"
-if command -v nvim > /dev/null; then
-   alias vim='nvim'
-   alias vi='nvim'
-   alias v='nvim'
-fi
+export PATH="$PATH:$HOME/squashfs-root/usr/bin"
 
 alias ai='howdoi -v -m "mini" --system-prompt "Write your response in markdown format"'
 
