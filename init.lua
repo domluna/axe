@@ -73,7 +73,7 @@ require('lazy').setup {
         mappings = {
           basic = true,
           windows = true,
-        }
+        },
       }
     end,
   },
@@ -221,7 +221,6 @@ require('lazy').setup {
     },
   },
 
-
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
@@ -355,7 +354,7 @@ require('lazy').setup {
 ---
 ---
 
-vim.cmd.colorscheme('retrobox')
+vim.cmd.colorscheme 'retrobox'
 -- Hide deprecation warnings
 vim.g.deprecation_warnings = false
 
@@ -369,8 +368,8 @@ opt.autowrite = true -- Enable auto write
 -- integration works automatically. Requires Neovim >= 0.10.0
 opt.clipboard = vim.env.SSH_TTY and '' or 'unnamedplus' -- Sync with system clipboard
 opt.completeopt = 'menu,menuone,noselect'
-opt.conceallevel = 2                                    -- Hide * markup for bold and italic, but not markers with substitutions
-opt.confirm = true                                      -- Confirm to save changes before exiting modified buffer
+opt.conceallevel = 2 -- Hide * markup for bold and italic, but not markers with substitutions
+opt.confirm = true -- Confirm to save changes before exiting modified buffer
 -- opt.fillchars = {
 --   foldopen = '',
 --   foldclose = '',
@@ -385,24 +384,24 @@ opt.formatoptions = 'jcroqlnt' -- tcqj
 opt.grepformat = '%f:%l:%c:%m'
 opt.grepprg = 'rg --vimgrep'
 opt.inccommand = 'nosplit' -- preview incremental substitute
-opt.laststatus = 3         -- global statusline
-opt.list = true            -- Show some invisible characters (tabs...
-opt.pumblend = 10          -- Popup blend
-opt.pumheight = 10         -- Maximum number of entries in a popup
-opt.relativenumber = true  -- Relative line numbers
-opt.scrolloff = 10         -- Lines of context
+opt.laststatus = 3 -- global statusline
+opt.list = true -- Show some invisible characters (tabs...
+opt.pumblend = 10 -- Popup blend
+opt.pumheight = 10 -- Maximum number of entries in a popup
+opt.relativenumber = true -- Relative line numbers
+opt.scrolloff = 10 -- Lines of context
 opt.sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help', 'globals', 'skiprtp', 'folds' }
 opt.shortmess:append { W = true, I = true, c = true, C = true }
-opt.showmode = false     -- Dont show mode since we have a statusline
-opt.sidescrolloff = 8    -- Columns of context
+opt.showmode = false -- Dont show mode since we have a statusline
+opt.sidescrolloff = 8 -- Columns of context
 opt.signcolumn = 'yes:2' -- Always show the signcolumn, otherwise it would shift the text each time
 opt.spelllang = { 'en' }
 opt.splitkeep = 'screen'
 -- opt.statuscolumn = [[%!v:lua.require'lazyvim.util'.ui.statuscolumn()]]
-opt.timeoutlen = 300               -- Lower than default (1000) to quickly trigger which-key
+opt.timeoutlen = 300 -- Lower than default (1000) to quickly trigger which-key
 opt.undolevels = 10000
-opt.updatetime = 250               -- Save swap file and trigger CursorHold
-opt.virtualedit = 'block'          -- Allow cursor to move where there is no text in visual block mode
+opt.updatetime = 250 -- Save swap file and trigger CursorHold
+opt.virtualedit = 'block' -- Allow cursor to move where there is no text in visual block mode
 opt.wildmode = 'longest:full,full' -- Command-line completion mode
 -- opt.wrap = true
 opt.hlsearch = true
@@ -410,7 +409,6 @@ opt.hlsearch = true
 vim.g.markdown_recommended_style = 0
 
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
 
 -- Diagnostic keymaps
 -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
@@ -443,6 +441,38 @@ vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = '[S]earch [D]iag
 vim.keymap.set('i', 'jk', '<Esc>', { noremap = true, silent = true })
 vim.keymap.set('i', 'kj', '<Esc>', { noremap = true, silent = true })
 
+-- LSP Keymaps and Attach configuration
+local on_attach = function(client, bufnr)
+  -- This is a callback function that runs whenever a new LSP client attaches to a buffer.
+  -- It's the perfect place to define buffer-local keymaps for LSP features.
+  local map = function(mode, lhs, rhs, desc)
+    vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, silent = true, desc = desc })
+  end
+
+  -- See :help vim.lsp.buf for more functions
+  map('n', 'gd', vim.lsp.buf.definition, 'Go to Definition')
+  map('n', 'gD', vim.lsp.buf.declaration, 'Go to Declaration')
+  map('n', 'gi', vim.lsp.buf.implementation, 'Go to Implementation')
+  map('n', 'gr', vim.lsp.buf.references, 'Find References')
+  map('n', 'K', vim.lsp.buf.hover, 'Hover Documentation')
+  map('n', '<leader>ca', vim.lsp.buf.code_action, 'Code Actions')
+  map('n', '<leader>rn', vim.lsp.buf.rename, 'Rename Symbol')
+  map('n', '[d', vim.diagnostic.goto_prev, 'Previous Diagnostic')
+  map('n', ']d', vim.diagnostic.goto_next, 'Next Diagnostic')
+  map('n', '<leader>e', vim.diagnostic.open_float, 'Show Line Diagnostics')
+end
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('lazyvim_lsp_attach', { clear = true }),
+  callback = function(event)
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    if client then
+      on_attach(client, event.buf)
+    end
+  end,
+})
+
+
 vim.lsp.enable 'clangd'
 vim.lsp.enable 'gopls'
 vim.lsp.enable 'rust-analyzer'
@@ -450,7 +480,7 @@ vim.lsp.enable 'pyrefly'
 vim.lsp.enable 'lua-language-server'
 vim.lsp.enable 'zls'
 
-vim.diagnostic.config({ virtual_text = true })
+vim.diagnostic.config { virtual_text = true }
 
 -- autogroups
 ---- This file is automatically loaded by lazyvim.config.init.
@@ -562,29 +592,3 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
 -- Auto-resize splits when terminal window changes size
 -- (e.g. when splitting or zooming with tmux)
 vim.api.nvim_create_autocmd({ 'VimResized' }, { pattern = '*', command = 'wincmd =' })
-
--- -- Highlight on yank
--- vim.api.nvim_create_autocmd('TextYankPost', {
---   group = augroup 'highlight_yank',
---   callback = function()
---     vim.highlight.on_yank()
---   end,
--- })
-
--- vim.api.nvim_create_autocmd('TextYankPost', {
---   desc = 'Highlight when yanking (copying) text',
---   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
---   callback = function()
---     vim.highlight.on_yank()
---   end,
--- })
-
--- vim.api.nvim_create_autocmd('LspAttach', {
---   group = augroup 'mylsp',
---   callback = function(ev)
---     local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
---     if client:supports_method 'textDocument/completion' then
---       -- vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
---     end
---   end,
--- })
