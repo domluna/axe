@@ -2,22 +2,19 @@
 
 # remove old files
 rm -rf $HOME/.config/nvim/
-rm -rf $HOME/.config/starship.toml
 rm $HOME/.tmux.conf
 rm $HOME/.gitconfig
 rm $HOME/.bashrc
 rm $HOME/.zshrc
 rm $HOME/.config/kitty/kitty.conf
 rm $HOME/.julia/config/startup.jl
-rm $HOME/.wezterm.lua
-rm $HOME/.alacritty.toml
+rm $HOME/.config/ghostty/config
 
 # symlinks
 
-mkdir -p $HOME/.config/nvim/{lua,vim}
+mkdir -p $HOME/.config/nvim/{lua,vim,lsp}
 mkdir -p $HOME/.julia/config
 mkdir -p $HOME/.config/kitty
-mkdir -p $HOME/.config/alacritty
 
 if [ "$(uname -s)" == "Darwin" ]
 then
@@ -34,7 +31,7 @@ ln -s $PWD/tmux.conf $HOME/.tmux.conf
 ln -s $PWD/gitconfig $HOME/.gitconfig
 ln -s $PWD/startup.jl $HOME/.julia/config/startup.jl
 ln -s $PWD/lua/*.lua $HOME/.config/nvim/lua/
+ln -s $PWD/lsp/* $HOME/.config/nvim/lsp/
 ln -s $PWD/vim/* $HOME/.config/nvim/vim/
 ln -s $PWD/kitty.conf $HOME/.config/kitty/kitty.conf
-ln -s $PWD/wezterm.lua $HOME/.wezterm.lua
-ln -s $PWD/alacritty.toml $HOME/.alacritty.toml
+ln -s $PWD/ghostty_config $HOME/.config/ghostty/config
