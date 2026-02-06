@@ -1,6 +1,5 @@
 export PS1="λ %~: "
 
-export GO111MODULE=on
 # Go
 export PATH=$PATH:$HOME/go/bin
 export PATH=$PATH:$HOME/bin
@@ -73,8 +72,6 @@ esac
 # <<< juliaup initialize <<<
 export PATH=$HOME/opt/anaconda3/bin:$PATH
 
-export PATH="/Users/lunaticd/.local/share/solana/install/active_release/bin:$PATH"
-
 eval "$(direnv hook zsh)"
 
 if [ -n "${commands[fzf-share]}" ]; then
@@ -90,17 +87,8 @@ if [ -n "${commands[bat]}" ]; then
   alias cat='bat'
 fi
 
-# function gcob() {
-#    git branch | grep --invert-match '\*' | cut -c 3- |
-#       fzf --multi --preview="git log {}" |
-#       xargs --no-run-if-empty git checkout
-# }
-#
-
 # increase limit from 256
-ulimit -n 250000
-
-export PATH="$PATH:/Users/lunaticd/.foundry/bin"
+ulimit -n 500000
 
 # bun completions
 [ -s "/Users/lunaticd/.bun/_bun" ] && source "/Users/lunaticd/.bun/_bun"
@@ -111,13 +99,9 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/lunaticd/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/lunaticd/google-cloud-sdk/path.zsh.inc'; fi
-
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/lunaticd/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/lunaticd/google-cloud-sdk/completion.zsh.inc'; fi
 
-export WASMTIME_HOME="$HOME/.wasmtime"
-
-export PATH="$WASMTIME_HOME/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -140,9 +124,6 @@ export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
 
- export PATH="/Users/lunaticd/code/executorch/third-party/flatbuffers/cmake-out:${PATH}"
-
-export LLAMACPP_DIR="$HOME/code/llama.cpp"
 
 mk() {
     # Extract the directory path from the provided full file path
@@ -155,9 +136,6 @@ mk() {
     touch "$1"
 }
 
-# sst
-export PATH=/Users/lunaticd/.sst/bin:$PATH
-
 # Compression
 compress() { tar -czf "${1%/}.tar.gz" "${1%/}"; }
 alias decompress="tar -xzf"
@@ -167,12 +145,11 @@ alias lsa='ls -a'
 alias lt='eza --tree --level=2 --long --icons --git'
 alias lta='lt -a'
 
-alias ai='howdoi -m "sonnet" --system-prompt "Write your response in markdown format, have a neutral tone and be as informative as possible while still being succinct."'
-
 alias py='uv run python'
 
 # Added by Antigravity
 export PATH="/Users/lunaticd/.antigravity/antigravity/bin:$PATH"
+
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=(/Users/lunaticd/.docker/completions $fpath)
 autoload -Uz compinit
