@@ -58,6 +58,11 @@ eval "$(zoxide init zsh)"
 setopt inc_append_history
 # Reloads the history whenever you use it
 setopt share_history
+# History configuration
+HISTSIZE=100000
+SAVEHIST=100000
+setopt HIST_IGNORE_ALL_DUPS  # Remove older duplicate entries from history
+setopt HIST_REDUCE_BLANKS    # Remove superfluous blanks from each command line
 
 . "$HOME/.cargo/env"
 
