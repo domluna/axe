@@ -15,6 +15,18 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup {
+  {
+    'folke/lazydev.nvim',
+    ft = 'lua', -- only load on lua files
+    opts = {
+      library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        { path = 'luvit-meta/library', words = { 'vim%.uv' } },
+      },
+    },
+  },
+  { 'Bilal2453/luvit-meta', lazy = true }, -- optional `vim.uv` typings
   -- {
   --   'rose-pine/neovim',
   --   name = 'rose-pine',
@@ -48,6 +60,8 @@ require('lazy').setup {
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
+      require('mini.pairs').setup()
+      require('mini.files').setup()
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
@@ -83,6 +97,22 @@ require('lazy').setup {
     dependencies = { 'nvim-lua/plenary.nvim' },
     opts = { signs = false },
   },
+
+  {
+    'folke/which-key.nvim',
+    event = 'VeryLazy',
+    opts = {},
+    keys = {
+      {
+        '<leader>?',
+        function()
+          require('which-key').show { global = false }
+        end,
+        desc = 'Buffer Local Keymaps (which-key)',
+      },
+    },
+  },
+
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   {
     'nvim-telescope/telescope.nvim',
