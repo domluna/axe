@@ -1,7 +1,4 @@
-# cool stuff bucko
 export PS1="λ \W: "
-
-export GO111MODULE=on
 
 export EDITOR=nvim
 
@@ -11,9 +8,6 @@ alias tree='ls --tree'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-# alias vim='nvim'
-# alias vi='nvim'
-# alias v='nvim'
 alias gst='git status'
 alias ga='git add'
 alias gc='git commit'
