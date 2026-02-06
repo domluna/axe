@@ -15,6 +15,18 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup {
+  {
+    'folke/lazydev.nvim',
+    ft = 'lua', -- only load on lua files
+    opts = {
+      library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        { path = 'luvit-meta/library', words = { 'vim%.uv' } },
+      },
+    },
+  },
+  { 'Bilal2453/luvit-meta', lazy = true }, -- optional `vim.uv` typings
   -- {
   --   'rose-pine/neovim',
   --   name = 'rose-pine',
@@ -48,6 +60,8 @@ require('lazy').setup {
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
+      require('mini.pairs').setup()
+      require('mini.files').setup()
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
@@ -83,6 +97,22 @@ require('lazy').setup {
     dependencies = { 'nvim-lua/plenary.nvim' },
     opts = { signs = false },
   },
+
+  {
+    'folke/which-key.nvim',
+    event = 'VeryLazy',
+    opts = {},
+    keys = {
+      {
+        '<leader>?',
+        function()
+          require('which-key').show { global = false }
+        end,
+        desc = 'Buffer Local Keymaps (which-key)',
+      },
+    },
+  },
+
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   {
     'nvim-telescope/telescope.nvim',
@@ -471,6 +501,45 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
+---@param name string
+vim.lsp.enable = function(name)
+  local config_path = vim.fn.stdpath 'config' .. '/lsp/' .. name .. '.lua'
+  if vim.fn.filereadable(config_path) == 1 then
+    local config = dofile(config_path)
+    if config then
+      -- Merge blink.cmp capabilities
+      local blink_installed, blink = pcall(require, 'blink.cmp')
+      if blink_installed then
+        config.capabilities = blink.get_lsp_capabilities(config.capabilities)
+      end
+
+      -- Handle root_dir if strictly using root_markers or missing
+      if not config.root_dir then
+        if config.root_markers then
+          config.root_dir = function(fname)
+            return vim.fs.root(fname, config.root_markers)
+          end
+        else
+          config.root_dir = function(fname)
+            return vim.fs.root(fname, { '.git' }) or vim.fn.getcwd()
+          end
+        end
+      end
+
+      -- Setup FileType autocommand to start LSP
+      if config.filetypes then
+        vim.api.nvim_create_autocmd('FileType', {
+          pattern = config.filetypes,
+          callback = function(ev)
+            vim.lsp.start(config, { bufnr = ev.buf })
+          end,
+        })
+      end
+    end
+  else
+    vim.notify('LSP config not found: ' .. name, vim.log.levels.WARN)
+  end
+end
 
 vim.lsp.enable 'clangd'
 vim.lsp.enable 'gopls'
