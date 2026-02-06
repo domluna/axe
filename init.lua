@@ -471,6 +471,45 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
+---@param name string
+vim.lsp.enable = function(name)
+  local config_path = vim.fn.stdpath 'config' .. '/lsp/' .. name .. '.lua'
+  if vim.fn.filereadable(config_path) == 1 then
+    local config = dofile(config_path)
+    if config then
+      -- Merge blink.cmp capabilities
+      local blink_installed, blink = pcall(require, 'blink.cmp')
+      if blink_installed then
+        config.capabilities = blink.get_lsp_capabilities(config.capabilities)
+      end
+
+      -- Handle root_dir if strictly using root_markers or missing
+      if not config.root_dir then
+        if config.root_markers then
+          config.root_dir = function(fname)
+            return vim.fs.root(fname, config.root_markers)
+          end
+        else
+          config.root_dir = function(fname)
+            return vim.fs.root(fname, { '.git' }) or vim.fn.getcwd()
+          end
+        end
+      end
+
+      -- Setup FileType autocommand to start LSP
+      if config.filetypes then
+        vim.api.nvim_create_autocmd('FileType', {
+          pattern = config.filetypes,
+          callback = function(ev)
+            vim.lsp.start(config, { bufnr = ev.buf })
+          end,
+        })
+      end
+    end
+  else
+    vim.notify('LSP config not found: ' .. name, vim.log.levels.WARN)
+  end
+end
 
 vim.lsp.enable 'clangd'
 vim.lsp.enable 'gopls'
