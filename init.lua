@@ -22,14 +22,14 @@ require('lazy').setup {
   --     vim.cmd.colorscheme 'rose-pine-moon'
   --   end,
   -- },
-  -- {
-  --   'folke/tokyonight.nvim',
-  --   priority = 1000,
-  --   opts = { style = 'storm' },
-  --   config = function()
-  --     vim.cmd.colorscheme 'tokyonight-night'
-  --   end,
-  -- },
+  {
+    'folke/tokyonight.nvim',
+    priority = 1000,
+    opts = { style = 'storm' },
+    config = function()
+      vim.cmd.colorscheme 'tokyonight-night'
+    end,
+  },
 
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
@@ -346,7 +346,6 @@ require('lazy').setup {
       require('trouble').setup()
     end,
   },
-  'github/copilot.vim',
 }
 
 ---
@@ -354,7 +353,7 @@ require('lazy').setup {
 ---
 ---
 
-vim.cmd.colorscheme 'retrobox'
+-- vim.cmd.colorscheme 'retrobox'
 -- Hide deprecation warnings
 vim.g.deprecation_warnings = false
 
@@ -368,8 +367,8 @@ opt.autowrite = true -- Enable auto write
 -- integration works automatically. Requires Neovim >= 0.10.0
 opt.clipboard = vim.env.SSH_TTY and '' or 'unnamedplus' -- Sync with system clipboard
 opt.completeopt = 'menu,menuone,noselect'
-opt.conceallevel = 2 -- Hide * markup for bold and italic, but not markers with substitutions
-opt.confirm = true -- Confirm to save changes before exiting modified buffer
+opt.conceallevel = 2                                    -- Hide * markup for bold and italic, but not markers with substitutions
+opt.confirm = true                                      -- Confirm to save changes before exiting modified buffer
 -- opt.fillchars = {
 --   foldopen = '',
 --   foldclose = '',
@@ -384,24 +383,24 @@ opt.formatoptions = 'jcroqlnt' -- tcqj
 opt.grepformat = '%f:%l:%c:%m'
 opt.grepprg = 'rg --vimgrep'
 opt.inccommand = 'nosplit' -- preview incremental substitute
-opt.laststatus = 3 -- global statusline
-opt.list = true -- Show some invisible characters (tabs...
-opt.pumblend = 10 -- Popup blend
-opt.pumheight = 10 -- Maximum number of entries in a popup
-opt.relativenumber = true -- Relative line numbers
-opt.scrolloff = 10 -- Lines of context
+opt.laststatus = 3         -- global statusline
+opt.list = true            -- Show some invisible characters (tabs...
+opt.pumblend = 10          -- Popup blend
+opt.pumheight = 10         -- Maximum number of entries in a popup
+opt.relativenumber = true  -- Relative line numbers
+opt.scrolloff = 10         -- Lines of context
 opt.sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help', 'globals', 'skiprtp', 'folds' }
 opt.shortmess:append { W = true, I = true, c = true, C = true }
-opt.showmode = false -- Dont show mode since we have a statusline
-opt.sidescrolloff = 8 -- Columns of context
+opt.showmode = false     -- Dont show mode since we have a statusline
+opt.sidescrolloff = 8    -- Columns of context
 opt.signcolumn = 'yes:2' -- Always show the signcolumn, otherwise it would shift the text each time
 opt.spelllang = { 'en' }
 opt.splitkeep = 'screen'
 -- opt.statuscolumn = [[%!v:lua.require'lazyvim.util'.ui.statuscolumn()]]
-opt.timeoutlen = 300 -- Lower than default (1000) to quickly trigger which-key
+opt.timeoutlen = 300               -- Lower than default (1000) to quickly trigger which-key
 opt.undolevels = 10000
-opt.updatetime = 250 -- Save swap file and trigger CursorHold
-opt.virtualedit = 'block' -- Allow cursor to move where there is no text in visual block mode
+opt.updatetime = 250               -- Save swap file and trigger CursorHold
+opt.virtualedit = 'block'          -- Allow cursor to move where there is no text in visual block mode
 opt.wildmode = 'longest:full,full' -- Command-line completion mode
 -- opt.wrap = true
 opt.hlsearch = true

@@ -170,3 +170,11 @@ alias lta='lt -a'
 alias ai='howdoi -m "sonnet" --system-prompt "Write your response in markdown format, have a neutral tone and be as informative as possible while still being succinct."'
 
 alias py='uv run python'
+
+# Added by Antigravity
+export PATH="/Users/lunaticd/.antigravity/antigravity/bin:$PATH"
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/lunaticd/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
