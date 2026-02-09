@@ -178,3 +178,53 @@ export DOCKER_HOST=unix:///var/run/docker.sock
 export PATH="$PATH:$HOME/squashfs-root/usr/bin"
 
 export PATH="$HOME/.local/kitty.app/bin:$PATH"
+
+wjj() {
+    local map="
+--- BASICS ---
+git init            ->  jj git init --git-repo .
+git status          ->  jj st
+git log             ->  jj log
+git show            ->  jj show
+git help            ->  jj help
+
+--- CHANGES & STAGING ---
+git add .           ->  (Automatic) jj tracks changes by default
+git add -p          ->  jj split
+git diff            ->  jj diff
+git commit          ->  jj describe + jj new
+git commit -m       ->  jj describe -m \"message\"
+git commit --amend  ->  jj describe
+git restore <file>  ->  jj restore <file>
+git reset --hard    ->  jj abandon
+
+--- BRANCHING & MOVING ---
+git co <branch>     ->  jj edit <rev>
+git checkout -b     ->  jj branch create <name>
+git branch -M main  ->  jj branch set main
+git merge           ->  jj merge -r <rev>
+
+--- STASHING & REBASING ---
+git stash           ->  jj new (creates a new 'empty' change)
+git stash pop       ->  jj squash (merges into current)
+git rebase -i       ->  jj rebase / jj squash
+git cherry-pick     ->  jj rebase -r <rev> -d @
+
+--- REMOTE & SYNC ---
+git fetch           ->  jj git fetch
+git pull            ->  jj git fetch + jj rebase/merge
+git push            ->  jj git push
+git push -f         ->  jj git push (jj handles 'rewrites' naturally)
+
+--- RECOVERY ---
+git reflog          ->  jj op log
+git undo (alias)    ->  jj undo (the ultimate 'save me' button)
+"
+
+    if [ -z "$1" ]; then
+        echo -e "GIT COMMAND         |   JJ EQUIVALENT\n========================================"
+        echo "$map"
+    else
+        echo "$map" | grep -i "$1"
+    fi
+}
