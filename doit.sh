@@ -9,8 +9,8 @@ rm $HOME/.zshrc
 rm $HOME/.config/kitty/kitty.conf
 rm $HOME/.julia/config/startup.jl
 rm $HOME/.config/ghostty/config
-# rm -rf $HOME/.gemini/skills
-# rm -rf $HOME/.gemini/policies/
+rm -rf $HOME/.gemini/skills
+rm -rf $HOME/.gemini/policies/
 # rm $HOME/.claude/skills
 
 # symlinks
@@ -18,8 +18,7 @@ rm $HOME/.config/ghostty/config
 mkdir -p $HOME/.config/nvim/{lua,vim,lsp}
 mkdir -p $HOME/.julia/config
 mkdir -p $HOME/.config/kitty
-mkdir -p $HOME/.gemini/policies/
-mkdir -p $HOME/.gemini/skills/
+mkdir -p $HOME/.gemini/{policies,skills}
 # mkdir -p $HOME/.claude/skills/
 
 if [ "$(uname -s)" == "Darwin" ]
