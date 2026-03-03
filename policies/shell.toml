@@ -1,0 +1,5 @@
+[[rule]]
+toolName = "run_shell_command"
+commandPrefix = ["git", "jj", "ls", "cat", "pwd", "npm", "go", "cargo", "bun", "npx"]
+decision = "allow"
+priority = 100
